@@ -4,27 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Ladies – Systém webinářů 2026</title>
-  <script>
-    (function(){
-      var PWD_KEY = 'ailadies_access_v1';
-      var CORRECT = 'AILadies2026';
-      if(sessionStorage.getItem(PWD_KEY) !== '1'){
-        document.addEventListener('DOMContentLoaded', function(){
-          document.body.style.display = 'none';
-        });
-        var attempt = null;
-        while(attempt !== CORRECT){
-          attempt = prompt('🔐 AI Ladies – zadej heslo pro přístup:');
-          if(attempt === null){ document.write('<div style="font-family:sans-serif;text-align:center;padding:80px;font-size:1.1rem;color:#555">Stránka je chráněna heslem.</div>'); document.close(); break; }
-          if(attempt !== CORRECT){ alert('Nesprávné heslo. Zkus to znovu.'); }
-        }
-        if(attempt === CORRECT){
-          sessionStorage.setItem(PWD_KEY, '1');
-          document.addEventListener('DOMContentLoaded', function(){ document.body.style.display = ''; });
-        }
-      }
-    })();
-  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -65,8 +44,6 @@
       --max:1040px;
       --font-serif:'Cormorant Garamond','Georgia',serif;
       --font-sans:'Inter',system-ui,-apple-system,sans-serif;
-      --edit-ring:rgba(201,146,26,.45);
-      --edit-bg:rgba(212,175,55,.12);
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
@@ -80,25 +57,6 @@
     h2{font-size:clamp(1.45rem,3.2vw,2rem);font-weight:600;line-height:1.15}
     h3{font-size:1.12rem;font-weight:600;line-height:1.25}
     h4{font-size:.8rem;font-weight:600;line-height:1.3}
-
-    /* EDIT BAR */
-    #edit-bar{position:sticky;top:0;z-index:200;background:var(--bg-nav);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:var(--text-on-dark);display:flex;align-items:center;gap:12px;padding:12px 24px;font-size:.82rem;font-weight:500;flex-wrap:wrap;border-bottom:1px solid var(--on-dark-12)}
-    .bar-label{display:flex;align-items:center;gap:8px;color:rgba(212,175,55,.88);font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:.68rem}
-    .bar-label::before{content:'✏️';font-size:.88rem}
-    .bar-hint{color:var(--on-dark-40);flex:1;min-width:160px;font-weight:400}
-    #edit-bar button{cursor:pointer;border:none;border-radius:var(--r-pill);padding:8px 18px;font-family:var(--font-sans);font-size:.78rem;font-weight:600;transition:background .18s,opacity .18s,color .18s,border-color .18s}
-    #edit-bar button:hover{opacity:.92}
-    #btn-save{background:var(--accent);color:#fff}
-    #btn-save:hover{background:var(--accent-hover)}
-    #btn-reset{background:transparent;color:var(--on-dark-72);border:1px solid var(--on-dark-12)}
-    #btn-reset:hover{color:var(--text-on-dark);border-color:var(--accent-soft)}
-    #save-toast{font-size:.75rem;color:rgba(212,175,55,.85);opacity:0;transition:opacity .3s;font-weight:500}
-    #save-toast.show{opacity:1}
-
-    /* EDITABLE */
-    [contenteditable]{border-radius:8px;transition:outline .15s,background .15s;outline:2px solid transparent;cursor:text}
-    [contenteditable]:hover{outline:2px dashed var(--edit-ring);background:var(--edit-bg)}
-    [contenteditable]:focus{outline:2px solid var(--accent);background:#fff;box-shadow:0 0 0 4px var(--rose-soft)}
 
     /* LAYOUT */
     .page-wrap{max-width:var(--max);margin:0 auto;padding:0 28px 100px}
@@ -287,148 +245,30 @@
     .site-footer a{color:var(--accent-bright);font-weight:500}
     .site-footer a:hover{color:#fff}
 
-    /* ══ COMMENT SYSTEM ══ */
-    /* Comment mode state on body */
-    body.cmode [data-cid]{position:relative;cursor:pointer}
-    body.cmode [data-cid]:hover{outline:2px dashed rgba(201,146,26,.55);outline-offset:4px;border-radius:10px}
-    body.cmode [data-cid]:hover>.cmt-add-btn{opacity:1;pointer-events:auto}
-
-    /* Add-comment trigger */
-    .cmt-add-btn{
-      position:absolute;top:6px;right:6px;z-index:30;
-      opacity:0;pointer-events:none;transition:opacity .15s;
-      background:var(--accent);color:#fff;border:none;border-radius:var(--r-pill);
-      font-size:.68rem;font-weight:700;padding:3px 9px;cursor:pointer;
-      font-family:var(--font-sans);white-space:nowrap;letter-spacing:.03em;
-      box-shadow:0 2px 14px rgba(201,146,26,.25)
-    }
-
-    /* Comment count badge — výrazná, aby bylo hned vidět, že blok má thread */
-    .cmt-badge{
-      position:absolute;top:8px;right:8px;z-index:31;
-      background:var(--bg-dark);color:var(--text-on-dark);border-radius:999px;
-      font-size:.78rem;font-weight:700;padding:6px 12px 6px 10px;
-      font-family:var(--font-sans);cursor:pointer;white-space:nowrap;
-      box-shadow:0 3px 16px rgba(26,21,16,.28);display:flex;align-items:center;gap:7px;
-      border:2px solid rgba(212,175,55,.55);min-height:38px
-    }
-    .cmt-badge .cmt-badge-ico{font-size:1.35rem;line-height:1;display:inline-flex;align-items:center;justify-content:center}
-    .cmt-badge .cmt-badge-num{font-size:.95rem;font-weight:800;min-width:1.1em;text-align:center}
-    .cmt-badge:hover{background:var(--accent);border-color:var(--accent);color:#fff}
-    .cmt-badge:hover .cmt-badge-ico{filter:brightness(1.05)}
-
-    /* Floating thread panel */
-    #cmt-panel{
-      position:fixed;right:18px;top:60px;width:340px;max-height:calc(100vh - 80px);
-      background:var(--bg);border:1px solid var(--border);border-radius:var(--r-md);
-      box-shadow:var(--shadow-md);z-index:500;
-      display:flex;flex-direction:column;overflow:hidden
-    }
-    .cmt-ph{
-      padding:13px 16px 10px;border-bottom:1px solid var(--border);
-      background:var(--bg-alt);display:flex;align-items:center;justify-content:space-between;gap:8px
-    }
-    .cmt-ph-title{font-size:.8rem;font-weight:700;font-family:var(--font-sans);color:var(--text);flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
-    .cmt-ph-close{cursor:pointer;font-size:1rem;color:var(--text-muted);background:none;border:none;padding:2px 6px;border-radius:4px;font-family:var(--font-sans)}
-    .cmt-ph-close:hover{background:var(--border)}
-    .cmt-body{flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:14px}
-    .cmt-empty{font-size:.82rem;color:var(--text-muted);text-align:center;padding:10px 0}
-
-    /* Comment item */
-    .cmt-item{display:flex;flex-direction:column;gap:6px;padding-bottom:14px;border-bottom:1px solid var(--border)}
-    .cmt-item:last-of-type{border-bottom:none;padding-bottom:0}
-    .cmt-item.resolved .cmt-bubble{opacity:.55}
-    .cmt-bubble{
-      background:var(--bg-alt);border:1px solid var(--border);
-      border-radius:0 var(--r-sm) var(--r-sm) var(--r-sm);
-      padding:9px 11px;font-size:.83rem
-    }
-    .cmt-meta{display:flex;align-items:center;gap:7px;margin-bottom:5px}
-    .cmt-author-tag{font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:var(--r-pill);font-family:var(--font-sans);letter-spacing:.03em}
-    .a-petra{background:var(--accent-soft);color:var(--text)}
-    .a-aneta{background:var(--bg-alt);color:var(--text);border:1px solid var(--border)}
-    .a-katka{background:#EDE4F7;color:#402060}
-    .cmt-time{font-size:.65rem;color:var(--text-muted)}
-    .cmt-text{color:var(--text);line-height:1.55;word-break:break-word}
-    .cmt-actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-top:8px}
-    .btn-reply,.btn-resolve,.btn-delete{font-size:.74rem;background:none;border:none;cursor:pointer;font-family:var(--font-sans);font-weight:600;padding:4px 0;border-radius:4px}
-    .btn-reply{color:var(--accent)}
-    .btn-resolve{color:var(--text-muted)}
-    .btn-delete{color:#9a3d3d;margin-left:auto;display:inline-flex;align-items:center;gap:5px;padding:4px 8px;border-radius:var(--r-pill)}
-    .btn-delete:hover{background:rgba(154,61,61,.1);color:#c42b2b}
-    .btn-delete .btn-del-ico{font-size:1rem;line-height:1}
-    .reply-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:4px}
-    .btn-del-reply{flex-shrink:0;border:none;background:var(--bg-alt);color:var(--text-muted);cursor:pointer;width:32px;height:32px;border-radius:8px;font-size:1.05rem;line-height:1;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--border)}
-    .btn-del-reply:hover{background:rgba(154,61,61,.12);color:#9a3d3d;border-color:rgba(154,61,61,.25)}
-    .cmt-resolved-tag{font-size:.65rem;color:var(--accent);font-weight:700;margin-top:3px}
-
-    /* Replies */
-    .cmt-replies{margin-left:12px;margin-top:6px;padding-left:10px;border-left:2px solid var(--border);display:flex;flex-direction:column;gap:7px}
-    .reply-bubble{background:var(--bg);border:1px solid var(--border);border-radius:0 var(--r-sm) var(--r-sm) var(--r-sm);padding:7px 10px;font-size:.8rem}
-
-    /* Inline reply form */
-    .reply-form{margin-left:12px;margin-top:6px;padding:8px 10px;background:var(--bg-alt);border-radius:var(--r-sm);border:1px solid var(--border)}
-    .reply-form textarea,.cmt-form textarea{width:100%;border:1px solid var(--border);border-radius:8px;padding:7px 9px;font-size:.82rem;font-family:var(--font-sans);background:var(--bg);color:var(--text);resize:none;min-height:48px;line-height:1.5}
-    .reply-form textarea:focus,.cmt-form textarea:focus{outline:2px solid var(--accent);border-color:var(--accent)}
-    .author-row{display:flex;gap:5px;align-items:center;margin-top:6px;flex-wrap:wrap}
-    .a-btn{font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:var(--r-pill);border:2px solid transparent;cursor:pointer;font-family:var(--font-sans);opacity:.65;transition:opacity .15s,box-shadow .15s}
-    .a-btn.sel{opacity:1;box-shadow:0 0 0 2px rgba(0,0,0,.18)}
-    .a-btn-petra{background:var(--accent-soft);color:var(--text)}
-    .a-btn-aneta{background:var(--bg-alt);color:var(--text);border:1px solid var(--border)}
-    .a-btn-katka{background:#EDE4F7;color:#402060}
-    .btn-send-cmt{margin-left:auto;background:var(--accent);color:#fff;border:none;border-radius:var(--r-pill);padding:4px 13px;font-size:.76rem;font-weight:700;cursor:pointer;font-family:var(--font-sans);letter-spacing:.02em}
-    .btn-send-cmt:hover{background:var(--accent-hover)}
-
-    /* New comment form at bottom */
-    .cmt-form{padding:11px 14px;border-top:1px solid var(--border);background:var(--bg-alt)}
-    .cmt-form-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin-bottom:5px;font-family:var(--font-sans)}
-
-    /* Comment toggle in bar */
-    #btn-comments{background:var(--on-dark-08);color:var(--on-dark-72);border:1px solid var(--on-dark-12);display:inline-flex;align-items:center;gap:7px;font-size:.86rem}
-    #btn-comments .btn-cmt-ico{font-size:1.2rem;line-height:1}
-    #btn-comments:hover{color:var(--text-on-dark);border-color:var(--accent-soft)}
-    #btn-comments.cmode-on{background:var(--accent);color:#fff;border-color:var(--accent)}
-    #cmt-sep{width:1px;height:20px;background:var(--on-dark-12);flex-shrink:0}
-
     @media print{
-      #edit-bar{display:none}
-      #cmt-panel{display:none}
       .tab-panel{display:block!important}
       .tabs-nav{display:none}
-      [contenteditable]:hover,[contenteditable]:focus{outline:none;background:transparent;box-shadow:none}
     }
     @media(max-width:600px){
       .header-inner{padding:32px 0 38px}
       .toc-section{padding:22px 18px}
       .card{padding:18px 18px}
       .tab-panel{padding:18px 16px}
-      #edit-bar{gap:7px}
     }
   </style>
 </head>
 <body>
-
-<!-- EDIT BAR -->
-<div id="edit-bar">
-  <span class="bar-label">Úpravy</span>
-  <span class="bar-hint">Klikni na libovolný text a přepiš ho.</span>
-  <span id="save-toast">✓ Uloženo</span>
-  <button id="btn-save">Uložit</button>
-  <button id="btn-reset">Obnovit výchozí</button>
-  <span id="cmt-sep"></span>
-  <button id="btn-comments" type="button"><span class="btn-cmt-ico" aria-hidden="true">💬</span> Komentáře</button>
-</div>
 
 <!-- HEADER -->
 <header class="site-header">
   <div class="header-inner">
     <div class="header-tag">AI Ladies CZ — Interní dokument</div>
     <h1>Systém webinářů<br>a <em>seriálů</em> 2026</h1>
-    <p class="header-claim" contenteditable="true" data-key="main-claim">AI bez studu, bez technického stresu a krok za krokem.</p>
+    <p class="header-claim">AI bez studu, bez technického stresu a krok za krokem.</p>
     <div class="claims">
-      <span class="claim-pill" contenteditable="true" data-key="claim1">Přijdeš s nejistotou. Odejdeš s konkrétním výsledkem.</span>
-      <span class="claim-pill" contenteditable="true" data-key="claim2">Žádná otázka není hloupá. Každý klik se počítá.</span>
-      <span class="claim-pill" contenteditable="true" data-key="claim3">Jeden nástroj. Jeden týden. Skutečná jistota v praxi.</span>
+      <span class="claim-pill">Přijdeš s nejistotou. Odejdeš s konkrétním výsledkem.</span>
+      <span class="claim-pill">Žádná otázka není hloupá. Každý klik se počítá.</span>
+      <span class="claim-pill">Jeden nástroj. Jeden týden. Skutečná jistota v praxi.</span>
     </div>
     <div class="header-meta">
       <span>Verze 2.0</span><span>Květen 2026</span><span>Petra · Aneta · Katka</span>
@@ -467,16 +307,16 @@
 <section class="section" id="vize">
   <div class="section-header"><div class="section-num">1</div><h2>Vize a positioning</h2></div>
 
-  <p class="intro-text mb-md" contenteditable="true" data-key="vize-intro">AI Ladies webináře nejsou klasický technický kurz. Jsou bezpečný, podpůrný a praktický prostor pro ženy, které chtějí AI konečně pochopit, osahat si ji krok za krokem a začít ji používat v práci, podnikání i běžném životě.</p>
+  <p class="intro-text mb-md">AI Ladies webináře nejsou klasický technický kurz. Jsou bezpečný, podpůrný a praktický prostor pro ženy, které chtějí AI konečně pochopit, osahat si ji krok za krokem a začít ji používat v práci, podnikání i běžném životě.</p>
 
   <div class="cards-grid">
     <div class="card accent-card">
       <h4>Co je cílem</h4>
       <ul class="check-list">
-        <li><span contenteditable="true" data-key="cil1">Pomoci ženám získat jistotu – kde co najdou, na co kliknout, co nastavit</span></li>
-        <li><span contenteditable="true" data-key="cil2">Jak zadat úkol a jak poznat dobrý výstup</span></li>
-        <li><span contenteditable="true" data-key="cil3">Jak AI využít na vlastní práci a vytvořit opakovatelný postup</span></li>
-        <li><span contenteditable="true" data-key="cil4">Bezpečný prostor – žádná otázka není hloupá</span></li>
+        <li><span>Pomoci ženám získat jistotu – kde co najdou, na co kliknout, co nastavit</span></li>
+        <li><span>Jak zadat úkol a jak poznat dobrý výstup</span></li>
+        <li><span>Jak AI využít na vlastní práci a vytvořit opakovatelný postup</span></li>
+        <li><span>Bezpečný prostor – žádná otázka není hloupá</span></li>
       </ul>
     </div>
     <div class="card">
@@ -492,7 +332,7 @@
   </div>
 
   <blockquote class="mt-md">
-    <span contenteditable="true" data-key="vize-quote">Neučíme ženy AI teorii. Pomáháme jim otevřít správný nástroj, kliknout na správné místo a vytvořit něco, co jim hned pomůže v práci, podnikání nebo životě.</span>
+    <span>Neučíme ženy AI teorii. Pomáháme jim otevřít správný nástroj, kliknout na správné místo a vytvořit něco, co jim hned pomůže v práci, podnikání nebo životě.</span>
   </blockquote>
 </section>
 
@@ -504,28 +344,28 @@
 <section class="section" id="prokoco">
   <div class="section-header"><div class="section-num">2</div><h2>Pro koho webináře jsou</h2></div>
 
-  <p class="intro-text mb-md" contenteditable="true" data-key="prokoco-intro">Webináře AI Ladies jsou pro ženy, které chtějí AI opravdu pochopit a začít ji používat v praxi. Nemusíš mít technické znalosti. Nemusíš znát správná slova. Nemusíš se bát, že se zeptáš špatně.</p>
+  <p class="intro-text mb-md">Webináře AI Ladies jsou pro ženy, které chtějí AI opravdu pochopit a začít ji používat v praxi. Nemusíš mít technické znalosti. Nemusíš znát správná slova. Nemusíš se bát, že se zeptáš špatně.</p>
 
   <div class="card green-card mb-md">
     <h4>Webinář je vhodný pro ženy, které</h4>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:6px 20px;margin-top:8px">
       <div class="check-list">
-        <li><span contenteditable="true" data-key="pk1">AI zatím vůbec nepoužívají</span></li>
-        <li><span contenteditable="true" data-key="pk2">ChatGPT jen zkusily, ale nevyznají se v prostředí</span></li>
-        <li><span contenteditable="true" data-key="pk3">Mají pocit, že ostatní jsou napřed</span></li>
-        <li><span contenteditable="true" data-key="pk4">Absolvovaly kurzy, které pro ně byly příliš složité</span></li>
+        <li><span>AI zatím vůbec nepoužívají</span></li>
+        <li><span>ChatGPT jen zkusily, ale nevyznají se v prostředí</span></li>
+        <li><span>Mají pocit, že ostatní jsou napřed</span></li>
+        <li><span>Absolvovaly kurzy, které pro ně byly příliš složité</span></li>
       </div>
       <div class="check-list">
-        <li><span contenteditable="true" data-key="pk5">Bojí se zeptat na základní věci</span></li>
-        <li><span contenteditable="true" data-key="pk6">Potřebují vidět konkrétně, kde kliknout a co napsat</span></li>
-        <li><span contenteditable="true" data-key="pk7">Chtějí AI využít v práci, podnikání nebo osobním životě</span></li>
-        <li><span contenteditable="true" data-key="pk8">Chtějí být konkurenceschopné a neztratit se ve světě AI</span></li>
+        <li><span>Bojí se zeptat na základní věci</span></li>
+        <li><span>Potřebují vidět konkrétně, kde kliknout a co napsat</span></li>
+        <li><span>Chtějí AI využít v práci, podnikání nebo osobním životě</span></li>
+        <li><span>Chtějí být konkurenceschopné a neztratit se ve světě AI</span></li>
       </div>
     </div>
   </div>
 
   <blockquote>
-    <span contenteditable="true" data-key="prokoco-quote">V bezpečném ženském prostředí si nástroje projdeme krok za krokem — kde kliknout, co nastavit, co zadat, jak výstup upravit a jak poznat, že ti AI skutečně pomáhá. Každý webinář je praktický. Otevřeš si konkrétní nástroj a rovnou v něm něco vytvoříš.</span>
+    <span>V bezpečném ženském prostředí si nástroje projdeme krok za krokem — kde kliknout, co nastavit, co zadat, jak výstup upravit a jak poznat, že ti AI skutečně pomáhá. Každý webinář je praktický. Otevřeš si konkrétní nástroj a rovnou v něm něco vytvoříš.</span>
   </blockquote>
 </section>
 
@@ -537,52 +377,52 @@
 <section class="section" id="levely">
   <div class="section-header"><div class="section-num">3</div><h2>Úrovně webinářů</h2></div>
 
-  <p class="intro-text mb-md" contenteditable="true" data-key="levely-intro">Veřejné webináře řadíme do <strong>tří úrovní podle pokročilosti</strong>: začátečnice, středně pokročilé, pokročilé. Uvnitř každé úrovně dál pracujeme s náladou <em>Začínám → Zkouším → Stavím systém</em> – jde o to, kde zrovna jste v návyku na AI, ne o nálepku navždy.</p>
+  <p class="intro-text mb-md">Veřejné webináře řadíme do <strong>tří úrovní podle pokročilosti</strong>: začátečnice, středně pokročilé, pokročilé. Uvnitř každé úrovně dál pracujeme s náladou <em>Začínám → Zkouším → Stavím systém</em> – jde o to, kde zrovna jste v návyku na AI, ne o nálepku navždy.</p>
 
   <div class="level-grid">
     <div class="level-card">
       <div class="lvl-tag lvl-b">Začátečnice</div>
-      <h3 contenteditable="true" data-key="lv1-h">Začátečnice</h3>
-      <p class="target" contenteditable="true" data-key="lv1-track"><strong style="color:var(--accent)">Dráha:</strong> typicky <em>Začínám</em> – první krůčky, přestat se bát nástroje.</p>
-      <p class="target" contenteditable="true" data-key="lv1-t">AI zatím vůbec nebo málo. Neví, co zadat, chce klikat s někým poprvé a hned něco malého dokončit.</p>
+      <h3>Začátečnice</h3>
+      <p class="target"><strong style="color:var(--accent)">Dráha:</strong> typicky <em>Začínám</em> – první krůčky, přestat se bát nástroje.</p>
+      <p class="target">AI zatím vůbec nebo málo. Neví, co zadat, chce klikat s někým poprvé a hned něco malého dokončit.</p>
       <ul>
-        <li contenteditable="true" data-key="lv1-1">Orientace v prostředí a první jisté úkoly</li>
-        <li contenteditable="true" data-key="lv1-2">Jednoduché výstupy do práce i života</li>
-        <li contenteditable="true" data-key="lv1-3">Pocit „zvládnu to taky“</li>
+        <li>Orientace v prostředí a první jisté úkoly</li>
+        <li>Jednoduché výstupy do práce i života</li>
+        <li>Pocit „zvládnu to taky“</li>
       </ul>
     </div>
     <div class="level-card">
       <div class="lvl-tag lvl-i">Středně pokročilé</div>
-      <h3 contenteditable="true" data-key="lv2-h">Středně pokročilé</h3>
-      <p class="target" contenteditable="true" data-key="lv2-track"><strong style="color:var(--accent)">Dráha:</strong> typicky <em>Zkouším</em> – chci lepší výstupy a opakovatelný postup.</p>
-      <p class="target" contenteditable="true" data-key="lv2-t">Nástroj už otevře, ale výsledky jsou obecné nebo nestabilní. Chce lepší zadávání, šablony a rutiny.</p>
+      <h3>Středně pokročilé</h3>
+      <p class="target"><strong style="color:var(--accent)">Dráha:</strong> typicky <em>Zkouším</em> – chci lepší výstupy a opakovatelný postup.</p>
+      <p class="target">Nástroj už otevře, ale výsledky jsou obecné nebo nestabilní. Chce lepší zadávání, šablony a rutiny.</p>
       <ul>
-        <li contenteditable="true" data-key="lv2-1">Lepší prompty, kontext, kontrola výstupu</li>
-        <li contenteditable="true" data-key="lv2-2">AI na konkrétní opakující se úkoly</li>
-        <li contenteditable="true" data-key="lv2-3">Osvojení si vlastního „mini-workflow“</li>
+        <li>Lepší prompty, kontext, kontrola výstupu</li>
+        <li>AI na konkrétní opakující se úkoly</li>
+        <li>Osvojení si vlastního „mini-workflow“</li>
       </ul>
     </div>
     <div class="level-card">
       <div class="lvl-tag lvl-a">Pokročilé</div>
-      <h3 contenteditable="true" data-key="lv3-h">Pokročilé</h3>
-      <p class="target" contenteditable="true" data-key="lv3-track"><strong style="color:var(--accent)">Dráha:</strong> typicky <em>Stavím systém</em> – propojení nástrojů, automatizace, vlastní asistent.</p>
-      <p class="target" contenteditable="true" data-key="lv3-t">AI používá pravidelně. Zajímá ji, jak si ušetřit čas skládáním kroků, bezpečným propojením nástrojů a jednoduchými prototypy.</p>
+      <h3>Pokročilé</h3>
+      <p class="target"><strong style="color:var(--accent)">Dráha:</strong> typicky <em>Stavím systém</em> – propojení nástrojů, automatizace, vlastní asistent.</p>
+      <p class="target">AI používá pravidelně. Zajímá ji, jak si ušetřit čas skládáním kroků, bezpečným propojením nástrojů a jednoduchými prototypy.</p>
       <ul>
-        <li contenteditable="true" data-key="lv3-1">Jednoduché AI workflow a přenositelné postupy</li>
-        <li contenteditable="true" data-key="lv3-2">Přehled o tom, kde má AI limity</li>
-        <li contenteditable="true" data-key="lv3-3">Vlastní mini-asistent nebo use case v praxi</li>
+        <li>Jednoduché AI workflow a přenositelné postupy</li>
+        <li>Přehled o tom, kde má AI limity</li>
+        <li>Vlastní mini-asistent nebo use case v praxi</li>
       </ul>
     </div>
   </div>
 
   <div class="card accent-card mt-md">
     <div class="eyebrow">Odděleně od tří úrovní</div>
-    <h3 contenteditable="true" data-key="lv4-h">AI v týmu: bezpečně a prakticky</h3>
-    <p class="target" contenteditable="true" data-key="lv4-t">Samostatná linie pro <strong>firmy, týmy a organizace</strong> – GDPR, pravidla, limity, firemní kultura práce s AI. Neřadíme to do začátečnice / středně / pokročilé; domluvíme formát podle týmu.</p>
+    <h3>AI v týmu: bezpečně a prakticky</h3>
+    <p class="target">Samostatná linie pro <strong>firmy, týmy a organizace</strong> – GDPR, pravidla, limity, firemní kultura práce s AI. Neřadíme to do začátečnice / středně / pokročilé; domluvíme formát podle týmu.</p>
     <ul class="check-list mt-sm">
-      <li><span contenteditable="true" data-key="lv4-1">Bezpečnost dat a rozumná pravidla pro tým</span></li>
-      <li><span contenteditable="true" data-key="lv4-2">Checklist a základ pro týmový standard</span></li>
-      <li><span contenteditable="true" data-key="lv4-3">Praktické ukázky bez zbytečného žargonu</span></li>
+      <li><span>Bezpečnost dat a rozumná pravidla pro tým</span></li>
+      <li><span>Checklist a základ pro týmový standard</span></li>
+      <li><span>Praktické ukázky bez zbytečného žargonu</span></li>
     </ul>
   </div>
 </section>
@@ -599,12 +439,12 @@
     <table>
       <thead><tr><th>Typ</th><th>Pro koho</th><th>Co se děje</th><th>Výsledek</th></tr></thead>
       <tbody>
-        <tr><td contenteditable="true" data-key="typ1n">Kickoff / vstupní webinář</td><td contenteditable="true" data-key="typ1k">Úplné začátečnice</td><td contenteditable="true" data-key="typ1c">Společné klikání, orientace v nástroji, první úkoly</td><td contenteditable="true" data-key="typ1v">Účastnice se přestane bát prostředí</td></tr>
-        <tr><td contenteditable="true" data-key="typ2n">Praktický workshop</td><td contenteditable="true" data-key="typ2k">Začátečnice / mírně pokročilé</td><td contenteditable="true" data-key="typ2c">Tvoří se konkrétní výstup krok za krokem</td><td contenteditable="true" data-key="typ2v">Text, plán, tabulka, prezentace nebo zápis</td></tr>
-        <tr><td contenteditable="true" data-key="typ3n">Inspirativní use-case</td><td contenteditable="true" data-key="typ3k">Všechny úrovně</td><td contenteditable="true" data-key="typ3c">Ukázky možností AI na reálných situacích</td><td contenteditable="true" data-key="typ3v">Účastnice pochopí, kde AI využít ve své práci</td></tr>
-        <tr><td contenteditable="true" data-key="typ4n">Nástrojový webinář</td><td contenteditable="true" data-key="typ4k">Mírně pokročilé</td><td contenteditable="true" data-key="typ4c">Jeden nástroj do hloubky, nastavení, funkce</td><td contenteditable="true" data-key="typ4v">Ví, kde co nastavit a kdy ho použít</td></tr>
-        <tr><td contenteditable="true" data-key="typ5n">Pokročilý mini-lab</td><td contenteditable="true" data-key="typ5k">Pokročilé</td><td contenteditable="true" data-key="typ5c">Automatizace, workflow, AI Studio, prototypy</td><td contenteditable="true" data-key="typ5v">Funkční jednoduchý AI systém nebo prototyp</td></tr>
-        <tr><td contenteditable="true" data-key="typ6n">Bezpečnostní / firemní</td><td contenteditable="true" data-key="typ6k">Týmy, firmy, podnikatelky</td><td contenteditable="true" data-key="typ6c">Data, pravidla, limity, GDPR, bezpečnost</td><td contenteditable="true" data-key="typ6v">Checklist a základní pravidla pro tým</td></tr>
+        <tr><td>Kickoff / vstupní webinář</td><td>Úplné začátečnice</td><td>Společné klikání, orientace v nástroji, první úkoly</td><td>Účastnice se přestane bát prostředí</td></tr>
+        <tr><td>Praktický workshop</td><td>Začátečnice / mírně pokročilé</td><td>Tvoří se konkrétní výstup krok za krokem</td><td>Text, plán, tabulka, prezentace nebo zápis</td></tr>
+        <tr><td>Inspirativní use-case</td><td>Všechny úrovně</td><td>Ukázky možností AI na reálných situacích</td><td>Účastnice pochopí, kde AI využít ve své práci</td></tr>
+        <tr><td>Nástrojový webinář</td><td>Mírně pokročilé</td><td>Jeden nástroj do hloubky, nastavení, funkce</td><td>Ví, kde co nastavit a kdy ho použít</td></tr>
+        <tr><td>Pokročilý mini-lab</td><td>Pokročilé</td><td>Automatizace, workflow, AI Studio, prototypy</td><td>Funkční jednoduchý AI systém nebo prototyp</td></tr>
+        <tr><td>Bezpečnostní / firemní</td><td>Týmy, firmy, podnikatelky</td><td>Data, pravidla, limity, GDPR, bezpečnost</td><td>Checklist a základní pravidla pro tým</td></tr>
       </tbody>
     </table>
   </div>
@@ -642,7 +482,7 @@
 
   <div class="card mb-md">
     <h4>Časy – střídáme záměrně</h4>
-    <p contenteditable="true" data-key="cas-text">Každý webinář má jiný čas. Není to náhoda – je to záměr. Zaměstnaná žena s dětmi na kroužcích nenajde vždy stejné okno. Tak ji najdeme my.</p>
+    <p>Každý webinář má jiný čas. Není to náhoda – je to záměr. Zaměstnaná žena s dětmi na kroužcích nenajde vždy stejné okno. Tak ji najdeme my.</p>
     <div class="chips mt-sm">
       <span class="chip on">🌅 Dopoledne ~10:00</span>
       <span class="chip on">☀️ Odpoledne ~14:00</span>
@@ -655,15 +495,15 @@
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:12px">
       <div>
         <div class="eyebrow" style="color:var(--accent-bright)">Fáze 1 – První měsíc</div>
-        <p style="margin-top:6px" contenteditable="true" data-key="faze1">První 3 webináře vedou jen Petra, Aneta a Katka. Testujeme formát, budujeme brand lidských tváří, ne loga.</p>
+        <p style="margin-top:6px">První 3 webináře vedou jen Petra, Aneta a Katka. Testujeme formát, budujeme brand lidských tváří, ne loga.</p>
       </div>
       <div>
         <div class="eyebrow" style="color:var(--accent-bright)">Fáze 2 – Hosté</div>
-        <p style="margin-top:6px" contenteditable="true" data-key="faze2">Zveme externistky, které jsou ochotné přijít bez honoráře. Odměnou je viditelnost v komunitě. Oslovujeme přes vizi projektu.</p>
+        <p style="margin-top:6px">Zveme externistky, které jsou ochotné přijít bez honoráře. Odměnou je viditelnost v komunitě. Oslovujeme přes vizi projektu.</p>
       </div>
       <div>
         <div class="eyebrow" style="color:var(--accent-bright)">Fáze 3 – Tool Week lektoři</div>
-        <p style="margin-top:6px" contenteditable="true" data-key="faze3">Intenzivní seriály potřebují specialisty na konkrétní nástroje. Petra průběžně vytipovává a oslovuje.</p>
+        <p style="margin-top:6px">Intenzivní seriály potřebují specialisty na konkrétní nástroje. Petra průběžně vytipovává a oslovuje.</p>
       </div>
     </div>
   </div>
@@ -674,10 +514,10 @@
       <div class="table-wrap mt-sm" style="margin:0"><table>
         <thead><tr><th>Čas</th><th>Blok</th></tr></thead>
         <tbody>
-          <tr><td>0–5 min</td><td contenteditable="true" data-key="str60-1">Uvítání, bezpečný rámec, cíl dne</td></tr>
-          <tr><td>5–45 min</td><td contenteditable="true" data-key="str60-2">Hlavní obsah – výuka, nastavení, demo krok za krokem</td></tr>
-          <tr><td>45–55 min</td><td contenteditable="true" data-key="str60-3">Volitelný úkol / miniúkol přímo v webináři</td></tr>
-          <tr><td>55–60 min</td><td contenteditable="true" data-key="str60-4">Shrnutí, odkaz na záznam, info o příštím</td></tr>
+          <tr><td>0–5 min</td><td>Uvítání, bezpečný rámec, cíl dne</td></tr>
+          <tr><td>5–45 min</td><td>Hlavní obsah – výuka, nastavení, demo krok za krokem</td></tr>
+          <tr><td>45–55 min</td><td>Volitelný úkol / miniúkol přímo v webináři</td></tr>
+          <tr><td>55–60 min</td><td>Shrnutí, odkaz na záznam, info o příštím</td></tr>
         </tbody>
       </table></div>
     </div>
@@ -686,12 +526,12 @@
       <div class="table-wrap mt-sm" style="margin:0"><table>
         <thead><tr><th>Čas</th><th>Blok</th></tr></thead>
         <tbody>
-          <tr><td>0–10 min</td><td contenteditable="true" data-key="str75-1">Přivítání, bezpečný rámec, cíl dne</td></tr>
-          <tr><td>10–25 min</td><td contenteditable="true" data-key="str75-2">Orientace v konkrétní funkci nebo části nástroje</td></tr>
-          <tr><td>25–50 min</td><td contenteditable="true" data-key="str75-3">Společná praktická práce – klikáme spolu</td></tr>
-          <tr><td>50–60 min</td><td contenteditable="true" data-key="str75-4">Vlastní miniúkol během webináře</td></tr>
-          <tr><td>60–70 min</td><td contenteditable="true" data-key="str75-5">Sdílení, dotazy, co fungovalo / nefungovalo</td></tr>
-          <tr><td>70–75 min</td><td contenteditable="true" data-key="str75-6">Dobrovolný úkol na další den</td></tr>
+          <tr><td>0–10 min</td><td>Přivítání, bezpečný rámec, cíl dne</td></tr>
+          <tr><td>10–25 min</td><td>Orientace v konkrétní funkci nebo části nástroje</td></tr>
+          <tr><td>25–50 min</td><td>Společná praktická práce – klikáme spolu</td></tr>
+          <tr><td>50–60 min</td><td>Vlastní miniúkol během webináře</td></tr>
+          <tr><td>60–70 min</td><td>Sdílení, dotazy, co fungovalo / nefungovalo</td></tr>
+          <tr><td>70–75 min</td><td>Dobrovolný úkol na další den</td></tr>
         </tbody>
       </table></div>
     </div>
@@ -708,9 +548,9 @@
 
   <div class="card dark-card mb-md" style="border-left:4px solid var(--accent)">
     <div class="eyebrow" style="color:var(--accent-bright);margin-bottom:8px">První webinář AI Ladies · 26. 5. 2026 (Út) · 10:00 · <strong>ZDARMA nebo 490 Kč</strong> (ke zvážení — cena v materiálech často nejvíc připomene hodnotu vstupu) · délka k diskuzi · záložní termín 4. 6.</div>
-    <h3 style="font-size:1.35rem;margin-bottom:4px" contenteditable="true" data-key="ko-h">Jak si zjednodušit život s AI</h3>
-    <p style="color:var(--accent-bright);font-weight:500;margin-bottom:14px" contenteditable="true" data-key="ko-sub">Inspirace pro úplné začátečnice</p>
-    <p contenteditable="true" data-key="ko-popis">Slyšíte všude, že „AI změní svět", a říkáte si – fajn, ale co konkrétně mi udělá v úterý večer, když mám rozdělaný e-mail klientovi, dvě nedočtené smlouvy a zítra musím vařit pro celou rodinu? Tenhle webinář je přesně o tom. Za 60 minut ukážeme 10 reálných situací ze života, ve kterých vám AI pomůže – bez toho, abyste se musely učit programovat nebo znát zkratky.</p>
+    <h3 style="font-size:1.35rem;margin-bottom:4px">Jak si zjednodušit život s AI</h3>
+    <p style="color:var(--accent-bright);font-weight:500;margin-bottom:14px">Inspirace pro úplné začátečnice</p>
+    <p>Slyšíte všude, že „AI změní svět", a říkáte si – fajn, ale co konkrétně mi udělá v úterý večer, když mám rozdělaný e-mail klientovi, dvě nedočtené smlouvy a zítra musím vařit pro celou rodinu? Tenhle webinář je přesně o tom. Za 60 minut ukážeme 10 reálných situací ze života, ve kterých vám AI pomůže – bez toho, abyste se musely učit programovat nebo znát zkratky.</p>
     <div class="chips mt-sm">
       <span class="chip on">⏱ 60 minut</span>
       <span class="chip on">💸 Zdarma <em>nebo</em> 490 Kč — ke zvážení</span>
@@ -722,25 +562,25 @@
     <div class="card green-card">
       <h4>Co si odnesete</h4>
       <ul class="check-list">
-        <li><span contenteditable="true" data-key="ko1">Konkrétní představu, k čemu vám AI bude ve vašem životě, ne obecně</span></li>
-        <li><span contenteditable="true" data-key="ko2">10 příkladů ze života, ze kterých si vyberete to vaše</span></li>
-        <li><span contenteditable="true" data-key="ko3">Pocit, že to zvládnete – protože ano, zvládnete</span></li>
-        <li><span contenteditable="true" data-key="ko4">Inspiraci, na který další webinář se přihlásit</span></li>
+        <li><span>Konkrétní představu, k čemu vám AI bude ve vašem životě, ne obecně</span></li>
+        <li><span>10 příkladů ze života, ze kterých si vyberete to vaše</span></li>
+        <li><span>Pocit, že to zvládnete – protože ano, zvládnete</span></li>
+        <li><span>Inspiraci, na který další webinář se přihlásit</span></li>
       </ul>
     </div>
     <div class="card">
       <h4>Pro koho je</h4>
       <ul class="check-list">
-        <li><span contenteditable="true" data-key="ko5">Pro ženy, které AI ještě nezkoušely</span></li>
-        <li><span contenteditable="true" data-key="ko6">Pro ty, které ji zkoušely a zavřely, protože nevěděly co s tím</span></li>
-        <li><span contenteditable="true" data-key="ko7">Pro každou, která má pocit „to všichni umí, jen já ne"</span></li>
+        <li><span>Pro ženy, které AI ještě nezkoušely</span></li>
+        <li><span>Pro ty, které ji zkoušely a zavřely, protože nevěděly co s tím</span></li>
+        <li><span>Pro každou, která má pocit „to všichni umí, jen já ne"</span></li>
       </ul>
-      <p class="mt-sm text-sm text-muted" contenteditable="true" data-key="ko8">Co budete potřebovat: notebook nebo tablet, prohlížeč, dobrá káva. Žádný účet zatím nepotřebujete.</p>
+      <p class="mt-sm text-sm text-muted">Co budete potřebovat: notebook nebo tablet, prohlížeč, dobrá káva. Žádný účet zatím nepotřebujete.</p>
     </div>
     <div class="card accent-card">
       <h4>Co tu nečekejte</h4>
-      <p contenteditable="true" data-key="ko9">Žádné zkratky, technické pojmy ani přednášku o tom, jak AI funguje uvnitř. Tohle je hodina pro normální ženy a normální životy.</p>
-      <p class="mt-sm" style="font-size:.85rem;font-weight:500;color:var(--accent)" contenteditable="true" data-key="ko10">Není to přednáška o budoucnosti. Je to inspirace pro dnešní úterý.</p>
+      <p>Žádné zkratky, technické pojmy ani přednášku o tom, jak AI funguje uvnitř. Tohle je hodina pro normální ženy a normální životy.</p>
+      <p class="mt-sm" style="font-size:.85rem;font-weight:500;color:var(--accent)">Není to přednáška o budoucnosti. Je to inspirace pro dnešní úterý.</p>
     </div>
   </div>
 </section>
@@ -752,7 +592,7 @@
      ══════════════════════════════════════════ -->
 <section class="section" id="standalone">
   <div class="section-header"><div class="section-num">7</div><h2>Témata webinářů</h2></div>
-  <p class="intro-text mb-md" contenteditable="true" data-key="sa-intro">Všechna témata začínají problémem nebo benefitem – ne názvem nástroje. Nástroje (ChatGPT, Gemini, Claude…) zmiňujeme uvnitř každého webináře a vždy řekneme, kdy se který hodí. Účastnice se tak nástroje naučí přirozeně, aniž by jim to bylo přednášeno.</p>
+  <p class="intro-text mb-md">Všechna témata začínají problémem nebo benefitem – ne názvem nástroje. Nástroje (ChatGPT, Gemini, Claude…) zmiňujeme uvnitř každého webináře a vždy řekneme, kdy se který hodí. Účastnice se tak nástroje naučí přirozeně, aniž by jim to bylo přednášeno.</p>
 
   <div class="card green-card mb-md">
     <h4>Princip pojmenování</h4>
@@ -774,86 +614,86 @@
       <tbody>
         <tr>
           <td style="font-weight:700;color:var(--accent)">★</td>
-          <td><strong contenteditable="true" data-key="w0n">Jak si zjednodušit život s AI</strong><br><span style="font-size:.75rem;color:var(--accent)">KICKOFF · <strong>ZDARMA nebo 490 Kč</strong> (ke zvážení) · 60 min · 26. 5. 2026 (záložní 4. 6.)</span></td>
-          <td contenteditable="true" data-key="w0d">10 reálných situací ze života. Konkrétní představa, kde AI pomůže právě vám. Inspirace bez techniky.</td>
+          <td><strong>Jak si zjednodušit život s AI</strong><br><span style="font-size:.75rem;color:var(--accent)">KICKOFF · <strong>ZDARMA nebo 490 Kč</strong> (ke zvážení) · 60 min · 26. 5. 2026 (záložní 4. 6.)</span></td>
+          <td>10 reálných situací ze života. Konkrétní představa, kde AI pomůže právě vám. Inspirace bez techniky.</td>
           <td><span class="lvl-badge lvl-b">Začátečnice</span></td>
         </tr>
         <tr>
           <td>1</td>
-          <td contenteditable="true" data-key="w1n">Konec přeplněné e-mailové schránky</td>
-          <td contenteditable="true" data-key="w1d">AI píše, odpovídá, shrnuje a třídí e-maily. Pro každou, kdo se každé pondělí ráno bojí otevřít inbox. Výstup: nastavený mailový asistent.</td>
+          <td>Konec přeplněné e-mailové schránky</td>
+          <td>AI píše, odpovídá, shrnuje a třídí e-maily. Pro každou, kdo se každé pondělí ráno bojí otevřít inbox. Výstup: nastavený mailový asistent.</td>
           <td><span class="lvl-badge lvl-b">Začátečnice</span></td>
         </tr>
         <tr>
           <td>2</td>
-          <td contenteditable="true" data-key="w2n">Prezentace, materiály, projekty – zvládněte to s AI bez chaosu</td>
-          <td contenteditable="true" data-key="w2d">Slajdy, podklady, jednoduché projekty a „co s tím dál“ – ne klasické „přečti si 40 stran smlouvy“. Výstup: postup, jak z materiálů rychle udělat strukturu, shrnutí nebo návrh dalšího kroku (s rozumem a bez halucinací brát jako hotovou pravdu).</td>
+          <td>Prezentace, materiály, projekty – zvládněte to s AI bez chaosu</td>
+          <td>Slajdy, podklady, jednoduché projekty a „co s tím dál“ – ne klasické „přečti si 40 stran smlouvy“. Výstup: postup, jak z materiálů rychle udělat strukturu, shrnutí nebo návrh dalšího kroku (s rozumem a bez halucinací brát jako hotovou pravdu).</td>
           <td><span class="lvl-badge lvl-b">Začátečnice</span></td>
         </tr>
         <tr>
           <td>3</td>
-          <td contenteditable="true" data-key="w3n">Konec ručního přepisování schůzek</td>
-          <td contenteditable="true" data-key="w3d">Nahrávání, zápisy, akční body. Ze záznamu schůzky vznikne zápis, akční kroky a shrnutí pro tým. Výstup: šablona zápisu a postup práce se záznamem.</td>
+          <td>Konec ručního přepisování schůzek</td>
+          <td>Nahrávání, zápisy, akční body. Ze záznamu schůzky vznikne zápis, akční kroky a shrnutí pro tým. Výstup: šablona zápisu a postup práce se záznamem.</td>
           <td><span class="lvl-badge lvl-b">Začátečnice</span></td>
         </tr>
         <tr>
           <td>4</td>
-          <td contenteditable="true" data-key="w4n">Texty, které dlouho odkládáte</td>
-          <td contenteditable="true" data-key="w4d">Newsletter, LinkedIn, blog, web. Když máte co říct, ale ne čas to napsat. Výstup: hotový nebo rozepsaný text + osobní postup pro psaní s AI.</td>
+          <td>Texty, které dlouho odkládáte</td>
+          <td>Newsletter, LinkedIn, blog, web. Když máte co říct, ale ne čas to napsat. Výstup: hotový nebo rozepsaný text + osobní postup pro psaní s AI.</td>
           <td><span class="lvl-badge lvl-b">Začátečnice</span></td>
         </tr>
         <tr>
           <td>5</td>
-          <td contenteditable="true" data-key="w5n">Úřední čeština a nepříjemné dopisy</td>
-          <td contenteditable="true" data-key="w5d">Stížnost, reklamace, žádost o slevu, výpověď. Když potřebujete znít profesionálně i naštvaně. Výstup: 3 napsané dopisy nebo šablony.</td>
+          <td>Úřední čeština a nepříjemné dopisy</td>
+          <td>Stížnost, reklamace, žádost o slevu, výpověď. Když potřebujete znít profesionálně i naštvaně. Výstup: 3 napsané dopisy nebo šablony.</td>
           <td><span class="lvl-badge lvl-b">Začátečnice</span></td>
         </tr>
         <tr>
           <td>6</td>
-          <td contenteditable="true" data-key="w6n">Jídelníček, rozvrh, kroužky: plánovačka bez chaosu</td>
-          <td contenteditable="true" data-key="w6d">Září už není o dovolené — spíš návrat do rytmu: jídelníček, rozvrh domácnosti, kroužky a „co kdy“. Neviditelná práce, kterou vám AI převezme z hlavy. Výstup: šablony pro opakované plánování.</td>
+          <td>Jídelníček, rozvrh, kroužky: plánovačka bez chaosu</td>
+          <td>Září už není o dovolené — spíš návrat do rytmu: jídelníček, rozvrh domácnosti, kroužky a „co kdy“. Neviditelná práce, kterou vám AI převezme z hlavy. Výstup: šablony pro opakované plánování.</td>
           <td><span class="lvl-badge lvl-b">Začátečnice</span></td>
         </tr>
         <tr>
           <td>7</td>
-          <td contenteditable="true" data-key="w7n">Když dítě nerozumí úkolu a vy taky ne</td>
-          <td contenteditable="true" data-key="w7d">AI jako trpělivý doučovatel. Matika, slohovka, projekt na biologii. Bez křiku, bez slz. Výstup: osobní postup doučování s AI.</td>
+          <td>Když dítě nerozumí úkolu a vy taky ne</td>
+          <td>AI jako trpělivý doučovatel. Matika, slohovka, projekt na biologii. Bez křiku, bez slz. Výstup: osobní postup doučování s AI.</td>
           <td><span class="lvl-badge lvl-b">Začátečnice</span></td>
         </tr>
         <tr>
           <td>8</td>
-          <td contenteditable="true" data-key="w8n">Co je v té lékařské zprávě, které nerozumím</td>
-          <td contenteditable="true" data-key="w8d">Nálezy, léky, příbalové letáky přeložené do lidštiny. Ne diagnóza – orientace. Výstup: postup jak bezpečně číst zdravotní dokumenty s AI.</td>
+          <td>Co je v té lékařské zprávě, které nerozumím</td>
+          <td>Nálezy, léky, příbalové letáky přeložené do lidštiny. Ne diagnóza – orientace. Výstup: postup jak bezpečně číst zdravotní dokumenty s AI.</td>
           <td><span class="lvl-badge lvl-b">Začátečnice</span></td>
         </tr>
         <tr>
           <td>9</td>
-          <td contenteditable="true" data-key="w9n">Vyfoť a vyřeš: Když foťák v telefonu zastane půl práce</td>
-          <td contenteditable="true" data-key="w9d">Účtenky, letáky, vizitky, etikety, cizojazyčné nápisy. Naskenovat, přeložit, roztřídit. Výstup: mobilní workflow pro každodenní použití.</td>
+          <td>Vyfoť a vyřeš: Když foťák v telefonu zastane půl práce</td>
+          <td>Účtenky, letáky, vizitky, etikety, cizojazyčné nápisy. Naskenovat, přeložit, roztřídit. Výstup: mobilní workflow pro každodenní použití.</td>
           <td><span class="lvl-badge lvl-i">Středně pokročilé</span></td>
         </tr>
         <tr>
           <td>10</td>
-          <td contenteditable="true" data-key="w10n">Mluvte, místo abyste psaly</td>
-          <td contenteditable="true" data-key="w10d">AI hlasem – pro ty, kdo řídí, vaří, žehlí, chodí se psem. Hands-free asistentka v kapse. Výstup: nastavená hlasová rutina.</td>
+          <td>Mluvte, místo abyste psaly</td>
+          <td>AI hlasem – pro ty, kdo řídí, vaří, žehlí, chodí se psem. Hands-free asistentka v kapse. Výstup: nastavená hlasová rutina.</td>
           <td><span class="lvl-badge lvl-i">Středně pokročilé</span></td>
         </tr>
         <tr>
           <td>11</td>
-          <td contenteditable="true" data-key="w11n">Naučte se cokoli po svém</td>
-          <td contenteditable="true" data-key="w11d">AI jako trpělivý učitel. Angličtina, finanční gramotnost, nové programy v práci. Vlastním tempem, beze studu. Výstup: osobní studijní plán s AI.</td>
+          <td>Naučte se cokoli po svém</td>
+          <td>AI jako trpělivý učitel. Angličtina, finanční gramotnost, nové programy v práci. Vlastním tempem, beze studu. Výstup: osobní studijní plán s AI.</td>
           <td><span class="lvl-badge lvl-a">Pokročilé</span></td>
         </tr>
         <tr>
           <td>12</td>
-          <td contenteditable="true" data-key="w12n">Když se nemůžete rozhodnout</td>
-          <td contenteditable="true" data-key="w12d">AI jako sparring partner – pro velká i malá rozhodnutí. Pro ženy, které toho mají v hlavě moc. Výstup: osobní rozhodovací rámec s AI.</td>
+          <td>Když se nemůžete rozhodnout</td>
+          <td>AI jako sparring partner – pro velká i malá rozhodnutí. Pro ženy, které toho mají v hlavě moc. Výstup: osobní rozhodovací rámec s AI.</td>
           <td><span class="lvl-badge lvl-a">Pokročilé</span></td>
         </tr>
         <tr>
           <td>+</td>
-          <td contenteditable="true" data-key="w13n">AI poradna: přines svůj úkol</td>
-          <td contenteditable="true" data-key="w13d">Komunitní poradna bez tématu. Účastnice přijde s konkrétním problémem. Výstup: každá odchází s konkrétním dalším krokem.</td>
+          <td>AI poradna: přines svůj úkol</td>
+          <td>Komunitní poradna bez tématu. Účastnice přijde s konkrétním problémem. Výstup: každá odchází s konkrétním dalším krokem.</td>
           <td><span class="lvl-badge lvl-all">Všechny úrovně</span></td>
         </tr>
       </tbody>
@@ -871,8 +711,8 @@
 
   <div class="card green-card mb-md">
     <h4>Princip Tool Weeku</h4>
-    <p contenteditable="true" data-key="tw-princip">Celý týden se budeme věnovat jednomu konkrétnímu nástroji. Každý den jiný typ využití – od prvního otevření přes každodenní práci až po vlastní workflow. Smyslem je, aby se účastnice s jedním prostředím opravdu sžila a pochopila ho.</p>
-    <p class="mt-sm" contenteditable="true" data-key="tw-prodej">Neprezentujeme Tool Week jako „5 webinářů“, ale jako malý praktický kurz: <em>Během jednoho týdne se s jedním AI nástrojem naučíš pracovat tak, aby ses v něm neztrácela a uměla ho používat samostatně.</em> <strong>Prodejní model k rozhodnutí:</strong> buď <strong>celý týden jako balíček</strong> (výhodnější), nebo <strong>jednotlivé dny zvlášť</strong> – obě varianty držíme v dokumentu otevřené, doladíme v Makaly a komunikaci.</p>
+    <p>Celý týden se budeme věnovat jednomu konkrétnímu nástroji. Každý den jiný typ využití – od prvního otevření přes každodenní práci až po vlastní workflow. Smyslem je, aby se účastnice s jedním prostředím opravdu sžila a pochopila ho.</p>
+    <p class="mt-sm">Neprezentujeme Tool Week jako „5 webinářů“, ale jako malý praktický kurz: <em>Během jednoho týdne se s jedním AI nástrojem naučíš pracovat tak, aby ses v něm neztrácela a uměla ho používat samostatně.</em> <strong>Prodejní model k rozhodnutí:</strong> buď <strong>celý týden jako balíček</strong> (výhodnější), nebo <strong>jednotlivé dny zvlášť</strong> – obě varianty držíme v dokumentu otevřené, doladíme v Makaly a komunikaci.</p>
   </div>
 
   <div class="card mb-md">
@@ -880,11 +720,11 @@
     <div class="table-wrap mt-sm" style="margin:0"><table>
       <thead><tr><th>Den</th><th>Typ dne</th><th>Smysl</th></tr></thead>
       <tbody>
-        <tr><td>Den 1</td><td contenteditable="true" data-key="tw-d1t">Seznámení s nástrojem</td><td contenteditable="true" data-key="tw-d1s">Otevřít, pochopit prostředí, odstranit strach</td></tr>
-        <tr><td>Den 2</td><td contenteditable="true" data-key="tw-d2t">Každodenní použití</td><td contenteditable="true" data-key="tw-d2s">Běžné úkoly, které šetří čas</td></tr>
-        <tr><td>Den 3</td><td contenteditable="true" data-key="tw-d3t">Práce s dokumenty / daty / soubory</td><td contenteditable="true" data-key="tw-d3s">Hlubší využití podle daného nástroje</td></tr>
-        <tr><td>Den 4</td><td contenteditable="true" data-key="tw-d4t">Tvorba výstupů</td><td contenteditable="true" data-key="tw-d4s">Texty, prezentace, rešerše, obsah</td></tr>
-        <tr><td>Den 5</td><td contenteditable="true" data-key="tw-d5t">Vlastní workflow</td><td contenteditable="true" data-key="tw-d5s">Každá si postaví vlastní opakovatelný postup</td></tr>
+        <tr><td>Den 1</td><td>Seznámení s nástrojem</td><td>Otevřít, pochopit prostředí, odstranit strach</td></tr>
+        <tr><td>Den 2</td><td>Každodenní použití</td><td>Běžné úkoly, které šetří čas</td></tr>
+        <tr><td>Den 3</td><td>Práce s dokumenty / daty / soubory</td><td>Hlubší využití podle daného nástroje</td></tr>
+        <tr><td>Den 4</td><td>Tvorba výstupů</td><td>Texty, prezentace, rešerše, obsah</td></tr>
+        <tr><td>Den 5</td><td>Vlastní workflow</td><td>Každá si postaví vlastní opakovatelný postup</td></tr>
       </tbody>
     </table></div>
   </div>
@@ -902,97 +742,97 @@
 
     <div class="tab-panel active" id="tw-chatgpt">
       <h4>Týden s ChatGPT</h4>
-      <p class="subtitle" contenteditable="true" data-key="cg-sub">Od prvního promptu po vlastní AI asistentku.</p>
+      <p class="subtitle">Od prvního promptu po vlastní AI asistentku.</p>
       <div class="day-row">
         <span class="day-badge">Po</span>
         <div class="day-info">
-          <div class="day-title" contenteditable="true" data-key="cg-po-t">ChatGPT bez strachu: kde kliknout a jak začít</div>
-          <div class="day-result" contenteditable="true" data-key="cg-po-r">Výstup: první prompty a orientace v prostředí</div>
-          <div class="day-task" contenteditable="true" data-key="cg-po-u">Úkol: Zadej ChatGPT tři jednoduché úkoly z běžného dne a vyber nejlepší výstup</div>
+          <div class="day-title">ChatGPT bez strachu: kde kliknout a jak začít</div>
+          <div class="day-result">Výstup: první prompty a orientace v prostředí</div>
+          <div class="day-task">Úkol: Zadej ChatGPT tři jednoduché úkoly z běžného dne a vyber nejlepší výstup</div>
         </div>
       </div>
       <div class="day-row">
         <span class="day-badge">Út</span>
         <div class="day-info">
-          <div class="day-title" contenteditable="true" data-key="cg-ut-t">Jak se ptát, aby ChatGPT odpovídal užitečně</div>
-          <div class="day-result" contenteditable="true" data-key="cg-ut-r">Výstup: vlastní promptovací šablona</div>
-          <div class="day-task" contenteditable="true" data-key="cg-ut-u">Úkol: Přepiš jeden nepovedený prompt pomocí nové šablony</div>
+          <div class="day-title">Jak se ptát, aby ChatGPT odpovídal užitečně</div>
+          <div class="day-result">Výstup: vlastní promptovací šablona</div>
+          <div class="day-task">Úkol: Přepiš jeden nepovedený prompt pomocí nové šablony</div>
         </div>
       </div>
       <div class="day-row">
         <span class="day-badge">St</span>
         <div class="day-info">
-          <div class="day-title" contenteditable="true" data-key="cg-st-t">ChatGPT pro práci: e-maily, texty, plány, rozhodování</div>
-          <div class="day-result" contenteditable="true" data-key="cg-st-r">Výstup: 3 konkrétní pracovní použití</div>
-          <div class="day-task" contenteditable="true" data-key="cg-st-u">Úkol: Nech si pomoct s jedním reálným pracovním úkolem</div>
+          <div class="day-title">ChatGPT pro práci: e-maily, texty, plány, rozhodování</div>
+          <div class="day-result">Výstup: 3 konkrétní pracovní použití</div>
+          <div class="day-task">Úkol: Nech si pomoct s jedním reálným pracovním úkolem</div>
         </div>
       </div>
       <div class="day-row">
         <span class="day-badge">Čt</span>
         <div class="day-info">
-          <div class="day-title" contenteditable="true" data-key="cg-ct-t">ChatGPT s dokumenty, obrázky a hlasem</div>
-          <div class="day-result" contenteditable="true" data-key="cg-ct-r">Výstup: práce se souborem, obrázkem nebo hlasovým zadáním</div>
-          <div class="day-task" contenteditable="true" data-key="cg-ct-u">Úkol: Nahraj nebo vlož soubor a nech si ho zpracovat</div>
+          <div class="day-title">ChatGPT s dokumenty, obrázky a hlasem</div>
+          <div class="day-result">Výstup: práce se souborem, obrázkem nebo hlasovým zadáním</div>
+          <div class="day-task">Úkol: Nahraj nebo vlož soubor a nech si ho zpracovat</div>
         </div>
       </div>
       <div class="day-row">
         <span class="day-badge">Pá</span>
         <div class="day-info">
-          <div class="day-title" contenteditable="true" data-key="cg-pa-t">Moje vlastní AI asistentka v ChatGPT</div>
-          <div class="day-result" contenteditable="true" data-key="cg-pa-r">Výstup: návrh vlastního GPT nebo sady instrukcí</div>
-          <div class="day-task" contenteditable="true" data-key="cg-pa-u">Úkol: Sepiš si vlastní instrukce pro „moji AI pomocnici"</div>
+          <div class="day-title">Moje vlastní AI asistentka v ChatGPT</div>
+          <div class="day-result">Výstup: návrh vlastního GPT nebo sady instrukcí</div>
+          <div class="day-task">Úkol: Sepiš si vlastní instrukce pro „moji AI pomocnici"</div>
         </div>
       </div>
     </div>
 
     <div class="tab-panel" id="tw-gemini">
       <h4>Týden s Gemini</h4>
-      <p class="subtitle" contenteditable="true" data-key="gm-sub">AI v prostředí Googlu, které už používáš.</p>
-      <div class="day-row"><span class="day-badge">Po</span><div class="day-info"><div class="day-title" contenteditable="true" data-key="gm-po-t">Gemini bez strachu: první kroky a orientace</div><div class="day-result" contenteditable="true" data-key="gm-po-r">Výstup: účastnice ví, kde co najde</div><div class="day-task" contenteditable="true" data-key="gm-po-u">Úkol: Otevři Gemini a vyzkoušej tři jednoduché otázky z běžného dne</div></div></div>
-      <div class="day-row"><span class="day-badge">Út</span><div class="day-info"><div class="day-title" contenteditable="true" data-key="gm-ut-t">Gemini pro Gmail, kalendář a každodenní agendu</div><div class="day-result" contenteditable="true" data-key="gm-ut-r">Výstup: návrh osobní pracovní rutiny</div><div class="day-task" contenteditable="true" data-key="gm-ut-u">Úkol: Nech si připravit odpověď na jeden reálný e-mail nebo plán schůzky</div></div></div>
-      <div class="day-row"><span class="day-badge">St</span><div class="day-info"><div class="day-title" contenteditable="true" data-key="gm-st-t">Gemini v Dokumentech, Tabulkách a na Disku</div><div class="day-result" contenteditable="true" data-key="gm-st-r">Výstup: práce s dokumentem nebo tabulkou</div><div class="day-task" contenteditable="true" data-key="gm-st-u">Úkol: Vyzkoušej práci s jedním dokumentem nebo tabulkou</div></div></div>
-      <div class="day-row"><span class="day-badge">Čt</span><div class="day-info"><div class="day-title" contenteditable="true" data-key="gm-ct-t">Gemini pro rešerše, nápady a obsah</div><div class="day-result" contenteditable="true" data-key="gm-ct-r">Výstup: jeden hotový text, rešerše nebo plán</div><div class="day-task" contenteditable="true" data-key="gm-ct-u">Úkol: Vytvoř s Gemini jeden konkrétní výstup: text, plán, rešerši nebo osnovu</div></div></div>
-      <div class="day-row"><span class="day-badge">Pá</span><div class="day-info"><div class="day-title" contenteditable="true" data-key="gm-pa-t">Moje vlastní Gemini workflow</div><div class="day-result" contenteditable="true" data-key="gm-pa-r">Výstup: vlastní opakovatelný postup</div><div class="day-task" contenteditable="true" data-key="gm-pa-u">Úkol: Sepiš svůj osobní Gemini postup: kdy ho budeš používat a na co</div></div></div>
+      <p class="subtitle">AI v prostředí Googlu, které už používáš.</p>
+      <div class="day-row"><span class="day-badge">Po</span><div class="day-info"><div class="day-title">Gemini bez strachu: první kroky a orientace</div><div class="day-result">Výstup: účastnice ví, kde co najde</div><div class="day-task">Úkol: Otevři Gemini a vyzkoušej tři jednoduché otázky z běžného dne</div></div></div>
+      <div class="day-row"><span class="day-badge">Út</span><div class="day-info"><div class="day-title">Gemini pro Gmail, kalendář a každodenní agendu</div><div class="day-result">Výstup: návrh osobní pracovní rutiny</div><div class="day-task">Úkol: Nech si připravit odpověď na jeden reálný e-mail nebo plán schůzky</div></div></div>
+      <div class="day-row"><span class="day-badge">St</span><div class="day-info"><div class="day-title">Gemini v Dokumentech, Tabulkách a na Disku</div><div class="day-result">Výstup: práce s dokumentem nebo tabulkou</div><div class="day-task">Úkol: Vyzkoušej práci s jedním dokumentem nebo tabulkou</div></div></div>
+      <div class="day-row"><span class="day-badge">Čt</span><div class="day-info"><div class="day-title">Gemini pro rešerše, nápady a obsah</div><div class="day-result">Výstup: jeden hotový text, rešerše nebo plán</div><div class="day-task">Úkol: Vytvoř s Gemini jeden konkrétní výstup: text, plán, rešerši nebo osnovu</div></div></div>
+      <div class="day-row"><span class="day-badge">Pá</span><div class="day-info"><div class="day-title">Moje vlastní Gemini workflow</div><div class="day-result">Výstup: vlastní opakovatelný postup</div><div class="day-task">Úkol: Sepiš svůj osobní Gemini postup: kdy ho budeš používat a na co</div></div></div>
     </div>
 
     <div class="tab-panel" id="tw-claude">
       <h4>Týden s Claude</h4>
-      <p class="subtitle" contenteditable="true" data-key="cl-sub">Texty, strategie, analýzy a hlubší přemýšlení.</p>
-      <div class="day-row"><span class="day-badge">Po</span><div class="day-info"><div class="day-title" contenteditable="true" data-key="cl-po-t">Claude bez strachu: jak začít a v čem je jiný</div><div class="day-result" contenteditable="true" data-key="cl-po-r">Výstup: orientace v prostředí, první výstup</div><div class="day-task" contenteditable="true" data-key="cl-po-u">Úkol: Zadej Claude jeden běžný úkol a porovnej výstup s jiným nástrojem</div></div></div>
-      <div class="day-row"><span class="day-badge">Út</span><div class="day-info"><div class="day-title" contenteditable="true" data-key="cl-ut-t">Claude jako editor: texty, tón, argumentace</div><div class="day-result" contenteditable="true" data-key="cl-ut-r">Výstup: přepracovaný vlastní text</div><div class="day-task" contenteditable="true" data-key="cl-ut-u">Úkol: Vlož vlastní text a nech si navrhnout tři vylepšení</div></div></div>
-      <div class="day-row"><span class="day-badge">St</span><div class="day-info"><div class="day-title" contenteditable="true" data-key="cl-st-t">Claude pro delší podklady, prezentace a analýzy</div><div class="day-result" contenteditable="true" data-key="cl-st-r">Výstup: struktura, shrnutí nebo rozbor z materiálů</div><div class="day-task" contenteditable="true" data-key="cl-st-u">Úkol: Vezmi vlastní podklad (prezentace, poznámky, PDF) a udělej z něj přehledný výstup</div></div></div>
-      <div class="day-row"><span class="day-badge">Čt</span><div class="day-info"><div class="day-title" contenteditable="true" data-key="cl-ct-t">Claude pro strategie, osnovy a rozhodování</div><div class="day-result" contenteditable="true" data-key="cl-ct-r">Výstup: struktura projektu nebo rozhodovací mapa</div><div class="day-task" contenteditable="true" data-key="cl-ct-u">Úkol: Nech si vytvořit osnovu projektu, článku nebo strategie</div></div></div>
-      <div class="day-row"><span class="day-badge">Pá</span><div class="day-info"><div class="day-title" contenteditable="true" data-key="cl-pa-t">Moje vlastní Claude workflow pro práci s textem</div><div class="day-result" contenteditable="true" data-key="cl-pa-r">Výstup: osobní sada postupů pro práci s textem</div><div class="day-task" contenteditable="true" data-key="cl-pa-u">Úkol: Vytvoř si vlastní postup pro práci s texty v Claude</div></div></div>
+      <p class="subtitle">Texty, strategie, analýzy a hlubší přemýšlení.</p>
+      <div class="day-row"><span class="day-badge">Po</span><div class="day-info"><div class="day-title">Claude bez strachu: jak začít a v čem je jiný</div><div class="day-result">Výstup: orientace v prostředí, první výstup</div><div class="day-task">Úkol: Zadej Claude jeden běžný úkol a porovnej výstup s jiným nástrojem</div></div></div>
+      <div class="day-row"><span class="day-badge">Út</span><div class="day-info"><div class="day-title">Claude jako editor: texty, tón, argumentace</div><div class="day-result">Výstup: přepracovaný vlastní text</div><div class="day-task">Úkol: Vlož vlastní text a nech si navrhnout tři vylepšení</div></div></div>
+      <div class="day-row"><span class="day-badge">St</span><div class="day-info"><div class="day-title">Claude pro delší podklady, prezentace a analýzy</div><div class="day-result">Výstup: struktura, shrnutí nebo rozbor z materiálů</div><div class="day-task">Úkol: Vezmi vlastní podklad (prezentace, poznámky, PDF) a udělej z něj přehledný výstup</div></div></div>
+      <div class="day-row"><span class="day-badge">Čt</span><div class="day-info"><div class="day-title">Claude pro strategie, osnovy a rozhodování</div><div class="day-result">Výstup: struktura projektu nebo rozhodovací mapa</div><div class="day-task">Úkol: Nech si vytvořit osnovu projektu, článku nebo strategie</div></div></div>
+      <div class="day-row"><span class="day-badge">Pá</span><div class="day-info"><div class="day-title">Moje vlastní Claude workflow pro práci s textem</div><div class="day-result">Výstup: osobní sada postupů pro práci s textem</div><div class="day-task">Úkol: Vytvoř si vlastní postup pro práci s texty v Claude</div></div></div>
     </div>
 
     <div class="tab-panel" id="tw-copilot">
       <h4>Týden s Copilotem</h4>
-      <p class="subtitle" contenteditable="true" data-key="cp-sub">AI v Microsoftu bez zmatku.</p>
-      <div class="day-row"><span class="day-badge">Po</span><div class="day-info"><div class="day-title" contenteditable="true" data-key="cp-po-t">Copilot bez strachu: kde ho najdu a co od něj čekat</div><div class="day-result" contenteditable="true" data-key="cp-po-r">Výstup: orientace v prostředí</div><div class="day-task" contenteditable="true" data-key="cp-po-u">Úkol: Najdi, kde máš Copilot dostupný, a vyzkoušej první jednoduché zadání</div></div></div>
-      <div class="day-row"><span class="day-badge">Út</span><div class="day-info"><div class="day-title" contenteditable="true" data-key="cp-ut-t">Copilot v Outlooku a Teams: e-maily, porady, shrnutí</div><div class="day-result" contenteditable="true" data-key="cp-ut-r">Výstup: šablona pro práci se schůzkami</div><div class="day-task" contenteditable="true" data-key="cp-ut-u">Úkol: Připrav si pomocí Copilotu odpověď na e-mail nebo shrnutí schůzky</div></div></div>
-      <div class="day-row"><span class="day-badge">St</span><div class="day-info"><div class="day-title" contenteditable="true" data-key="cp-st-t">Copilot ve Wordu a PowerPointu</div><div class="day-result" contenteditable="true" data-key="cp-st-r">Výstup: návrh dokumentu nebo prezentace</div><div class="day-task" contenteditable="true" data-key="cp-st-u">Úkol: Vytvoř návrh dokumentu nebo prezentace</div></div></div>
-      <div class="day-row"><span class="day-badge">Čt</span><div class="day-info"><div class="day-title" contenteditable="true" data-key="cp-ct-t">Copilot v Excelu: co umí a kde má limity</div><div class="day-result" contenteditable="true" data-key="cp-ct-r">Výstup: základní práce s tabulkou</div><div class="day-task" contenteditable="true" data-key="cp-ct-u">Úkol: Vyzkoušej práci s jednoduchou tabulkou</div></div></div>
-      <div class="day-row"><span class="day-badge">Pá</span><div class="day-info"><div class="day-title" contenteditable="true" data-key="cp-pa-t">Moje vlastní Copilot workflow</div><div class="day-result" contenteditable="true" data-key="cp-pa-r">Výstup: osobní plán využití v Microsoft prostředí</div><div class="day-task" contenteditable="true" data-key="cp-pa-u">Úkol: Sepiš si vlastní plán využití Copilotu v práci</div></div></div>
+      <p class="subtitle">AI v Microsoftu bez zmatku.</p>
+      <div class="day-row"><span class="day-badge">Po</span><div class="day-info"><div class="day-title">Copilot bez strachu: kde ho najdu a co od něj čekat</div><div class="day-result">Výstup: orientace v prostředí</div><div class="day-task">Úkol: Najdi, kde máš Copilot dostupný, a vyzkoušej první jednoduché zadání</div></div></div>
+      <div class="day-row"><span class="day-badge">Út</span><div class="day-info"><div class="day-title">Copilot v Outlooku a Teams: e-maily, porady, shrnutí</div><div class="day-result">Výstup: šablona pro práci se schůzkami</div><div class="day-task">Úkol: Připrav si pomocí Copilotu odpověď na e-mail nebo shrnutí schůzky</div></div></div>
+      <div class="day-row"><span class="day-badge">St</span><div class="day-info"><div class="day-title">Copilot ve Wordu a PowerPointu</div><div class="day-result">Výstup: návrh dokumentu nebo prezentace</div><div class="day-task">Úkol: Vytvoř návrh dokumentu nebo prezentace</div></div></div>
+      <div class="day-row"><span class="day-badge">Čt</span><div class="day-info"><div class="day-title">Copilot v Excelu: co umí a kde má limity</div><div class="day-result">Výstup: základní práce s tabulkou</div><div class="day-task">Úkol: Vyzkoušej práci s jednoduchou tabulkou</div></div></div>
+      <div class="day-row"><span class="day-badge">Pá</span><div class="day-info"><div class="day-title">Moje vlastní Copilot workflow</div><div class="day-result">Výstup: osobní plán využití v Microsoft prostředí</div><div class="day-task">Úkol: Sepiš si vlastní plán využití Copilotu v práci</div></div></div>
     </div>
 
     <div class="tab-panel" id="tw-nbklm">
       <h4>Týden s NotebookLM</h4>
-      <p class="subtitle" contenteditable="true" data-key="nb-sub">Jak si z dokumentů udělat chytrý pracovní a studijní prostor.</p>
-      <div class="day-row"><span class="day-badge">Po</span><div class="day-info"><div class="day-title" contenteditable="true" data-key="nb-po-t">NotebookLM bez strachu: co to je a kdy ho použít</div><div class="day-result" contenteditable="true" data-key="nb-po-r">Výstup: první vlastní notebook</div><div class="day-task" contenteditable="true" data-key="nb-po-u">Úkol: Vytvoř si první notebook a nahraj jeden bezpečný podklad</div></div></div>
-      <div class="day-row"><span class="day-badge">Út</span><div class="day-info"><div class="day-title" contenteditable="true" data-key="nb-ut-t">Jak nahrát podklady a správně se nad nimi ptát</div><div class="day-result" contenteditable="true" data-key="nb-ut-r">Výstup: sada otázek k vlastním materiálům</div><div class="day-task" contenteditable="true" data-key="nb-ut-u">Úkol: Připrav si 5 otázek nad svými materiály</div></div></div>
-      <div class="day-row"><span class="day-badge">St</span><div class="day-info"><div class="day-title" contenteditable="true" data-key="nb-st-t">Shrnutí, studijní přehledy a příprava obsahu</div><div class="day-result" contenteditable="true" data-key="nb-st-r">Výstup: výstup z vlastních dokumentů</div><div class="day-task" contenteditable="true" data-key="nb-st-u">Úkol: Nech si vytvořit shrnutí nebo studijní přehled</div></div></div>
-      <div class="day-row"><span class="day-badge">Čt</span><div class="day-info"><div class="day-title" contenteditable="true" data-key="nb-ct-t">Podcasty, briefingy a přehledy z materiálů</div><div class="day-result" contenteditable="true" data-key="nb-ct-r">Výstup: audio briefing nebo Q&A z podkladů</div><div class="day-task" contenteditable="true" data-key="nb-ct-u">Úkol: Vyzkoušej briefing nebo audio přehled</div></div></div>
-      <div class="day-row"><span class="day-badge">Pá</span><div class="day-info"><div class="day-title" contenteditable="true" data-key="nb-pa-t">Moje vlastní znalostní knihovna</div><div class="day-result" contenteditable="true" data-key="nb-pa-r">Výstup: struktura osobního nebo týmového notebooku</div><div class="day-task" contenteditable="true" data-key="nb-pa-u">Úkol: Navrhni si strukturu vlastní znalostní knihovny</div></div></div>
+      <p class="subtitle">Jak si z dokumentů udělat chytrý pracovní a studijní prostor.</p>
+      <div class="day-row"><span class="day-badge">Po</span><div class="day-info"><div class="day-title">NotebookLM bez strachu: co to je a kdy ho použít</div><div class="day-result">Výstup: první vlastní notebook</div><div class="day-task">Úkol: Vytvoř si první notebook a nahraj jeden bezpečný podklad</div></div></div>
+      <div class="day-row"><span class="day-badge">Út</span><div class="day-info"><div class="day-title">Jak nahrát podklady a správně se nad nimi ptát</div><div class="day-result">Výstup: sada otázek k vlastním materiálům</div><div class="day-task">Úkol: Připrav si 5 otázek nad svými materiály</div></div></div>
+      <div class="day-row"><span class="day-badge">St</span><div class="day-info"><div class="day-title">Shrnutí, studijní přehledy a příprava obsahu</div><div class="day-result">Výstup: výstup z vlastních dokumentů</div><div class="day-task">Úkol: Nech si vytvořit shrnutí nebo studijní přehled</div></div></div>
+      <div class="day-row"><span class="day-badge">Čt</span><div class="day-info"><div class="day-title">Podcasty, briefingy a přehledy z materiálů</div><div class="day-result">Výstup: audio briefing nebo Q&A z podkladů</div><div class="day-task">Úkol: Vyzkoušej briefing nebo audio přehled</div></div></div>
+      <div class="day-row"><span class="day-badge">Pá</span><div class="day-info"><div class="day-title">Moje vlastní znalostní knihovna</div><div class="day-result">Výstup: struktura osobního nebo týmového notebooku</div><div class="day-task">Úkol: Navrhni si strukturu vlastní znalostní knihovny</div></div></div>
     </div>
 
     <div class="tab-panel" id="tw-aistudio">
       <h4>Týden s Google AI Studio</h4>
-      <p class="subtitle" contenteditable="true" data-key="ai-sub">První krok k vlastní AI pomocnici. Pro pokročilejší.</p>
-      <div class="day-row"><span class="day-badge">Po</span><div class="day-info"><div class="day-title" contenteditable="true" data-key="ai-po-t">Google AI Studio bez technického stresu</div><div class="day-result" contenteditable="true" data-key="ai-po-r">Výstup: orientace v prostředí</div><div class="day-task" contenteditable="true" data-key="ai-po-u">Úkol: Otevři Google AI Studio a projdi základní prostředí</div></div></div>
-      <div class="day-row"><span class="day-badge">Út</span><div class="day-info"><div class="day-title" contenteditable="true" data-key="ai-ut-t">Jak vytvořit první jednoduchou AI pomocnici</div><div class="day-result" contenteditable="true" data-key="ai-ut-r">Výstup: první funkční prompt nebo instrukce</div><div class="day-task" contenteditable="true" data-key="ai-ut-u">Úkol: Navrhni jednoduchou pomocnici pro jeden opakovaný úkol</div></div></div>
-      <div class="day-row"><span class="day-badge">St</span><div class="day-info"><div class="day-title" contenteditable="true" data-key="ai-st-t">Jak testovat odpovědi a ladit chování AI</div><div class="day-result" contenteditable="true" data-key="ai-st-r">Výstup: vylepšený asistent</div><div class="day-task" contenteditable="true" data-key="ai-st-u">Úkol: Otestuj odpovědi a uprav instrukce</div></div></div>
-      <div class="day-row"><span class="day-badge">Čt</span><div class="day-info"><div class="day-title" contenteditable="true" data-key="ai-ct-t">Jak přemýšlet o vlastním AI nástroji</div><div class="day-result" contenteditable="true" data-key="ai-ct-r">Výstup: návrh mini use casu</div><div class="day-task" contenteditable="true" data-key="ai-ct-u">Úkol: Popiš vlastní use case: komu má nástroj pomáhat a s čím</div></div></div>
-      <div class="day-row"><span class="day-badge">Pá</span><div class="day-info"><div class="day-title" contenteditable="true" data-key="ai-pa-t">Můj první AI prototyp</div><div class="day-result" contenteditable="true" data-key="ai-pa-r">Výstup: jednoduchý návrh vlastního řešení</div><div class="day-task" contenteditable="true" data-key="ai-pa-u">Úkol: Připrav mini prototyp nebo zadání pro další vývoj</div></div></div>
+      <p class="subtitle">První krok k vlastní AI pomocnici. Pro pokročilejší.</p>
+      <div class="day-row"><span class="day-badge">Po</span><div class="day-info"><div class="day-title">Google AI Studio bez technického stresu</div><div class="day-result">Výstup: orientace v prostředí</div><div class="day-task">Úkol: Otevři Google AI Studio a projdi základní prostředí</div></div></div>
+      <div class="day-row"><span class="day-badge">Út</span><div class="day-info"><div class="day-title">Jak vytvořit první jednoduchou AI pomocnici</div><div class="day-result">Výstup: první funkční prompt nebo instrukce</div><div class="day-task">Úkol: Navrhni jednoduchou pomocnici pro jeden opakovaný úkol</div></div></div>
+      <div class="day-row"><span class="day-badge">St</span><div class="day-info"><div class="day-title">Jak testovat odpovědi a ladit chování AI</div><div class="day-result">Výstup: vylepšený asistent</div><div class="day-task">Úkol: Otestuj odpovědi a uprav instrukce</div></div></div>
+      <div class="day-row"><span class="day-badge">Čt</span><div class="day-info"><div class="day-title">Jak přemýšlet o vlastním AI nástroji</div><div class="day-result">Výstup: návrh mini use casu</div><div class="day-task">Úkol: Popiš vlastní use case: komu má nástroj pomáhat a s čím</div></div></div>
+      <div class="day-row"><span class="day-badge">Pá</span><div class="day-info"><div class="day-title">Můj první AI prototyp</div><div class="day-result">Výstup: jednoduchý návrh vlastního řešení</div><div class="day-task">Úkol: Připrav mini prototyp nebo zadání pro další vývoj</div></div></div>
     </div>
 
   </div>
@@ -1005,23 +845,23 @@
      ══════════════════════════════════════════ -->
 <section class="section" id="bezpecno">
   <div class="section-header"><div class="section-num">9</div><h2>Bezpečný prostor</h2></div>
-  <p class="intro-text mb-md" contenteditable="true" data-key="bp-intro">Na začátku každého webináře zazní tato pravidla. Jsou součástí identity AI Ladies – odlišujeme se tím, že se nikdo nemusí bát ptát.</p>
+  <p class="intro-text mb-md">Na začátku každého webináře zazní tato pravidla. Jsou součástí identity AI Ladies – odlišujeme se tím, že se nikdo nemusí bát ptát.</p>
   <div class="cards-grid">
     <div class="card accent-card">
       <h4>Pravidla bezpečného prostoru</h4>
       <ul class="check-list">
-        <li><span contenteditable="true" data-key="bp1">Žádná otázka není hloupá.</span></li>
-        <li><span contenteditable="true" data-key="bp2">Není cílem být nejrychlejší.</span></li>
-        <li><span contenteditable="true" data-key="bp3">Nevadí, když něco nefunguje napoprvé.</span></li>
-        <li><span contenteditable="true" data-key="bp4">Nebudeme se tvářit, že je všechno jasné.</span></li>
-        <li><span contenteditable="true" data-key="bp5">Každá účastnice může pracovat vlastním tempem.</span></li>
-        <li><span contenteditable="true" data-key="bp6">Sdílení úkolů je dobrovolné.</span></li>
-        <li><span contenteditable="true" data-key="bp7">Citlivá data do nástrojů nevkládáme bez anonymizace.</span></li>
+        <li><span>Žádná otázka není hloupá.</span></li>
+        <li><span>Není cílem být nejrychlejší.</span></li>
+        <li><span>Nevadí, když něco nefunguje napoprvé.</span></li>
+        <li><span>Nebudeme se tvářit, že je všechno jasné.</span></li>
+        <li><span>Každá účastnice může pracovat vlastním tempem.</span></li>
+        <li><span>Sdílení úkolů je dobrovolné.</span></li>
+        <li><span>Citlivá data do nástrojů nevkládáme bez anonymizace.</span></li>
       </ul>
     </div>
     <div class="card">
       <h4>Formulace pro úvod webináře</h4>
-      <blockquote style="margin:0" contenteditable="true" data-key="bp-formulace">Tohle je prostor, kde se můžeš ptát opravdu na cokoli. Neřešíme, kdo už je dál. Společně si nástroj otevřeme, vyzkoušíme a projdeme krok za krokem.</blockquote>
+      <blockquote style="margin:0">Tohle je prostor, kde se můžeš ptát opravdu na cokoli. Neřešíme, kdo už je dál. Společně si nástroj otevřeme, vyzkoušíme a projdeme krok za krokem.</blockquote>
     </div>
   </div>
 </section>
@@ -1034,12 +874,12 @@
 <section class="section" id="proc">
   <div class="section-header"><div class="section-num">10</div><h2>Proč AI Ladies? Čím se odlišujeme</h2></div>
   <div class="diff-grid">
-    <div class="diff-card"><div class="diff-icon">👆</div><div class="diff-title" contenteditable="true" data-key="d1t">Ukážeme ti kde kliknout</div><div class="diff-desc" contenteditable="true" data-key="d1d">Neodcházíš se zápisem z přednášky. Odcházíš s nastavenou funkcí. Projdeme to spolu live, krok za krokem.</div></div>
-    <div class="diff-card"><div class="diff-icon">🎯</div><div class="diff-title" contenteditable="true" data-key="d2t">Jeden problém = jeden webinář</div><div class="diff-desc" contenteditable="true" data-key="d2d">Žádné obecné přehledy. Každý webinář má jeden konkrétní cíl – a za hodinu ho splníme.</div></div>
-    <div class="diff-card"><div class="diff-icon">📊</div><div class="diff-title" contenteditable="true" data-key="d3t">Tři úrovně + samostatně týmy</div><div class="diff-desc" contenteditable="true" data-key="d3d">Začátečnice, středně pokročilé, pokročilé – vždy konkrétní krok. Témata pro firmy („AI v týmu bezpečně a prakticky“) držíme odděleně, ne jako „čtvrtou poličku“ ve stejné řadě.</div></div>
-    <div class="diff-card"><div class="diff-icon">🔍</div><div class="diff-title" contenteditable="true" data-key="d4t">Testujeme co funguje i co ne</div><div class="diff-desc" contenteditable="true" data-key="d4d">Neukážeme ti jen hezký výstup. Ukážeme i kde AI selže, co napsat jinak a proč. Reálný pohled, ne reklama.</div></div>
-    <div class="diff-card"><div class="diff-icon">📚</div><div class="diff-title" contenteditable="true" data-key="d5t">Speciální materiály ke každému webináři</div><div class="diff-desc" contenteditable="true" data-key="d5d">Přepis, shrnutí klíčových tipů a záznam. Nikdy nepřijdeš o to, co jsi nestihla.</div></div>
-    <div class="diff-card"><div class="diff-icon">🎙️</div><div class="diff-title" contenteditable="true" data-key="d6t">Podcast ze záznamu přes NotebookLM</div><div class="diff-desc" contenteditable="true" data-key="d6d">Ze záznamu každého webináře automaticky vznikne podcast. Poslouchej cestou nebo při vaření. Řeší Aneta.</div></div>
+    <div class="diff-card"><div class="diff-icon">👆</div><div class="diff-title">Ukážeme ti kde kliknout</div><div class="diff-desc">Neodcházíš se zápisem z přednášky. Odcházíš s nastavenou funkcí. Projdeme to spolu live, krok za krokem.</div></div>
+    <div class="diff-card"><div class="diff-icon">🎯</div><div class="diff-title">Jeden problém = jeden webinář</div><div class="diff-desc">Žádné obecné přehledy. Každý webinář má jeden konkrétní cíl – a za hodinu ho splníme.</div></div>
+    <div class="diff-card"><div class="diff-icon">📊</div><div class="diff-title">Tři úrovně + samostatně týmy</div><div class="diff-desc">Začátečnice, středně pokročilé, pokročilé – vždy konkrétní krok. Témata pro firmy („AI v týmu bezpečně a prakticky“) držíme odděleně, ne jako „čtvrtou poličku“ ve stejné řadě.</div></div>
+    <div class="diff-card"><div class="diff-icon">🔍</div><div class="diff-title">Testujeme co funguje i co ne</div><div class="diff-desc">Neukážeme ti jen hezký výstup. Ukážeme i kde AI selže, co napsat jinak a proč. Reálný pohled, ne reklama.</div></div>
+    <div class="diff-card"><div class="diff-icon">📚</div><div class="diff-title">Speciální materiály ke každému webináři</div><div class="diff-desc">Přepis, shrnutí klíčových tipů a záznam. Nikdy nepřijdeš o to, co jsi nestihla.</div></div>
+    <div class="diff-card"><div class="diff-icon">🎙️</div><div class="diff-title">Podcast ze záznamu přes NotebookLM</div><div class="diff-desc">Ze záznamu každého webináře automaticky vznikne podcast. Poslouchej cestou nebo při vaření. Řeší Aneta.</div></div>
   </div>
 
   <div class="card dark-card mt-md">
@@ -1048,19 +888,19 @@
       <div>
         <div class="eyebrow" style="color:var(--accent-bright)">Co to je</div>
         <ul class="check-list mt-sm">
-          <li><span contenteditable="true" data-key="je1">Praktické učení krok za krokem</span></li>
-          <li><span contenteditable="true" data-key="je2">Bezpečný ženský prostor</span></li>
-          <li><span contenteditable="true" data-key="je3">Práce na reálných úkolech</span></li>
-          <li><span contenteditable="true" data-key="je4">Cesta k větší jistotě a konkurenceschopnosti</span></li>
+          <li><span>Praktické učení krok za krokem</span></li>
+          <li><span>Bezpečný ženský prostor</span></li>
+          <li><span>Práce na reálných úkolech</span></li>
+          <li><span>Cesta k větší jistotě a konkurenceschopnosti</span></li>
         </ul>
       </div>
       <div>
         <div class="eyebrow" style="color:var(--accent-bright)">Co to není</div>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:7px;margin-top:8px">
-          <li style="display:flex;gap:8px;font-size:.88rem;color:var(--on-dark-72)"><span>✗</span><span contenteditable="true" data-key="ne1">Technický kurz pro programátory</span></li>
-          <li style="display:flex;gap:8px;font-size:.88rem;color:var(--on-dark-72)"><span>✗</span><span contenteditable="true" data-key="ne2">Obecná přednáška o budoucnosti AI</span></li>
-          <li style="display:flex;gap:8px;font-size:.88rem;color:var(--on-dark-72)"><span>✗</span><span contenteditable="true" data-key="ne3">Soutěž, kdo toho umí víc</span></li>
-          <li style="display:flex;gap:8px;font-size:.88rem;color:var(--on-dark-72)"><span>✗</span><span contenteditable="true" data-key="ne4">Zahlcení desítkami nástrojů najednou</span></li>
+          <li style="display:flex;gap:8px;font-size:.88rem;color:var(--on-dark-72)"><span>✗</span><span>Technický kurz pro programátory</span></li>
+          <li style="display:flex;gap:8px;font-size:.88rem;color:var(--on-dark-72)"><span>✗</span><span>Obecná přednáška o budoucnosti AI</span></li>
+          <li style="display:flex;gap:8px;font-size:.88rem;color:var(--on-dark-72)"><span>✗</span><span>Soutěž, kdo toho umí víc</span></li>
+          <li style="display:flex;gap:8px;font-size:.88rem;color:var(--on-dark-72)"><span>✗</span><span>Zahlcení desítkami nástrojů najednou</span></li>
         </ul>
       </div>
     </div>
@@ -1074,7 +914,7 @@
      ══════════════════════════════════════════ -->
 <section class="section" id="night">
   <div class="section-header"><div class="section-num">11</div><h2>AI Ladies Night – fyzická setkání</h2></div>
-  <p class="intro-text mb-md" contenteditable="true" data-key="night-intro">Neformální, živé setkání žen v Praze. Networking, sdílení a radost ze společné cesty s AI.</p>
+  <p class="intro-text mb-md">Neformální, živé setkání žen v Praze. Networking, sdílení a radost ze společné cesty s AI.</p>
   <div class="cards-grid">
     <div class="card">
       <h4>Parametry</h4>
@@ -1083,7 +923,7 @@
         <li>Kapacita: 50–80 lidí (start max. 50)</li>
         <li>Den: čtvrtek, večer 18:00–21:00</li>
         <li>Místo: kavárna s sálkem, MetrBlok, kulturní hub – NE zasedačka</li>
-        <li>Vstupné: <strong contenteditable="true" data-key="night-cena">290 Kč</strong></li>
+        <li>Vstupné: <strong>290 Kč</strong></li>
       </ul>
     </div>
     <div class="card accent-card">
@@ -1092,7 +932,7 @@
         <li><strong>Datum: čtvrtek 18. června 2026</strong></li>
         <li>Kapacita: max. 50 lidí</li>
         <li>Pozvánky: komunita Holky v failu</li>
-        <li><span contenteditable="true" data-key="night-cil">Cíl: vyzkoušet formát, poznat komunitu, ukázat vizi AI Ladies</span></li>
+        <li><span>Cíl: vyzkoušet formát, poznat komunitu, ukázat vizi AI Ladies</span></li>
       </ul>
     </div>
   </div>
@@ -1105,7 +945,7 @@
      ══════════════════════════════════════════ -->
 <section class="section" id="followup">
   <div class="section-header"><div class="section-num">12</div><h2>Účastnická cesta & follow-up</h2></div>
-  <p class="intro-text mb-md" contenteditable="true" data-key="fu-intro">Zážitek AI Ladies nekončí webinářem. Začíná ještě před ním – a pokračuje personalizovanou péčí po něm. To nikdo jiný nedělá.</p>
+  <p class="intro-text mb-md">Zážitek AI Ladies nekončí webinářem. Začíná ještě před ním – a pokračuje personalizovanou péčí po něm. To nikdo jiný nedělá.</p>
 
   <div class="card dark-card mb-md">
     <h3 style="margin-bottom:16px">Celá cesta účastnice</h3>
@@ -1114,25 +954,25 @@
       <div style="display:flex;gap:14px;padding:13px 0;border-bottom:1px solid var(--on-dark-12)">
         <div style="flex-shrink:0;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:.8rem;display:flex;align-items:center;justify-content:center">1</div>
         <div>
-          <h4 style="color:var(--text-on-dark);margin-bottom:3px" contenteditable="true" data-key="uc-t1">Přihlásí se na webinář</h4>
-          <p contenteditable="true" data-key="uc-d1">Přes web ailadies.cz / Makaly. Platba nebo zdarma (kickoff). Okamžitý potvrzovací e-mail s odkazem.</p>
+          <h4 style="color:var(--text-on-dark);margin-bottom:3px">Přihlásí se na webinář</h4>
+          <p>Přes web ailadies.cz / Makaly. Platba nebo zdarma (kickoff). Okamžitý potvrzovací e-mail s odkazem.</p>
         </div>
       </div>
 
       <div style="display:flex;gap:14px;padding:13px 0;border-bottom:1px solid var(--on-dark-12)">
         <div style="flex-shrink:0;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:.8rem;display:flex;align-items:center;justify-content:center">2</div>
         <div style="flex:1">
-          <h4 style="color:var(--accent-bright);margin-bottom:3px" contenteditable="true" data-key="uc-t2">✦ Pre-webinář formulář – naše differenciace</h4>
-          <p contenteditable="true" data-key="uc-d2">Po přihlášení dostane krátký formulář: „Řekni nám o sobě a svém tématu." Víme se na co připravit, ona cítí, že ji vnímáme jako konkrétního člověka, ne jako číslo.</p>
+          <h4 style="color:var(--accent-bright);margin-bottom:3px">✦ Pre-webinář formulář – naše differenciace</h4>
+          <p>Po přihlášení dostane krátký formulář: „Řekni nám o sobě a svém tématu." Víme se na co připravit, ona cítí, že ji vnímáme jako konkrétního člověka, ne jako číslo.</p>
           <div class="card green-card mt-sm" style="padding:14px 16px">
             <h4>Otázky v pre-webinář formuláři</h4>
             <ul class="check-list mt-sm">
-              <li><span contenteditable="true" data-key="pf1">Jak pracuješ / co děláš? (obor, role, podnikatelka/zaměstnankyně…)</span></li>
-              <li><span contenteditable="true" data-key="pf2">Co tě na tématu webináře konkrétně zajímá nebo trápí?</span></li>
-              <li><span contenteditable="true" data-key="pf3">Máš konkrétní otázku, na kterou chceš odpověď? (nepovinné)</span></li>
-              <li><span contenteditable="true" data-key="pf4">Jak daleko jsi s AI? (nikdy / zkusila / používám občas / používám pravidelně)</span></li>
+              <li><span>Jak pracuješ / co děláš? (obor, role, podnikatelka/zaměstnankyně…)</span></li>
+              <li><span>Co tě na tématu webináře konkrétně zajímá nebo trápí?</span></li>
+              <li><span>Máš konkrétní otázku, na kterou chceš odpověď? (nepovinné)</span></li>
+              <li><span>Jak daleko jsi s AI? (nikdy / zkusila / používám občas / používám pravidelně)</span></li>
             </ul>
-            <p class="mt-sm" style="font-size:.8rem;color:var(--text-muted)" contenteditable="true" data-key="pf-note">Odpovědi vidí Petra před webinářem → může zmínit konkrétní příklady z reálných situací přítomných žen. Pocit: „Připravovala se speciálně pro mě."</p>
+            <p class="mt-sm" style="font-size:.8rem;color:var(--text-muted)">Odpovědi vidí Petra před webinářem → může zmínit konkrétní příklady z reálných situací přítomných žen. Pocit: „Připravovala se speciálně pro mě."</p>
           </div>
         </div>
       </div>
@@ -1140,41 +980,41 @@
       <div style="display:flex;gap:14px;padding:13px 0;border-bottom:1px solid var(--on-dark-12)">
         <div style="flex-shrink:0;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:.8rem;display:flex;align-items:center;justify-content:center">3</div>
         <div>
-          <h4 style="color:var(--text-on-dark);margin-bottom:3px" contenteditable="true" data-key="uc-t3">Den před: připomínka + co si připravit</h4>
-          <p contenteditable="true" data-key="uc-d3">Automatický e-mail 24 hod předem: odkaz na Meet, co si otevřít nebo připravit, krátká motivační věta. Připravuje Aneta.</p>
+          <h4 style="color:var(--text-on-dark);margin-bottom:3px">Den před: připomínka + co si připravit</h4>
+          <p>Automatický e-mail 24 hod předem: odkaz na Meet, co si otevřít nebo připravit, krátká motivační věta. Připravuje Aneta.</p>
         </div>
       </div>
 
       <div style="display:flex;gap:14px;padding:13px 0;border-bottom:1px solid var(--on-dark-12)">
         <div style="flex-shrink:0;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:.8rem;display:flex;align-items:center;justify-content:center">4</div>
         <div>
-          <h4 style="color:var(--text-on-dark);margin-bottom:3px" contenteditable="true" data-key="uc-t4">Webinář (live)</h4>
-          <p contenteditable="true" data-key="uc-d4">60 minut (standard běžného webináře). Petra zná situace účastnic z formuláře → zmiňuje konkrétní příklady. Konec: vyzveme k registraci do AI Ladies Club / Hubu a vyplnění profilu.</p>
+          <h4 style="color:var(--text-on-dark);margin-bottom:3px">Webinář (live)</h4>
+          <p>60 minut (standard běžného webináře). Petra zná situace účastnic z formuláře → zmiňuje konkrétní příklady. Konec: vyzveme k registraci do AI Ladies Club / Hubu a vyplnění profilu.</p>
         </div>
       </div>
 
       <div style="display:flex;gap:14px;padding:13px 0;border-bottom:1px solid var(--on-dark-12)">
         <div style="flex-shrink:0;width:32px;height:32px;border-radius:50%;background:var(--bg-dark);color:#fff;font-weight:700;font-size:.8rem;display:flex;align-items:center;justify-content:center">5</div>
         <div>
-          <h4 style="color:var(--text-on-dark);margin-bottom:3px" contenteditable="true" data-key="uc-t5">Follow-up e-mail do 2 hodin po webináři</h4>
-          <p contenteditable="true" data-key="uc-d5">Záznam + přepis + shrnutí 3–5 klíčových tipů + dobrovolný úkol. Odkaz na podcast verzi (NotebookLM). Nabídka AI Ladies Club se slevou.</p>
+          <h4 style="color:var(--text-on-dark);margin-bottom:3px">Follow-up e-mail do 2 hodin po webináři</h4>
+          <p>Záznam + přepis + shrnutí 3–5 klíčových tipů + dobrovolný úkol. Odkaz na podcast verzi (NotebookLM). Nabídka AI Ladies Club se slevou.</p>
         </div>
       </div>
 
       <div style="display:flex;gap:14px;padding:13px 0">
         <div style="flex-shrink:0;width:32px;height:32px;border-radius:50%;background:var(--bg-dark);color:#fff;font-weight:700;font-size:.8rem;display:flex;align-items:center;justify-content:center">6</div>
         <div style="flex:1">
-          <h4 style="color:var(--accent-bright);margin-bottom:3px" contenteditable="true" data-key="uc-t6">✦ Personalizovaný AI návrh – pokročilé workflow</h4>
-          <p contenteditable="true" data-key="uc-d6">Na základě pre-webinář formuláře (obor, role, co ji trápí) + tématu webináře AI vygeneruje konkrétní doporučení: „Tady je, jak to, co ses naučila, použít právě ty ve své práci." Čím víc dat o ní máme (profil AI Ladies Club), tím přesnější doporučení.</p>
+          <h4 style="color:var(--accent-bright);margin-bottom:3px">✦ Personalizovaný AI návrh – pokročilé workflow</h4>
+          <p>Na základě pre-webinář formuláře (obor, role, co ji trápí) + tématu webináře AI vygeneruje konkrétní doporučení: „Tady je, jak to, co ses naučila, použít právě ty ve své práci." Čím víc dat o ní máme (profil AI Ladies Club), tím přesnější doporučení.</p>
           <div class="card" style="background:var(--on-dark-08);border-color:var(--on-dark-12);padding:14px 16px;margin-top:10px">
             <h4 style="color:var(--accent-bright)">Příklady personalizace</h4>
             <div style="display:flex;flex-direction:column;gap:6px;margin-top:8px">
               <div style="font-size:.82rem;color:var(--on-dark-72)"><strong style="color:var(--accent-bright)">Webinář:</strong> Konec ručního přepisování schůzek</div>
-              <div style="font-size:.8rem;color:var(--on-dark-55)" contenteditable="true" data-key="px1">→ Učitelka: „Tady je postup, jak nahrávat třídní schůzky a automaticky posílat zápis rodičům."</div>
-              <div style="font-size:.8rem;color:var(--on-dark-55)" contenteditable="true" data-key="px2">→ HR manažerka: „Tady je workflow pro přijímací pohovory – přepis + shrnutí kandidáta."</div>
-              <div style="font-size:.8rem;color:var(--on-dark-55)" contenteditable="true" data-key="px3">→ Freelancerka: „Tady je šablona: nahrávka briefingu s klientem → automaticky zadání projektu."</div>
+              <div style="font-size:.8rem;color:var(--on-dark-55)">→ Učitelka: „Tady je postup, jak nahrávat třídní schůzky a automaticky posílat zápis rodičům."</div>
+              <div style="font-size:.8rem;color:var(--on-dark-55)">→ HR manažerka: „Tady je workflow pro přijímací pohovory – přepis + shrnutí kandidáta."</div>
+              <div style="font-size:.8rem;color:var(--on-dark-55)">→ Freelancerka: „Tady je šablona: nahrávka briefingu s klientem → automaticky zadání projektu."</div>
             </div>
-            <p style="font-size:.75rem;color:var(--on-dark-40);margin-top:10px" contenteditable="true" data-key="px-note">Technicky: AI (Claude/ChatGPT) dostane profil účastnice + shrnutí webináře → vygeneruje personalizovaný text. Automatizace přes Make nebo Brevo. Dořeší Aneta.</p>
+            <p style="font-size:.75rem;color:var(--on-dark-40);margin-top:10px">Technicky: AI (Claude/ChatGPT) dostane profil účastnice + shrnutí webináře → vygeneruje personalizovaný text. Automatizace přes Make nebo Brevo. Dořeší Aneta.</p>
           </div>
         </div>
       </div>
@@ -1184,7 +1024,7 @@
 
   <div class="card accent-card">
     <h4>Proč je to differenciace, ne jen detail</h4>
-    <p contenteditable="true" data-key="fu-diff">Každý webinář má záznam. Ale záznam doplněný o „jak to použít právě ty" je něco jiného. Každá přihlašující formulář vyplní. Ale formulář, kde Petra pak zmíní tvůj obor live, je nezapomenutelný. Tohle je důvod, proč se ženy vrátí – a proč to řeknou kamarádkám.</p>
+    <p>Každý webinář má záznam. Ale záznam doplněný o „jak to použít právě ty" je něco jiného. Každá přihlašující formulář vyplní. Ale formulář, kde Petra pak zmíní tvůj obor live, je nezapomenutelný. Tohle je důvod, proč se ženy vrátí – a proč to řeknou kamarádkám.</p>
   </div>
 </section>
 
@@ -1197,63 +1037,63 @@
   <div class="section-header"><div class="section-num">13</div><h2>Ceník a produkty</h2></div>
 
   <div class="eyebrow mb-sm">Produkty (zjednodušeně)</div>
-  <p class="text-sm text-muted mb-md" contenteditable="true" data-key="pc-intro">Chceme přehledný ceník: kickoff jako vstup do světa AI Ladies, jeden jasný produkt „běžný webinář“, letní seriál (Tool Week) a členství vázané na <strong>AI Ladies Hub</strong>. Bez kombinovaných balíčků typu „4 webináře najednou“.</p>
+  <p class="text-sm text-muted mb-md">Chceme přehledný ceník: kickoff jako vstup do světa AI Ladies, jeden jasný produkt „běžný webinář“, letní seriál (Tool Week) a členství vázané na <strong>AI Ladies Hub</strong>. Bez kombinovaných balíčků typu „4 webináře najednou“.</p>
   <div class="pricing-grid mb-md">
     <div class="price-card">
       <div class="price-label">Kickoff webinář</div>
-      <div class="price-value" contenteditable="true" data-key="pc-kickoff-price" style="font-size:1.45rem;line-height:1.15">0–490 <span>Kč</span></div>
-      <div class="price-desc" contenteditable="true" data-key="pc-kickoff">První seznámení, buduje důvěru a komunitu. <strong>Varianta ke zvážení: zdarma</strong> (nábor) <strong>nebo 490 Kč</strong> jako plnohodnotný vstupní webinář — cena v e-mailech a na webu často nejlíp ukotví hodnotu. <strong>Délka 60 min</strong> je pracovní varianta.</div>
+      <div class="price-value" style="font-size:1.45rem;line-height:1.15">0–490 <span>Kč</span></div>
+      <div class="price-desc">První seznámení, buduje důvěru a komunitu. <strong>Varianta ke zvážení: zdarma</strong> (nábor) <strong>nebo 490 Kč</strong> jako plnohodnotný vstupní webinář — cena v e-mailech a na webu často nejlíp ukotví hodnotu. <strong>Délka 60 min</strong> je pracovní varianta.</div>
     </div>
     <div class="price-card feat" data-feat="Základní produkt">
       <div class="price-label">Základní produkt – webinář</div>
-      <div class="price-value" contenteditable="true" data-key="pc-w1">490 <span>Kč</span></div>
-      <div class="price-desc" contenteditable="true" data-key="pc-w1d">60 minut · záznam · pracovní materiály · dobrovolný úkol</div>
+      <div class="price-value">490 <span>Kč</span></div>
+      <div class="price-desc">60 minut · záznam · pracovní materiály · dobrovolný úkol</div>
     </div>
     <div class="price-card feat" data-feat="Doporučené">
       <div class="price-label">Tool Week (5 dní)</div>
-      <div class="price-value price-tw-q" contenteditable="true" data-key="pc-tw">? Kč</div>
+      <div class="price-value price-tw-q">? Kč</div>
       <div class="price-q-hint"><span class="tbd">Cena k zamyšlení</span> — v tabulkách níže zatím počítáme s <strong>1 490 Kč</strong> (přijde nám to málo).</div>
-      <div class="price-desc" contenteditable="true" data-key="pc-twd">5 × 75 min · jeden nástroj · záznamy · materiály · sdílení. Po letní sezóně cenu znovu nastavíme. <strong>Prodej:</strong> dny zvlášť nebo celý týden jako <em>malý kurz</em> (messaging „kurz“, ne „pět webinářů“).</div>
+      <div class="price-desc">5 × 75 min · jeden nástroj · záznamy · materiály · sdílení. Po letní sezóně cenu znovu nastavíme. <strong>Prodej:</strong> dny zvlášť nebo celý týden jako <em>malý kurz</em> (messaging „kurz“, ne „pět webinářů“).</div>
     </div>
     <div class="price-card">
       <div class="price-label">AI Ladies Night (akce)</div>
-      <div class="price-value" contenteditable="true" data-key="pc-night">290 <span>Kč</span></div>
-      <div class="price-desc" contenteditable="true" data-key="pc-nightd">Fyzické setkání v Praze. Pro Holky v failu zvýhodněně.</div>
+      <div class="price-value">290 <span>Kč</span></div>
+      <div class="price-desc">Fyzické setkání v Praze. Pro Holky v failu zvýhodněně.</div>
     </div>
     <div class="price-card">
       <div class="price-label">AI Ladies Club → Hub</div>
-      <div class="price-value" contenteditable="true" data-key="pc-club">99–149 <span>Kč/měs.</span></div>
-      <div class="price-desc" contenteditable="true" data-key="pc-clubd">Členství navázané na <strong>AI Ladies Hub</strong> – registrace a komunikace s klientkami tam, kde bude komunita žít. Automatizace přístupu po zaplacení: <span class="tbd">doplníme</span>, až bude napojení hotové (Katka + Aneta).</div>
+      <div class="price-value">99–149 <span>Kč/měs.</span></div>
+      <div class="price-desc">Členství navázané na <strong>AI Ladies Hub</strong> – registrace a komunikace s klientkami tam, kde bude komunita žít. Automatizace přístupu po zaplacení: <span class="tbd">doplníme</span>, až bude napojení hotové (Katka + Aneta).</div>
     </div>
   </div>
 
   <div class="calc-box">
     <h4>Orientační výpočet příjmů – měsíčně</h4>
     <p style="font-size:.75rem;color:var(--text-muted);margin-bottom:10px">Standardní měsíc (září–červen) · 4 webináře/měsíc · 50 účastnic/webinář</p>
-    <div class="calc-row"><span contenteditable="true" data-key="cr1">4 webináře × 50 účastnic × 490 Kč</span><span class="val" contenteditable="true" data-key="cr1v">98 000 Kč</span></div>
-    <div class="calc-row"><span contenteditable="true" data-key="cr2">AI Ladies Club 100 členek × 149 Kč</span><span class="val" contenteditable="true" data-key="cr2v">14 900 Kč</span></div>
+    <div class="calc-row"><span>4 webináře × 50 účastnic × 490 Kč</span><span class="val">98 000 Kč</span></div>
+    <div class="calc-row"><span>AI Ladies Club 100 členek × 149 Kč</span><span class="val">14 900 Kč</span></div>
     <div class="calc-row" style="font-weight:700"><span>Celkem / standardní měsíc</span><span class="val">~113 000 Kč</span></div>
   </div>
   <div class="calc-box mt-sm">
     <h4>Orientační výpočet – Tool Week měsíc (červenec / srpen)</h4>
     <p style="font-size:.75rem;color:var(--text-muted);margin-bottom:10px">Letní měsíc · 2 Tool Weeku / měsíc · 30 účastnic/seriál · <strong>částka 1 490 Kč jen modelová</strong> (reálná cena s ?)</p>
-    <div class="calc-row"><span contenteditable="true" data-key="cr5">2 Tool Weeku × 30 účastnic × 1 490 Kč (?)</span><span class="val" contenteditable="true" data-key="cr5v">89 400 Kč</span></div>
-    <div class="calc-row"><span contenteditable="true" data-key="cr6">AI Ladies Club 100 členek × 149 Kč</span><span class="val" contenteditable="true" data-key="cr6v">14 900 Kč</span></div>
+    <div class="calc-row"><span>2 Tool Weeku × 30 účastnic × 1 490 Kč (?)</span><span class="val">89 400 Kč</span></div>
+    <div class="calc-row"><span>AI Ladies Club 100 členek × 149 Kč</span><span class="val">14 900 Kč</span></div>
     <div class="calc-row" style="font-weight:700"><span>Celkem / letní měsíc</span><span class="val">~104 000 Kč</span></div>
   </div>
   <div class="calc-box mt-sm">
     <h4>Orientační výpočet – ročně (optimistický scénář)</h4>
     <p style="font-size:.75rem;color:var(--text-muted);margin-bottom:10px">9 standardních měsíců + 2 letní měsíce + 4 akce Night · Tool Week řádky: model s 1 490 Kč (?)</p>
-    <div class="calc-row"><span contenteditable="true" data-key="cr7">9 měs. × 4 webináře × 50 lidí × 490 Kč</span><span class="val" contenteditable="true" data-key="cr7v">882 000 Kč</span></div>
-    <div class="calc-row"><span contenteditable="true" data-key="cr8">4 Tool Weeku × 30 lidí × 1 490 Kč (?)</span><span class="val" contenteditable="true" data-key="cr8v">178 800 Kč</span></div>
-    <div class="calc-row"><span contenteditable="true" data-key="cr9">Club 12 měs. × 100 členek × 149 Kč</span><span class="val" contenteditable="true" data-key="cr9v">178 800 Kč</span></div>
-    <div class="calc-row"><span contenteditable="true" data-key="cr10">4 akce Night × 50 lidí × 290 Kč</span><span class="val" contenteditable="true" data-key="cr10v">58 000 Kč</span></div>
+    <div class="calc-row"><span>9 měs. × 4 webináře × 50 lidí × 490 Kč</span><span class="val">882 000 Kč</span></div>
+    <div class="calc-row"><span>4 Tool Weeku × 30 lidí × 1 490 Kč (?)</span><span class="val">178 800 Kč</span></div>
+    <div class="calc-row"><span>Club 12 měs. × 100 členek × 149 Kč</span><span class="val">178 800 Kč</span></div>
+    <div class="calc-row"><span>4 akce Night × 50 lidí × 290 Kč</span><span class="val">58 000 Kč</span></div>
     <div class="calc-row" style="font-weight:700;font-size:.95rem"><span>Roční součet (optimistický)</span><span class="val">~1 300 000 Kč</span></div>
-    <div class="calc-row" style="font-size:.8rem;color:var(--text-muted)"><span contenteditable="true" data-key="cr11">Konzervativní scénář (20 účastnic/web, 40 členek Clubu)</span><span class="val" contenteditable="true" data-key="cr11v">~507 000 Kč</span></div>
+    <div class="calc-row" style="font-size:.8rem;color:var(--text-muted)"><span>Konzervativní scénář (20 účastnic/web, 40 členek Clubu)</span><span class="val">~507 000 Kč</span></div>
   </div>
 
   <blockquote class="mt-md">
-    <span contenteditable="true" data-key="cenik-quote">Lektorky nedostávají honorář – dostávají viditelnost v komunitě a promo. Osloveníme je přes myšlenku projektu, ne přes peníze.</span>
+    <span>Lektorky nedostávají honorář – dostávají viditelnost v komunitě a promo. Osloveníme je přes myšlenku projektu, ne přes peníze.</span>
     <cite>Aneta Lázancová, brainstorming 30. 4. 2026</cite>
   </blockquote>
 </section>
@@ -1268,55 +1108,55 @@
 
   <div class="card accent-card mb-md" style="border-left:4px solid var(--accent)">
     <h4>Květen 2026 – Výkop 🚀</h4>
-    <p contenteditable="true" data-key="rp-kveten">Ideální termín kickoff webináře – ještě před červnovou sérií. Dopolední čas (10:00) umožňuje ženám v práci i doma připojit se před polednem.</p>
+    <p>Ideální termín kickoff webináře – ještě před červnovou sérií. Dopolední čas (10:00) umožňuje ženám v práci i doma připojit se před polednem.</p>
     <div class="table-wrap mt-sm" style="margin:0"><table>
       <thead><tr><th>Datum</th><th>Čas</th><th>Téma</th><th>Cena</th></tr></thead>
       <tbody>
         <tr>
           <td><strong>26. 5. (Út) ✦</strong></td>
           <td>10:00</td>
-          <td contenteditable="true" data-key="rp-k0">🌿 Kickoff: Jak si zjednodušit život s AI (60 min) · ZDARMA nebo 490 Kč ke zvážení · záložní termín: 4. 6.</td>
+          <td>🌿 Kickoff: Jak si zjednodušit život s AI (60 min) · ZDARMA nebo 490 Kč ke zvážení · záložní termín: 4. 6.</td>
           <td><span class="lvl-badge lvl-b">ZDARMA</span></td>
         </tr>
       </tbody>
     </table></div>
-    <p style="font-size:.75rem;color:var(--accent-bright);margin-top:8px" contenteditable="true" data-key="rp-kveten-note">✦ Preferovaný termín. Záložní: 4. 6. (Čt), 18:00 – pokud nebude realizovatelné stihnou přípravu do 26. 5.</p>
+    <p style="font-size:.75rem;color:var(--accent-bright);margin-top:8px">✦ Preferovaný termín. Záložní: 4. 6. (Čt), 18:00 – pokud nebude realizovatelné stihnou přípravu do 26. 5.</p>
   </div>
 
   <div class="card green-card mb-md">
     <h4>Červen 2026 – první vlna webinářů</h4>
-    <p contenteditable="true" data-key="rp-cerven">Čtyři týdenní webináře + AI Ladies Night. Střídáme Út/Čt, rotující časy (dop./odp./večer). Jen Petra, Aneta, Katka. Testujeme formát a budujeme brand.</p>
+    <p>Čtyři týdenní webináře + AI Ladies Night. Střídáme Út/Čt, rotující časy (dop./odp./večer). Jen Petra, Aneta, Katka. Testujeme formát a budujeme brand.</p>
     <div class="table-wrap mt-sm" style="margin:0"><table>
       <thead><tr><th>Datum</th><th>Čas</th><th>Téma</th><th>Cena</th></tr></thead>
       <tbody>
         <tr>
           <td><strong>4. 6. (Čt)</strong></td>
           <td>18:00</td>
-          <td contenteditable="true" data-key="rp-c0">🌿 Kickoff (záložní termín) NEBO Webinář #1: Konec přeplněné e-mailové schránky</td>
+          <td>🌿 Kickoff (záložní termín) NEBO Webinář #1: Konec přeplněné e-mailové schránky</td>
           <td><span class="lvl-badge lvl-b">ZDARMA / 490 Kč</span></td>
         </tr>
         <tr>
           <td><strong>9. 6. (Út)</strong></td>
           <td>10:00</td>
-          <td contenteditable="true" data-key="rp-c1">Konec přeplněné e-mailové schránky (nebo webinář #2)</td>
+          <td>Konec přeplněné e-mailové schránky (nebo webinář #2)</td>
           <td>490 Kč</td>
         </tr>
         <tr>
           <td><strong>18. 6. (Čt)</strong></td>
           <td>18:00</td>
-          <td contenteditable="true" data-key="rp-night">🎉 AI Ladies Night – fyzické setkání</td>
+          <td>🎉 AI Ladies Night – fyzické setkání</td>
           <td>290 Kč</td>
         </tr>
         <tr>
           <td><strong>23. 6. (Út)</strong></td>
           <td>14:00</td>
-          <td contenteditable="true" data-key="rp-c2">Prezentace, materiály, projekty – s AI bez chaosu</td>
+          <td>Prezentace, materiály, projekty – s AI bez chaosu</td>
           <td>490 Kč</td>
         </tr>
         <tr>
           <td><strong>30. 6. (Út)</strong></td>
           <td>18:00</td>
-          <td contenteditable="true" data-key="rp-c3">Konec ručního přepisování schůzek</td>
+          <td>Konec ručního přepisování schůzek</td>
           <td>490 Kč</td>
         </tr>
       </tbody>
@@ -1324,39 +1164,39 @@
   </div>
 
   <div class="eyebrow mb-sm">Letní Tool Weeku (červenec + srpen)</div>
-  <p class="text-sm text-muted mb-md" contenteditable="true" data-key="rp-leto-pozn">Petra má volno 20.–31. 7. – v tomto období nejsou žádné webináře. Seriály jsou naplánované tak, aby se toto okno respektovalo.</p>
+  <p class="text-sm text-muted mb-md">Petra má volno 20.–31. 7. – v tomto období nejsou žádné webináře. Seriály jsou naplánované tak, aby se toto okno respektovalo.</p>
   <div class="calendar-grid mb-md">
     <div class="cal-month">
       <div class="cal-month-header">Červenec 2026</div>
-      <div class="cal-item"><span class="cal-week">6.–10. 7.</span><span contenteditable="true" data-key="cal-c1">Tool Week 1 – Týden s Gemini (po–pá, 75 min)</span></div>
-      <div class="cal-item"><span class="cal-week">13.–17. 7.</span><span contenteditable="true" data-key="cal-c2">Tool Week 2 – Týden s ChatGPT (po–pá, 75 min)</span></div>
+      <div class="cal-item"><span class="cal-week">6.–10. 7.</span><span>Tool Week 1 – Týden s Gemini (po–pá, 75 min)</span></div>
+      <div class="cal-item"><span class="cal-week">13.–17. 7.</span><span>Tool Week 2 – Týden s ChatGPT (po–pá, 75 min)</span></div>
       <div class="cal-item holiday"><span class="cal-week dim">20.–31. 7.</span><span style="color:var(--text-muted)">🏖️ Prázdniny – žádné webináře</span></div>
     </div>
     <div class="cal-month">
       <div class="cal-month-header">Srpen 2026</div>
-      <div class="cal-item"><span class="cal-week">3.–7. 8.</span><span contenteditable="true" data-key="cal-s1">Tool Week 3 – Týden s Claude (po–pá, 75 min)</span></div>
-      <div class="cal-item"><span class="cal-week">17.–21. 8.</span><span contenteditable="true" data-key="cal-s2">Tool Week 4 – Týden s Copilotem (po–pá, 75 min)</span></div>
+      <div class="cal-item"><span class="cal-week">3.–7. 8.</span><span>Tool Week 3 – Týden s Claude (po–pá, 75 min)</span></div>
+      <div class="cal-item"><span class="cal-week">17.–21. 8.</span><span>Tool Week 4 – Týden s Copilotem (po–pá, 75 min)</span></div>
       <div class="cal-item"><span class="cal-week dim">24.–28. 8.</span><span style="color:var(--text-muted)">Příprava na podzimní program</span></div>
     </div>
     <div class="cal-month">
       <div class="cal-month-header">Od září 2026</div>
-      <div class="cal-item"><span class="cal-week">září–prosinec</span><span contenteditable="true" data-key="cal-r0">Vždy <strong>4 webináře / měsíc</strong> (dokud nepřidáme jiný rytmus). Tematický <strong>Tool Week</strong> držíme zatím primárně na <strong>léto</strong> — opakování v říjnu/listopadu jen s <strong>?</strong>, podle toho, jak se osvědčí.</span></div>
-      <div class="cal-item"><span class="cal-week">říjen</span><span contenteditable="true" data-key="cal-r1">4× webinář · NotebookLM jako téma týdne spíš <strong>?</strong> (ne pevný Tool Week, dokud nerozhodneme)</span></div>
-      <div class="cal-item"><span class="cal-week">listopad</span><span contenteditable="true" data-key="cal-r2">4× webinář · Google AI Studio (pokročilé) — stejná logika <strong>?</strong> k celotýdennímu formátu mimo léto</span></div>
-      <div class="cal-item"><span class="cal-week">prosinec</span><span contenteditable="true" data-key="cal-r3">4× webinář nebo speciál dle domluvy · AI poradna / shrnutí roku / osobní AI plán · bonusy pro Club</span></div>
+      <div class="cal-item"><span class="cal-week">září–prosinec</span><span>Vždy <strong>4 webináře / měsíc</strong> (dokud nepřidáme jiný rytmus). Tematický <strong>Tool Week</strong> držíme zatím primárně na <strong>léto</strong> — opakování v říjnu/listopadu jen s <strong>?</strong>, podle toho, jak se osvědčí.</span></div>
+      <div class="cal-item"><span class="cal-week">říjen</span><span>4× webinář · NotebookLM jako téma týdne spíš <strong>?</strong> (ne pevný Tool Week, dokud nerozhodneme)</span></div>
+      <div class="cal-item"><span class="cal-week">listopad</span><span>4× webinář · Google AI Studio (pokročilé) — stejná logika <strong>?</strong> k celotýdennímu formátu mimo léto</span></div>
+      <div class="cal-item"><span class="cal-week">prosinec</span><span>4× webinář nebo speciál dle domluvy · AI poradna / shrnutí roku / osobní AI plán · bonusy pro Club</span></div>
     </div>
   </div>
 
   <div class="card mb-md">
     <h4>Září 2026 – návrat do práce</h4>
-    <p contenteditable="true" data-key="rp-zari"><strong>4 webináře v září</strong> (stejný standard jako říjen–prosinec, pokud nepřidáme další formáty). Střídáme <strong>„pracovnější“</strong> a <strong>každodenně–rodinná</strong> témata, ať to není jen náraz práce po prázdninách.</p>
+    <p><strong>4 webináře v září</strong> (stejný standard jako říjen–prosinec, pokud nepřidáme další formáty). Střídáme <strong>„pracovnější“</strong> a <strong>každodenně–rodinná</strong> témata, ať to není jen náraz práce po prázdninách.</p>
     <div class="table-wrap mt-sm" style="margin:0"><table>
       <thead><tr><th>Datum</th><th>Čas</th><th>Téma</th></tr></thead>
       <tbody>
-        <tr><td>8. 9. (Út)</td><td>10:00</td><td contenteditable="true" data-key="rp-s1">Texty, které dlouho odkládáte</td></tr>
-        <tr><td>17. 9. (Čt)</td><td>18:00</td><td contenteditable="true" data-key="rp-s3">Jídelníček, rozvrh, kroužky: plánovačka bez chaosu</td></tr>
-        <tr><td>22. 9. (Út)</td><td>14:00</td><td contenteditable="true" data-key="rp-s2">Úřední čeština a nepříjemné dopisy</td></tr>
-        <tr><td>29. 9. (Út)</td><td>18:00</td><td contenteditable="true" data-key="rp-s4">Když dítě nerozumí úkolu a vy taky ne</td></tr>
+        <tr><td>8. 9. (Út)</td><td>10:00</td><td>Texty, které dlouho odkládáte</td></tr>
+        <tr><td>17. 9. (Čt)</td><td>18:00</td><td>Jídelníček, rozvrh, kroužky: plánovačka bez chaosu</td></tr>
+        <tr><td>22. 9. (Út)</td><td>14:00</td><td>Úřední čeština a nepříjemné dopisy</td></tr>
+        <tr><td>29. 9. (Út)</td><td>18:00</td><td>Když dítě nerozumí úkolu a vy taky ne</td></tr>
       </tbody>
     </table></div>
   </div>
@@ -1366,9 +1206,9 @@
     <div class="table-wrap mt-sm" style="margin:0"><table>
       <thead><tr><th>Měsíc</th><th>Program</th></tr></thead>
       <tbody>
-        <tr><td>Říjen</td><td contenteditable="true" data-key="rp-r1"><strong>4 webináře</strong> v měsíci (témata 5–8 ze série). Celotýdenní formát typu NotebookLM zatím spíš <strong>?</strong> — Tool Week zatím počítáme primárně na léto, podzim doladíme podle zkušenosti.</td></tr>
-        <tr><td>Listopad</td><td contenteditable="true" data-key="rp-r2"><strong>4 webináře</strong> (témata 9–12) · případný intenzivní týden s Google AI Studio jen jako <strong>?</strong>, ne jako jistota paralelně s běžným rytmem.</td></tr>
-        <tr><td>Prosinec</td><td contenteditable="true" data-key="rp-r3"><strong>4 webináře</strong> nebo vánoční speciál dle domluvy · AI poradna / shrnutí roku / osobní AI plán 2027 · bonusy pro Club</td></tr>
+        <tr><td>Říjen</td><td><strong>4 webináře</strong> v měsíci (témata 5–8 ze série). Celotýdenní formát typu NotebookLM zatím spíš <strong>?</strong> — Tool Week zatím počítáme primárně na léto, podzim doladíme podle zkušenosti.</td></tr>
+        <tr><td>Listopad</td><td><strong>4 webináře</strong> (témata 9–12) · případný intenzivní týden s Google AI Studio jen jako <strong>?</strong>, ne jako jistota paralelně s běžným rytmem.</td></tr>
+        <tr><td>Prosinec</td><td><strong>4 webináře</strong> nebo vánoční speciál dle domluvy · AI poradna / shrnutí roku / osobní AI plán 2027 · bonusy pro Club</td></tr>
       </tbody>
     </table></div>
   </div>
@@ -1382,12 +1222,12 @@
 <section class="section" id="technika">
   <div class="section-header"><div class="section-num">15</div><h2>Technická platforma</h2></div>
   <div class="tech-grid">
-    <div class="tech-item"><div class="tech-icon">📹</div><div><div class="tech-name">Google Meet – webinář mód</div><div class="tech-desc" contenteditable="true" data-key="t-meet">Diváci jen píší, nemluví. Zdarma. Petra má Google Workspace AI Ladies CZ.</div></div></div>
-    <div class="tech-item"><div class="tech-icon">▶️</div><div><div class="tech-name">Záznamy <span class="tbd">TBD</span></div><div class="tech-desc" contenteditable="true" data-key="t-zaz">Google Drive nebo YouTube – dořeší Aneta. Přístup pro registrované účastnice.</div></div></div>
-    <div class="tech-item"><div class="tech-icon">💳</div><div><div class="tech-name">Makaly + Stripe</div><div class="tech-desc" contenteditable="true" data-key="t-platby">Registrace a platby za webináře. Propojení existuje. S.r.o. v přípravě (Petra = jednatelka).</div></div></div>
-    <div class="tech-item"><div class="tech-icon">📧</div><div><div class="tech-name">Email marketing <span class="tbd">TBD</span></div><div class="tech-desc" contenteditable="true" data-key="t-email">Brevo nebo Mailchimp. Stack připravuje Aneta – včetně automatizace follow-up emailů.</div></div></div>
-    <div class="tech-item"><div class="tech-icon">🌐</div><div><div class="tech-name">ailadies.cz (Makaly)</div><div class="tech-desc" contenteditable="true" data-key="t-web">Hlavní web projektu. Registrace, blog, info o webinářích a AI Ladies Night.</div></div></div>
-    <div class="tech-item"><div class="tech-icon">🏗️</div><div><div class="tech-name">AI Ladies Hub <span class="tbd">V přípravě</span></div><div class="tech-desc" contenteditable="true" data-key="t-hub"><strong>Komunitní platforma</strong>, kde budeme hlavně komunikovat s klientkami: <strong>kalendář akcí</strong>, <strong>diskuze a sdílení</strong> (vzájemná podpora, rady), <strong>profily členek</strong> (kdo jsou, co dělají), prostor pro <strong>nabídky / poptávky práce</strong>, <strong>zpětnou vazbu</strong> k webinářům a do budoucna i <strong>newsletter</strong> / přehled novinek. Členství v <strong>AI Ladies Club</strong> s tím počítá jako s hlavním „domovem“ komunity. Buduje Katka; automatizace přístupu po zaplacení doplníme s Anetou.</div></div></div>
+    <div class="tech-item"><div class="tech-icon">📹</div><div><div class="tech-name">Google Meet – webinář mód</div><div class="tech-desc">Diváci jen píší, nemluví. Zdarma. Petra má Google Workspace AI Ladies CZ.</div></div></div>
+    <div class="tech-item"><div class="tech-icon">▶️</div><div><div class="tech-name">Záznamy <span class="tbd">TBD</span></div><div class="tech-desc">Google Drive nebo YouTube – dořeší Aneta. Přístup pro registrované účastnice.</div></div></div>
+    <div class="tech-item"><div class="tech-icon">💳</div><div><div class="tech-name">Makaly + Stripe</div><div class="tech-desc">Registrace a platby za webináře. Propojení existuje. S.r.o. v přípravě (Petra = jednatelka).</div></div></div>
+    <div class="tech-item"><div class="tech-icon">📧</div><div><div class="tech-name">Email marketing <span class="tbd">TBD</span></div><div class="tech-desc">Brevo nebo Mailchimp. Stack připravuje Aneta – včetně automatizace follow-up emailů.</div></div></div>
+    <div class="tech-item"><div class="tech-icon">🌐</div><div><div class="tech-name">ailadies.cz (Makaly)</div><div class="tech-desc">Hlavní web projektu. Registrace, blog, info o webinářích a AI Ladies Night.</div></div></div>
+    <div class="tech-item"><div class="tech-icon">🏗️</div><div><div class="tech-name">AI Ladies Hub <span class="tbd">V přípravě</span></div><div class="tech-desc"><strong>Komunitní platforma</strong>, kde budeme hlavně komunikovat s klientkami: <strong>kalendář akcí</strong>, <strong>diskuze a sdílení</strong> (vzájemná podpora, rady), <strong>profily členek</strong> (kdo jsou, co dělají), prostor pro <strong>nabídky / poptávky práce</strong>, <strong>zpětnou vazbu</strong> k webinářům a do budoucna i <strong>newsletter</strong> / přehled novinek. Členství v <strong>AI Ladies Club</strong> s tím počítá jako s hlavním „domovem“ komunity. Buduje Katka; automatizace přístupu po zaplacení doplníme s Anetou.</div></div></div>
   </div>
 </section>
 
@@ -1402,36 +1242,36 @@
     <div class="card">
       <h4>Jak oslovovat</h4>
       <ul class="check-list">
-        <li><span contenteditable="true" data-key="l-o1">Osobní oslovení od Petry – ze setkání, kurzů, LinkedInu</span></li>
-        <li><span contenteditable="true" data-key="l-o2">"Děláme projekt pro ženy v AI. Zajímalo by tě to?"</span></li>
-        <li><span contenteditable="true" data-key="l-o3">Prodáváme myšlenku projektu, ne honorář</span></li>
-        <li><span contenteditable="true" data-key="l-o4">Žádné studené zprávy – jen přirozené vztahy</span></li>
+        <li><span>Osobní oslovení od Petry – ze setkání, kurzů, LinkedInu</span></li>
+        <li><span>"Děláme projekt pro ženy v AI. Zajímalo by tě to?"</span></li>
+        <li><span>Prodáváme myšlenku projektu, ne honorář</span></li>
+        <li><span>Žádné studené zprávy – jen přirozené vztahy</span></li>
       </ul>
     </div>
     <div class="card green-card">
       <h4>Co lektorka dostane</h4>
       <ul class="check-list">
-        <li><span contenteditable="true" data-key="l-d1">Slot v úterním nebo čtvrtečním webináři (60 min)</span></li>
-        <li><span contenteditable="true" data-key="l-d2">Promo v emailingu + sociálních sítích (před i po)</span></li>
-        <li><span contenteditable="true" data-key="l-d3">Bio a link na web/LinkedIn v záznamu</span></li>
-        <li><span contenteditable="true" data-key="l-d4">Přístup do komunity AI Ladies</span></li>
+        <li><span>Slot v úterním nebo čtvrtečním webináři (60 min)</span></li>
+        <li><span>Promo v emailingu + sociálních sítích (před i po)</span></li>
+        <li><span>Bio a link na web/LinkedIn v záznamu</span></li>
+        <li><span>Přístup do komunity AI Ladies</span></li>
       </ul>
     </div>
     <div class="card">
       <h4>Co lektorka dodá</h4>
       <ul class="check-list">
-        <li><span contenteditable="true" data-key="l-dd1">Téma z oblasti AI (domluveno s Petrou předem)</span></li>
-        <li><span contenteditable="true" data-key="l-dd2">Příprava dema nebo prezentace – vždy praktické</span></li>
-        <li><span contenteditable="true" data-key="l-dd3">Souhlas s nahráváním a zveřejněním záznamu</span></li>
-        <li><span contenteditable="true" data-key="l-dd4">Krátké bio + fotka pro promo materiály</span></li>
+        <li><span>Téma z oblasti AI (domluveno s Petrou předem)</span></li>
+        <li><span>Příprava dema nebo prezentace – vždy praktické</span></li>
+        <li><span>Souhlas s nahráváním a zveřejněním záznamu</span></li>
+        <li><span>Krátké bio + fotka pro promo materiály</span></li>
       </ul>
     </div>
     <div class="card accent-card">
       <h4>Co nepřijímáme</h4>
       <ul class="check-list">
-        <li><span contenteditable="true" data-key="l-ne1">Honorář ani poplatek (v žádném směru)</span></li>
-        <li><span contenteditable="true" data-key="l-ne2">Reklamní obsah maskovaný jako webinář</span></li>
-        <li><span contenteditable="true" data-key="l-ne3">Přednášky bez praktické ukázky – vždy chceme demo</span></li>
+        <li><span>Honorář ani poplatek (v žádném směru)</span></li>
+        <li><span>Reklamní obsah maskovaný jako webinář</span></li>
+        <li><span>Přednášky bez praktické ukázky – vždy chceme demo</span></li>
       </ul>
     </div>
   </div>
@@ -1467,352 +1307,8 @@
     document.getElementById(panelId).classList.add('active');
   }
 
-  /* INLINE EDIT + LOCALSTORAGE */
-  const KEY = 'ailadies_v2_edits';
-  function getAllEditable() { return document.querySelectorAll('[data-key]'); }
-  function loadEdits() {
-    try {
-      const saved = JSON.parse(localStorage.getItem(KEY) || '{}');
-      getAllEditable().forEach(el => { if (saved[el.dataset.key] !== undefined) el.innerHTML = saved[el.dataset.key]; });
-    } catch(e) {}
-  }
-  function saveEdits() {
-    const data = {};
-    getAllEditable().forEach(el => { data[el.dataset.key] = el.innerHTML; });
-    localStorage.setItem(KEY, JSON.stringify(data));
-    const t = document.getElementById('save-toast');
-    t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2000);
-  }
-  function resetEdits() {
-    if (!confirm('Opravdu chceš obnovit výchozí texty? Všechny tvoje úpravy budou ztraceny.')) return;
-    localStorage.removeItem(KEY); location.reload();
-  }
-  let timer;
-  document.addEventListener('input', e => { if (e.target.hasAttribute('data-key')) { clearTimeout(timer); timer = setTimeout(saveEdits, 800); } });
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Enter' && e.target.hasAttribute('data-key')) {
-      const tag = e.target.tagName.toLowerCase();
-      if (['span','td','div','p'].includes(tag)) e.preventDefault();
-    }
-  });
-  document.getElementById('btn-save').addEventListener('click', saveEdits);
-  document.getElementById('btn-reset').addEventListener('click', resetEdits);
-  loadEdits();
 
-  /* ══════════════════════════════════════════════
-     COMMENT SYSTEM
-     ══════════════════════════════════════════════ */
-  const CKEY = 'ailadies_v2_comments';
-  let cmtMode = false;
-  let activeCid = null;
-  let currentAuthor = localStorage.getItem('ailadies_cmt_author') || '';
 
-  function escapeHtml(s) {
-    return String(s ?? '')
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
-  }
-
-  // ── Data helpers ──────────────────────────────
-  function loadCmts()  { try { return JSON.parse(localStorage.getItem(CKEY)||'{}'); } catch(e){ return {}; } }
-  function saveCmts(d) { localStorage.setItem(CKEY, JSON.stringify(d)); }
-
-  function nowStr() {
-    return new Date().toLocaleString('cs-CZ',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
-  }
-
-  // ── Assign stable data-cid to commentable elements ───
-  function initCids() {
-    // Sections: use existing id
-    document.querySelectorAll('.section[id]').forEach(el => { el.dataset.cid = 's-'+el.id; });
-    // Cards, level-cards, price-cards, cal-months, day-rows
-    let idx = 0;
-    document.querySelectorAll('.card,.level-card,.price-card,.cal-month,.day-row,.diff-card,.flow-step').forEach(el => {
-      if (!el.dataset.cid) el.dataset.cid = 'e-'+(idx++);
-    });
-  }
-
-  // ── Render add-buttons & badges on elements ───
-  function renderBadges() {
-    document.querySelectorAll('.cmt-add-btn,.cmt-badge').forEach(e => e.remove());
-    const data = loadCmts();
-    document.querySelectorAll('[data-cid]').forEach(el => {
-      const cid = el.dataset.cid;
-      // Ensure position:relative
-      if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
-
-      // "+" button (visible in cmode on hover via CSS)
-      const addBtn = document.createElement('button');
-      addBtn.className = 'cmt-add-btn';
-      addBtn.textContent = '+ komentář';
-      addBtn.setAttribute('aria-label', 'Přidat komentář');
-      addBtn.addEventListener('click', e => { e.stopPropagation(); openThread(cid, el); });
-      el.appendChild(addBtn);
-
-      // Badge with count if comments exist
-      const threads = (data[cid]||[]).filter(c => !c.resolved);
-      const totalWithReplies = (data[cid]||[]).reduce((sum,c)=>sum+(c.replies?c.replies.length:0),0) + (data[cid]||[]).length;
-      if (totalWithReplies > 0) {
-        const badge = document.createElement('span');
-        badge.className = 'cmt-badge';
-        const unresolved = threads.length;
-        const n = (data[cid]||[]).length;
-        const doneHint = unresolved < n ? '<span style="opacity:.85;font-size:.7rem" title="Část vyřešena">✓</span>' : '';
-        badge.innerHTML = '<span class="cmt-badge-ico" aria-hidden="true">💬</span><span class="cmt-badge-num">' + n + '</span>' + doneHint;
-        badge.title = 'Komentáře (' + n + ') — klikni pro zobrazení';
-        badge.addEventListener('click', e => { e.stopPropagation(); openThread(cid, el); });
-        el.appendChild(badge);
-      }
-    });
-  }
-
-  // ── Toggle comment mode ────────────────────────
-  function toggleCmtMode() {
-    cmtMode = !cmtMode;
-    document.body.classList.toggle('cmode', cmtMode);
-    const btn = document.getElementById('btn-comments');
-    btn.classList.toggle('cmode-on', cmtMode);
-    btn.innerHTML = cmtMode
-      ? '<span class="btn-cmt-ico" aria-hidden="true">💬</span> Vypnout komentáře'
-      : '<span class="btn-cmt-ico" aria-hidden="true">💬</span> Komentáře';
-    if (cmtMode) { initCids(); renderBadges(); }
-    else { closePanel(); renderBadges(); }
-  }
-
-  // ── Build & open thread panel ──────────────────
-  function openThread(cid, anchorEl) {
-    activeCid = cid;
-    closePanel(false);
-
-    const data = loadCmts();
-    const comments = data[cid] || [];
-
-    // Get label from element
-    const labelEl = anchorEl.querySelector('h2,h3,h4,.section-header h2,.card h3,.card h4');
-    const label = labelEl ? labelEl.textContent.trim().slice(0,44) : 'Komentáře';
-
-    const panel = document.createElement('div');
-    panel.id = 'cmt-panel';
-    panel.innerHTML = `
-      <div class="cmt-ph">
-        <span class="cmt-ph-title">💬 ${label}</span>
-        <button class="cmt-ph-close" onclick="closePanel()" title="Zavřít">✕</button>
-      </div>
-      <div class="cmt-body" id="cmt-body"></div>
-      <div class="cmt-form">
-        <div class="cmt-form-label">Nový komentář</div>
-        <textarea id="cmt-input" placeholder="Napiš komentář…" rows="2"></textarea>
-        <div class="author-row">
-          <button class="a-btn a-btn-petra${currentAuthor==='Petra'?' sel':''}" data-author="Petra">Petra</button>
-          <button class="a-btn a-btn-aneta${currentAuthor==='Aneta'?' sel':''}" data-author="Aneta">Aneta</button>
-          <button class="a-btn a-btn-katka${currentAuthor==='Katka'?' sel':''}" data-author="Katka">Katka</button>
-          <button class="btn-send-cmt" id="btn-cmt-send">Přidat →</button>
-        </div>
-      </div>`;
-
-    document.body.appendChild(panel);
-    renderThreadBody(cid);
-
-    // Restore stored author highlight
-    panel.querySelectorAll('.a-btn').forEach(b => {
-      b.addEventListener('click', () => setAuthor(b.dataset.author));
-    });
-    panel.querySelector('#btn-cmt-send').addEventListener('click', () => submitComment(cid));
-    panel.querySelector('#cmt-input').addEventListener('keydown', e => {
-      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) submitComment(cid);
-    });
-  }
-
-  function closePanel(clearCid=true) {
-    const p = document.getElementById('cmt-panel');
-    if (p) p.remove();
-    if (clearCid) activeCid = null;
-  }
-
-  // ── Render thread body ────────────────────────
-  function renderThreadBody(cid) {
-    const body = document.getElementById('cmt-body');
-    if (!body) return;
-    body.innerHTML = '';
-    const data = loadCmts();
-    const comments = data[cid] || [];
-
-    if (comments.length === 0) {
-      body.innerHTML = '<p class="cmt-empty">Zatím žádné komentáře. Buď první!</p>';
-      return;
-    }
-
-    comments.forEach((c, ci) => {
-      const item = document.createElement('div');
-      item.className = 'cmt-item' + (c.resolved ? ' resolved' : '');
-      const auth = (a) => String(a || '???').toLowerCase();
-
-      const repliesHTML = (c.replies||[]).map((r, ri) => `
-        <div class="reply-bubble">
-          <div class="reply-head">
-            <div class="cmt-meta">
-              <span class="cmt-author-tag a-${auth(r.author)}">${escapeHtml(r.author)}</span>
-              <span class="cmt-time">${escapeHtml(r.time)}</span>
-            </div>
-            <button type="button" class="btn-del-reply" data-ci="${ci}" data-ri="${ri}" title="Smazat odpověď" aria-label="Smazat odpověď">🗑</button>
-          </div>
-          <div class="cmt-text">${escapeHtml(r.text)}</div>
-        </div>`).join('');
-
-      item.innerHTML = `
-        <div class="cmt-bubble">
-          <div class="cmt-meta">
-            <span class="cmt-author-tag a-${auth(c.author)}">${escapeHtml(c.author)}</span>
-            <span class="cmt-time">${escapeHtml(c.time)}</span>
-          </div>
-          <div class="cmt-text">${escapeHtml(c.text)}</div>
-          <div class="cmt-actions">
-            <button type="button" class="btn-reply" data-ci="${ci}">↩ Odpovědět</button>
-            ${!c.resolved
-              ? `<button type="button" class="btn-resolve" data-ci="${ci}">✓ Vyřešit</button>`
-              : `<span class="cmt-resolved-tag">✓ Vyřešeno</span>`}
-            <button type="button" class="btn-delete" data-ci="${ci}" title="Smazat celý komentář včetně odpovědí"><span class="btn-del-ico" aria-hidden="true">🗑</span> Smazat</button>
-          </div>
-        </div>
-        ${repliesHTML.length ? `<div class="cmt-replies">${repliesHTML}</div>` : ''}
-        <div class="reply-form" id="rf-${cid}-${ci}" style="display:none">
-          <textarea placeholder="Tvoje odpověď… (Ctrl+Enter odešle)" rows="2" id="ri-${cid}-${ci}"></textarea>
-          <div class="author-row">
-            <button type="button" class="a-btn a-btn-petra${currentAuthor==='Petra'?' sel':''}" data-author="Petra">Petra</button>
-            <button type="button" class="a-btn a-btn-aneta${currentAuthor==='Aneta'?' sel':''}" data-author="Aneta">Aneta</button>
-            <button type="button" class="a-btn a-btn-katka${currentAuthor==='Katka'?' sel':''}" data-author="Katka">Katka</button>
-            <button type="button" class="btn-send-cmt" data-ci="${ci}" data-cid="${cid}">Odpovědět →</button>
-          </div>
-        </div>`;
-
-      body.appendChild(item);
-
-      item.querySelector('.btn-reply').addEventListener('click', () => toggleReplyForm(cid, ci));
-      const resolveBtn = item.querySelector('.btn-resolve');
-      if (resolveBtn) resolveBtn.addEventListener('click', () => resolveComment(cid, ci));
-      const delBtn = item.querySelector('.btn-delete');
-      if (delBtn) delBtn.addEventListener('click', () => deleteComment(cid, +delBtn.dataset.ci));
-      item.querySelectorAll('.btn-del-reply').forEach(btn => {
-        btn.addEventListener('click', () => deleteReply(cid, +btn.dataset.ci, +btn.dataset.ri));
-      });
-      const sendReply = item.querySelector('.btn-send-cmt');
-      if (sendReply) sendReply.addEventListener('click', () => submitReply(cid, ci));
-      const replyTa = item.querySelector(`#ri-${cid}-${ci}`);
-      if (replyTa) replyTa.addEventListener('keydown', e => {
-        if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) submitReply(cid, ci);
-      });
-      item.querySelectorAll('.a-btn').forEach(b => b.addEventListener('click', () => setAuthor(b.dataset.author)));
-    });
-
-    // Scroll to bottom
-    body.scrollTop = body.scrollHeight;
-  }
-
-  function toggleReplyForm(cid, ci) {
-    document.querySelectorAll('.reply-form').forEach(f => { if (f.id !== `rf-${cid}-${ci}`) f.style.display='none'; });
-    const form = document.getElementById(`rf-${cid}-${ci}`);
-    if (!form) return;
-    const show = form.style.display === 'none';
-    form.style.display = show ? 'block' : 'none';
-    if (show) form.querySelector('textarea').focus();
-  }
-
-  // ── Author selector ───────────────────────────
-  function setAuthor(name) {
-    currentAuthor = name;
-    localStorage.setItem('ailadies_cmt_author', name);
-    document.querySelectorAll('.a-btn').forEach(b => {
-      b.classList.toggle('sel', b.dataset.author === name);
-    });
-  }
-
-  // ── Submit new comment ────────────────────────
-  function submitComment(cid) {
-    const ta = document.getElementById('cmt-input');
-    if (!ta) return;
-    const text = ta.value.trim();
-    if (!text) { ta.focus(); ta.style.outline='2px solid #C9921A'; return; }
-    if (!currentAuthor) { alert('Vyber nejdřív jméno – Petra, Aneta nebo Katka.'); return; }
-    const data = loadCmts();
-    if (!data[cid]) data[cid] = [];
-    data[cid].push({ id: Date.now()+'', author: currentAuthor, text, time: nowStr(), resolved: false, replies: [] });
-    saveCmts(data);
-    ta.value = '';
-    ta.style.outline = '';
-    renderThreadBody(cid);
-    renderBadges();
-  }
-
-  // ── Submit reply ──────────────────────────────
-  function submitReply(cid, ci) {
-    const ta = document.getElementById(`ri-${cid}-${ci}`);
-    if (!ta) return;
-    const text = ta.value.trim();
-    if (!text) return;
-    if (!currentAuthor) { alert('Vyber nejdřív jméno.'); return; }
-    const data = loadCmts();
-    if (!data[cid]||!data[cid][ci]) return;
-    if (!data[cid][ci].replies) data[cid][ci].replies = [];
-    data[cid][ci].replies.push({ id: Date.now()+'', author: currentAuthor, text, time: nowStr() });
-    saveCmts(data);
-    renderThreadBody(cid);
-    renderBadges();
-  }
-
-  // ── Resolve comment ───────────────────────────
-  function resolveComment(cid, ci) {
-    const data = loadCmts();
-    if (data[cid]&&data[cid][ci]) {
-      data[cid][ci].resolved = true;
-      saveCmts(data);
-      renderThreadBody(cid);
-      renderBadges();
-    }
-  }
-
-  // ── Delete comment (thread) or single reply ───
-  function deleteComment(cid, ci) {
-    const data = loadCmts();
-    if (!data[cid] || data[cid][ci] === undefined) return;
-    const repN = (data[cid][ci].replies || []).length;
-    const msg = repN
-      ? 'Smazat tento komentář včetně ' + repN + ' ' + (repN === 1 ? 'odpovědi' : 'odpovědí') + '?'
-      : 'Smazat tento komentář?';
-    if (!confirm(msg)) return;
-    data[cid].splice(ci, 1);
-    if (data[cid].length === 0) delete data[cid];
-    saveCmts(data);
-    renderThreadBody(cid);
-    renderBadges();
-  }
-
-  function deleteReply(cid, ci, ri) {
-    if (!confirm('Smazat tuto odpověď?')) return;
-    const data = loadCmts();
-    if (!data[cid] || !data[cid][ci] || !data[cid][ci].replies || data[cid][ci].replies[ri] === undefined) return;
-    data[cid][ci].replies.splice(ri, 1);
-    saveCmts(data);
-    renderThreadBody(cid);
-    renderBadges();
-  }
-
-  // ── Wire up toggle button ─────────────────────
-  document.getElementById('btn-comments').addEventListener('click', toggleCmtMode);
-
-  // Close panel when clicking outside
-  document.addEventListener('click', e => {
-    if (!cmtMode) return;
-    if (e.target.closest('#cmt-panel')) return;
-    if (e.target.closest('.cmt-add-btn')) return;
-    if (e.target.closest('.cmt-badge')) return;
-    // Don't close when clicking a [data-cid] element itself (open triggers add btn)
-  });
-
-  // Init: show existing comment badges even without comment mode
-  initCids();
-  renderBadges();
 </script>
 </body>
 </html>
