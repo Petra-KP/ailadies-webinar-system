@@ -4,6 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Ladies – Systém webinářů 2026</title>
+  <script>
+    (function(){
+      var PWD_KEY = 'ailadies_access_v1';
+      var CORRECT = 'AILadies2026';
+      if(sessionStorage.getItem(PWD_KEY) !== '1'){
+        document.addEventListener('DOMContentLoaded', function(){
+          document.body.style.display = 'none';
+        });
+        var attempt = null;
+        while(attempt !== CORRECT){
+          attempt = prompt('🔐 AI Ladies – zadej heslo pro přístup:');
+          if(attempt === null){ document.write('<div style="font-family:sans-serif;text-align:center;padding:80px;font-size:1.1rem;color:#555">Stránka je chráněna heslem.</div>'); document.close(); break; }
+          if(attempt !== CORRECT){ alert('Nesprávné heslo. Zkus to znovu.'); }
+        }
+        if(attempt === CORRECT){
+          sessionStorage.setItem(PWD_KEY, '1');
+          document.addEventListener('DOMContentLoaded', function(){ document.body.style.display = ''; });
+        }
+      }
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
