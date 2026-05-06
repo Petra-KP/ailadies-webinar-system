@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AILadies – Osobní AI mentoring pro ženy</title>
+  <meta name="description" content="Osobní 1:1 AI mentoring pro ženy. Bez technického žargonu, bez chaosu. S konkrétními výstupy od první hodiny.">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --pink: #e91e8c;
+      --pink-light: #fce4f3;
+      --pink-mid: #f48cc8;
+      --black: #0d0d0d;
+      --white: #ffffff;
+      --off-white: #fafafa;
+      --grey: #f4f4f4;
+      --grey-mid: #e8e8e8;
+      --grey-text: #666;
+      --gold: #c9a96e;
+      --gold-light: #f7f0e6;
+      --radius: 16px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.08);
+      --shadow-hover: 0 8px 32px rgba(233,30,140,0.15);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Georgia', serif; background: var(--white); color: var(--black); line-height: 1.7; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--grey-mid);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .nav-logo { font-size: 1.25rem; font-weight: 700; letter-spacing: 0.04em; color: var(--black); text-decoration: none; }
+    .nav-logo span { color: var(--pink); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--black); font-size: 0.9rem; font-family: sans-serif; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--pink); }
+    .nav-cta {
+      background: var(--pink); color: var(--white); border: none; padding: 0.55rem 1.4rem;
+      border-radius: 50px; font-size: 0.9rem; cursor: pointer; font-family: sans-serif;
+      text-decoration: none; transition: background 0.2s;
+    }
+    .nav-cta:hover { background: #c4177c; }
+
+    /* HERO */
+    .hero {
+      background: var(--white);
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(ellipse at 60% 0%, rgba(233,30,140,0.06) 0%, transparent 60%),
+                  radial-gradient(ellipse at 20% 100%, rgba(201,169,110,0.06) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .hero-label {
+      display: inline-block; background: var(--pink-light); color: var(--pink);
+      font-size: 0.8rem; font-family: sans-serif; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.35rem 1rem; border-radius: 50px; margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.15;
+      color: var(--black); margin-bottom: 1.5rem; font-weight: 700;
+      max-width: 800px; margin-left: auto; margin-right: auto;
+    }
+    .hero h1 em { color: var(--pink); font-style: normal; }
+    .hero-perex {
+      font-size: 1.15rem; color: #444; max-width: 600px;
+      margin: 0 auto 2.5rem; font-family: sans-serif; line-height: 1.65;
+    }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem; }
+    .btn-primary {
+      background: var(--pink); color: var(--white); padding: 0.85rem 2.2rem;
+      border-radius: 50px; font-size: 1rem; text-decoration: none; font-family: sans-serif;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: #c4177c; transform: translateY(-1px); }
+    .btn-secondary {
+      border: 2px solid var(--black); color: var(--black); padding: 0.85rem 2.2rem;
+      border-radius: 50px; font-size: 1rem; text-decoration: none; font-family: sans-serif;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--pink); color: var(--pink); }
+    .trust-boxes {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3.5rem;
+    }
+    .trust-box {
+      background: var(--grey); padding: 0.5rem 1.2rem; border-radius: 50px;
+      font-size: 0.88rem; font-family: sans-serif; color: #444;
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .trust-box::before { content: '✔'; color: var(--pink); font-size: 0.85rem; }
+    .hero-card {
+      background: var(--black); color: var(--white);
+      max-width: 720px; margin: 0 auto;
+      border-radius: var(--radius); padding: 2.5rem;
+      text-align: left; position: relative; overflow: hidden;
+    }
+    .hero-card::before {
+      content: '✦';
+      position: absolute; right: 2rem; top: 1.5rem;
+      font-size: 3rem; color: rgba(233,30,140,0.2);
+    }
+    .hero-card-label { color: var(--pink); font-size: 0.8rem; font-family: sans-serif; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.75rem; }
+    .hero-card h3 { font-size: 1.4rem; margin-bottom: 1rem; line-height: 1.3; }
+    .hero-card p { color: rgba(255,255,255,0.8); font-family: sans-serif; font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem; }
+    .hero-stats { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .hero-stat { text-align: center; }
+    .hero-stat-val { font-size: 1.1rem; font-weight: 700; color: var(--gold); display: block; }
+    .hero-stat-lbl { font-size: 0.8rem; color: rgba(255,255,255,0.6); font-family: sans-serif; }
+
+    /* SECTION DEFAULTS */
+    section { padding: 5rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      display: inline-block; background: var(--pink-light); color: var(--pink);
+      font-size: 0.78rem; font-family: sans-serif; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.3rem 0.9rem; border-radius: 50px; margin-bottom: 1rem;
+    }
+    h2 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); line-height: 1.2; margin-bottom: 1.2rem; }
+    .section-perex { font-size: 1.05rem; color: #555; font-family: sans-serif; max-width: 640px; line-height: 1.65; margin-bottom: 2.5rem; }
+
+    /* PROBLEM */
+    .problem { background: var(--off-white); }
+    .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+    .problem-list { list-style: none; }
+    .problem-list li {
+      padding: 0.9rem 1.2rem; background: var(--white); border-radius: 12px;
+      margin-bottom: 0.75rem; font-family: sans-serif; font-size: 0.95rem;
+      border-left: 3px solid var(--pink); display: flex; gap: 0.75rem; align-items: flex-start;
+    }
+    .problem-list li::before { content: '—'; color: var(--pink); flex-shrink: 0; margin-top: 0.1rem; }
+    .problem-visual {
+      background: var(--pink); border-radius: var(--radius); padding: 2.5rem;
+      color: var(--white); display: flex; flex-direction: column; justify-content: center; min-height: 320px;
+    }
+    .problem-visual h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+    .problem-visual p { font-family: sans-serif; font-size: 0.95rem; line-height: 1.6; opacity: 0.9; }
+
+    /* FOR WHOM */
+    .for-whom { background: var(--white); }
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+    .card {
+      background: var(--grey); border-radius: var(--radius); padding: 1.75rem;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+    .card-icon { font-size: 1.6rem; margin-bottom: 0.75rem; }
+    .card h4 { font-size: 1rem; margin-bottom: 0.5rem; font-family: sans-serif; font-weight: 700; }
+    .card p { font-size: 0.9rem; color: var(--grey-text); font-family: sans-serif; line-height: 1.55; }
+    .dark-banner {
+      background: var(--black); color: var(--white);
+      border-radius: var(--radius); padding: 3rem;
+      margin-top: 3rem; text-align: center;
+    }
+    .dark-banner h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+    .dark-banner p { font-family: sans-serif; font-size: 0.95rem; color: rgba(255,255,255,0.7); margin-bottom: 2rem; }
+    .tags { display: flex; gap: 0.6rem; flex-wrap: wrap; justify-content: center; }
+    .tag {
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.85); padding: 0.4rem 1rem; border-radius: 50px;
+      font-size: 0.85rem; font-family: sans-serif;
+    }
+
+    /* HOW IT WORKS */
+    .how-it-works { background: var(--gold-light); }
+    .steps { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+    .step {
+      background: var(--white); border-radius: var(--radius); padding: 1.75rem;
+      position: relative;
+    }
+    .step-num {
+      font-size: 2.5rem; font-weight: 700; color: var(--pink-light); font-family: sans-serif;
+      line-height: 1; margin-bottom: 0.75rem;
+    }
+    .step h4 { font-size: 1rem; font-family: sans-serif; font-weight: 700; margin-bottom: 0.5rem; }
+    .step p { font-size: 0.9rem; color: var(--grey-text); font-family: sans-serif; line-height: 1.55; }
+    .how-note {
+      background: var(--white); border-left: 4px solid var(--gold); padding: 1.2rem 1.5rem;
+      border-radius: 0 12px 12px 0; font-family: sans-serif; font-size: 0.92rem;
+      color: #555; line-height: 1.6; font-style: italic;
+    }
+
+    /* WHAT YOU GET */
+    .what-you-get { background: var(--white); }
+    .get-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+    .get-card {
+      border: 1px solid var(--grey-mid); border-radius: var(--radius); padding: 1.75rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .get-card:hover { border-color: var(--pink); box-shadow: var(--shadow-hover); }
+    .get-num { font-size: 0.75rem; font-family: sans-serif; color: var(--pink); font-weight: 700; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+    .get-card h4 { font-size: 1rem; font-family: sans-serif; font-weight: 700; margin-bottom: 0.5rem; }
+    .get-card p { font-size: 0.9rem; color: var(--grey-text); font-family: sans-serif; line-height: 1.55; }
+    .results-block {
+      background: var(--pink-light); border-radius: var(--radius); padding: 2.5rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+    }
+    .results-col h4 { font-size: 1rem; font-weight: 700; font-family: sans-serif; margin-bottom: 1rem; color: var(--pink); }
+    .results-col ul { list-style: none; }
+    .results-col li {
+      font-family: sans-serif; font-size: 0.9rem; padding: 0.4rem 0;
+      display: flex; gap: 0.5rem; align-items: flex-start;
+    }
+    .results-col li::before { content: '→'; color: var(--pink); flex-shrink: 0; }
+
+    /* OFFER */
+    .offer { background: var(--off-white); }
+    .offer-card {
+      background: var(--white); border-radius: var(--radius); padding: 3rem;
+      box-shadow: var(--shadow); max-width: 680px;
+      border-top: 4px solid var(--pink);
+    }
+    .offer-card h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+    .offer-price { font-size: 2.2rem; font-weight: 700; color: var(--pink); margin-bottom: 1.5rem; font-family: sans-serif; }
+    .offer-price span { font-size: 1rem; color: var(--grey-text); font-weight: 400; }
+    .offer-features { list-style: none; margin-bottom: 2rem; }
+    .offer-features li {
+      padding: 0.55rem 0; border-bottom: 1px solid var(--grey); font-family: sans-serif; font-size: 0.95rem;
+      display: flex; gap: 0.75rem; align-items: flex-start;
+    }
+    .offer-features li:last-child { border-bottom: none; }
+    .offer-features li::before { content: '✦'; color: var(--pink); flex-shrink: 0; font-size: 0.75rem; margin-top: 0.25rem; }
+    .offer-how { font-family: sans-serif; font-size: 0.95rem; color: #555; margin-bottom: 1.75rem; line-height: 1.6; }
+    .offer-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-outline {
+      border: 2px solid var(--pink); color: var(--pink); padding: 0.8rem 1.8rem;
+      border-radius: 50px; font-size: 0.95rem; text-decoration: none; font-family: sans-serif;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-outline:hover { background: var(--pink); color: var(--white); }
+    .offer-note { font-family: sans-serif; font-size: 0.85rem; color: var(--grey-text); margin-top: 1.25rem; }
+    .offer-subsection { margin-bottom: 3rem; }
+    .offer-subsection:last-of-type { margin-bottom: 0; }
+    .offer-subsection h3 { font-size: 1.25rem; margin-bottom: 0.75rem; }
+    .offer-intro-box {
+      background: var(--gold-light); border: 1px solid var(--grey-mid); border-radius: var(--radius);
+      padding: 1.75rem 2rem; max-width: 720px;
+    }
+    .offer-intro-box ul { list-style: none; margin: 0.75rem 0 1.25rem 0; padding: 0; font-family: sans-serif; font-size: 0.95rem; color: #444; line-height: 1.65; }
+    .offer-intro-box li { padding: 0.35rem 0; padding-left: 0; }
+    .offer-price-note {
+      font-family: sans-serif; font-size: 0.9rem; color: var(--grey-text); line-height: 1.65;
+      margin-top: -0.75rem; margin-bottom: 1.5rem; max-width: 640px;
+    }
+    .packages-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-bottom: 1.5rem;
+      align-items: stretch;
+    }
+    .package-card {
+      background: var(--white); border: 1px solid var(--grey-mid); border-radius: var(--radius);
+      padding: 1.75rem 1.5rem; position: relative; display: flex; flex-direction: column;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .package-card:hover { border-color: var(--pink); box-shadow: var(--shadow-hover); }
+    .package-card.featured { border-color: var(--pink); border-width: 2px; box-shadow: var(--shadow); padding-top: 2rem; }
+    .package-badge {
+      position: absolute; top: -0.65rem; left: 50%; transform: translateX(-50%);
+      background: var(--pink); color: var(--white); font-size: 0.68rem; font-family: sans-serif;
+      font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 0.35rem 0.85rem; border-radius: 50px; white-space: nowrap;
+    }
+    .package-card h4 { font-size: 1.15rem; font-family: sans-serif; font-weight: 700; margin-bottom: 0.75rem; margin-top: 0.5rem; }
+    .package-desc { font-family: sans-serif; font-size: 0.9rem; color: var(--grey-text); line-height: 1.55; flex: 1; margin-bottom: 1rem; }
+    .package-desc p { margin: 0.25rem 0; }
+    .package-price { font-size: 1.35rem; font-weight: 700; font-family: sans-serif; color: var(--black); margin-top: auto; }
+    .packages-support {
+      font-family: sans-serif; font-size: 0.9rem; color: #555; line-height: 1.65;
+      max-width: 900px; padding: 1.25rem 1.5rem; background: var(--grey); border-radius: var(--radius);
+      margin-bottom: 2rem;
+    }
+    .offer-cta-row { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--grey-mid); }
+    .offer-cta-row p { font-family: sans-serif; font-size: 0.95rem; color: #555; margin-bottom: 1.25rem; max-width: 720px; line-height: 1.6; }
+    .offer-btns-secondary { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; margin-bottom: 0.5rem; }
+    .btn-cal { font-size: 0.88rem; padding: 0.7rem 1.25rem; }
+
+    /* ABOUT */
+    .about { background: var(--black); color: var(--white); }
+    .about .section-label { background: rgba(233,30,140,0.15); }
+    .about h2 { color: var(--white); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 4rem; align-items: start; }
+    .about-photo-placeholder {
+      aspect-ratio: 3/4; background: rgba(255,255,255,0.05); border-radius: var(--radius);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.3); font-family: sans-serif; font-size: 0.9rem;
+      border: 2px dashed rgba(255,255,255,0.1);
+    }
+    .name-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(201,169,110,0.15); border: 1px solid rgba(201,169,110,0.3);
+      color: var(--gold); padding: 0.4rem 1rem; border-radius: 50px;
+      font-size: 0.9rem; font-family: sans-serif; margin-bottom: 1.5rem;
+    }
+    .about-bio p {
+      font-family: sans-serif; font-size: 0.95rem; color: rgba(255,255,255,0.8);
+      line-height: 1.7; margin-bottom: 1.2rem;
+    }
+    .about-bullets { list-style: none; margin: 1.5rem 0; }
+    .about-bullets li {
+      font-family: sans-serif; font-size: 0.9rem; color: rgba(255,255,255,0.7);
+      padding: 0.35rem 0; display: flex; gap: 0.6rem;
+    }
+    .about-bullets li::before { content: '✦'; color: var(--pink); flex-shrink: 0; }
+    .about-linkedin {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      color: var(--pink); text-decoration: none; font-family: sans-serif; font-size: 0.9rem;
+      border: 1px solid rgba(233,30,140,0.4); padding: 0.5rem 1.2rem; border-radius: 50px;
+      margin-top: 0.5rem; transition: background 0.2s;
+    }
+    .about-linkedin:hover { background: rgba(233,30,140,0.1); }
+
+    /* SHARE STRIP */
+    .share-strip { background: var(--pink-light); text-align: center; padding: 4rem 2rem; }
+    .share-strip h2 { font-size: 1.6rem; margin-bottom: 0.75rem; }
+    .share-strip p { font-family: sans-serif; font-size: 0.95rem; color: #555; margin-bottom: 2rem; }
+    .share-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .share-btn {
+      background: var(--white); border: 1px solid var(--grey-mid); color: var(--black);
+      padding: 0.65rem 1.5rem; border-radius: 50px; font-size: 0.9rem; font-family: sans-serif;
+      cursor: pointer; transition: box-shadow 0.2s; display: flex; align-items: center; gap: 0.4rem;
+    }
+    .share-btn:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.12); }
+
+    /* FORM */
+    .contact-form { background: var(--white); }
+    .form-wrap { max-width: 760px; }
+    .form-note {
+      background: var(--gold-light); border-left: 4px solid var(--gold);
+      padding: 1rem 1.25rem; border-radius: 0 12px 12px 0;
+      font-family: sans-serif; font-size: 0.9rem; color: #555; margin-bottom: 2rem;
+    }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group.full { grid-column: 1 / -1; }
+    label { font-family: sans-serif; font-size: 0.88rem; font-weight: 600; color: #333; }
+    input[type="text"], input[type="email"], textarea, select {
+      border: 1.5px solid var(--grey-mid); border-radius: 10px; padding: 0.75rem 1rem;
+      font-family: sans-serif; font-size: 0.95rem; color: var(--black);
+      transition: border-color 0.2s; background: var(--white); width: 100%;
+    }
+    input:focus, textarea:focus, select:focus { outline: none; border-color: var(--pink); }
+    textarea { min-height: 100px; resize: vertical; }
+    .radio-group { display: flex; flex-direction: column; gap: 0.5rem; }
+    .radio-option { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-family: sans-serif; font-size: 0.9rem; }
+    .radio-option input { width: auto; }
+    .checkbox-group { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .checkbox-label {
+      display: flex; align-items: center; gap: 0.4rem; cursor: pointer;
+      background: var(--grey); padding: 0.4rem 0.9rem; border-radius: 50px;
+      font-family: sans-serif; font-size: 0.85rem;
+    }
+    .checkbox-label input { width: auto; accent-color: var(--pink); }
+    .form-submit { margin-top: 2rem; }
+    .btn-submit {
+      background: var(--pink); color: var(--white); border: none;
+      padding: 1rem 2.5rem; border-radius: 50px; font-size: 1.05rem;
+      cursor: pointer; font-family: sans-serif;
+      transition: background 0.2s, transform 0.15s; width: 100%;
+    }
+    .btn-submit:hover { background: #c4177c; transform: translateY(-1px); }
+
+    /* SUCCESS */
+    .success-screen {
+      display: none; background: var(--white); border-radius: var(--radius);
+      padding: 3rem; text-align: center; border: 2px solid var(--pink);
+    }
+    .success-screen.active { display: block; }
+    .success-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .success-screen h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+    .success-screen p { font-family: sans-serif; font-size: 0.95rem; color: #555; margin-bottom: 0.75rem; }
+
+    /* FOOTER */
+    footer {
+      background: var(--black); color: rgba(255,255,255,0.7);
+      padding: 3rem 2rem; font-family: sans-serif;
+    }
+    .footer-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem; align-items: start;
+    }
+    .footer-logo { font-size: 1.4rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
+    .footer-logo span { color: var(--pink); }
+    .footer-tagline { font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.5; }
+    .footer-nav { list-style: none; }
+    .footer-nav li { margin-bottom: 0.5rem; }
+    .footer-nav a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+    .footer-nav a:hover { color: var(--pink); }
+    .footer-contact p { font-size: 0.9rem; margin-bottom: 0.5rem; }
+    .footer-contact a { color: var(--pink); text-decoration: none; }
+    .footer-bottom {
+      max-width: 1100px; margin: 2rem auto 0; padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.82rem; color: rgba(255,255,255,0.4); flex-wrap: wrap; gap: 0.5rem;
+    }
+
+    /* MY PRACTICE */
+    .my-practice { background: var(--off-white); }
+    .practice-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
+    .practice-card {
+      background: var(--white); border: 1px solid var(--grey-mid); border-radius: var(--radius);
+      padding: 1.75rem; transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .practice-card:hover { border-color: var(--gold); box-shadow: var(--shadow-hover); }
+    .practice-icon { font-size: 1.6rem; margin-bottom: 0.75rem; }
+    .practice-num { font-size: 0.72rem; font-family: sans-serif; color: var(--gold); font-weight: 700; letter-spacing: 0.1em; margin-bottom: 0.4rem; }
+    .practice-card h4 { font-size: 1rem; font-family: sans-serif; font-weight: 700; margin-bottom: 0.5rem; }
+    .practice-card p { font-size: 0.9rem; color: var(--grey-text); font-family: sans-serif; line-height: 1.55; margin-bottom: 0.75rem; }
+    .practice-list {
+      list-style: none; margin: 0 0 0.85rem 0; padding: 0;
+      font-size: 0.88rem; color: var(--grey-text); font-family: sans-serif; line-height: 1.55;
+    }
+    .practice-list li { padding: 0.25rem 0 0.25rem 1.1rem; position: relative; }
+    .practice-list li::before { content: '·'; position: absolute; left: 0; color: var(--gold); font-weight: 700; }
+    .practice-result { font-size: 0.88rem; font-family: sans-serif; font-weight: 700; color: var(--black); margin-top: 0.25rem; }
+    .practice-quote {
+      background: var(--black); color: var(--white);
+      border-radius: var(--radius); padding: 2.5rem; text-align: center;
+    }
+    .practice-quote blockquote {
+      font-size: 1.15rem; line-height: 1.6; color: var(--gold);
+      font-style: italic; max-width: 680px; margin: 0 auto;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 0 1rem; }
+      .nav-links { display: none; }
+      .problem-grid, .about-grid, .results-block, .footer-inner, .form-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero { padding: 3rem 1rem 2.5rem; }
+      section { padding: 3.5rem 1rem; }
+      .dark-banner, .offer-card { padding: 2rem 1.5rem; }
+      .packages-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#"><span>AI</span>Ladies</a>
+  <ul class="nav-links">
+    <li><a href="#pro-koho">Pro koho</a></li>
+    <li><a href="#jak-to-funguje">Jak to funguje</a></li>
+    <li><a href="#co-dostanes">Co dostaneš</a></li>
+    <li><a href="#nabidka">Nabídka</a></li>
+    <li><a href="#o-mne">O mně</a></li>
+  </ul>
+  <a href="#zacit" class="nav-cta">Začít</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label">✦ Osobní AI mentoring</div>
+  <h1>AI, která ti začne dávat smysl.<br><em>A výsledky.</em></h1>
+  <p class="hero-perex">Osobní mentoring pro ženy, které chtějí AI opravdu používat – v práci, projektech i každodenním fungování. Bez chaosu. Bez technického balastu.</p>
+  <div class="hero-btns">
+    <a href="#zacit" class="btn-primary">Chci začít</a>
+    <a href="#jak-to-funguje" class="btn-secondary">Jak to funguje</a>
+  </div>
+  <div class="trust-boxes">
+    <span class="trust-box">1:1 přizpůsobeno jen tobě</span>
+    <span class="trust-box">online odkudkoliv</span>
+    <span class="trust-box">ve tvém tempu</span>
+  </div>
+  <div class="hero-card">
+    <div class="hero-card-label">Proč AILadies?</div>
+    <h3>Nezáleží na tom, co víš. Záleží na tom, kde chceš být.</h3>
+    <p>Nemusíš rozumět technologiím. Nemusíš být „digitální typ". Potřebuješ jen zvědavost – a průvodkyni, která zná cestu.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-val">1:1</span><span class="hero-stat-lbl">přizpůsobeno jen tobě</span></div>
+      <div class="hero-stat"><span class="hero-stat-val">online</span><span class="hero-stat-lbl">odkudkoliv</span></div>
+      <div class="hero-stat"><span class="hero-stat-val">tvým tempem</span><span class="hero-stat-lbl">bez spěchu</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLÉM -->
+<section class="problem">
+  <div class="container">
+    <span class="section-label">Poznáš se?</span>
+    <h2>AI už jsi zkusila. Ale pořád to není ono.</h2>
+    <ul class="problem-list">
+      <li>Zkoušíš ChatGPT, ale výsledky jsou tak napůl</li>
+      <li>Nevíš, kde AI do tvé práce vlastně zapadá</li>
+      <li>Nemáš čas testovat desítky nástrojů</li>
+      <li>Kurzy jsou moc obecné nebo příliš technické</li>
+      <li>Na kurzu nerozumíš, o čem se mluví, a nepřipadáš si dobře</li>
+      <li>Nikdo ti to nepřeložil do lidské řeči – ani tě krok za krokem neprovedl</li>
+    </ul>
+  </div>
+</section>
+
+<!-- PRO KOHO -->
+<section class="for-whom" id="pro-koho">
+  <div class="container">
+    <span class="section-label">Pro koho</span>
+    <h2>AILadies je pro tebe, pokud cítíš, že by AI mohla tvou práci změnit – ale zatím nevíš jak.</h2>
+    <p class="section-perex">Možná jsi zkusila kurz, kde nebylo nic jasné. Možná jsi slyšela, že AI šetří čas – ale ty vlastně chceš víc. Chceš, aby tě práce zase bavila a dávala smysl.</p>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🤔</div>
+        <h4>Prošla jsi kurzem – ale nic se nezměnilo</h4>
+        <p>Absolvovala jsi kurz nebo zkoušela ChatGPT, ale v praxi to nějak nefungovalo. Informace bez kontextu – bez tvého kontextu.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎯</div>
+        <h4>Víš, co chceš změnit. Nevíš jak.</h4>
+        <p>Máš konkrétní pocit, že něco jde dělat líp. Chybí ti jen cesta od záměru k praxi.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">💻</div>
+        <h4>K technologiím nemáš blízko</h4>
+        <p>A to je v pořádku. Nepotřebuješ rozumět kódu ani sledovat AI novinky. Potřebuješ vědět, co chceš ve své práci zlepšit.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">👩‍💼</div>
+        <h4>Pracuješ sama nebo řídíš tým</h4>
+        <p>Freelancerka, podnikatelka, manažerka, koordinátorka. Mentoring se přizpůsobí přesně tvé roli.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">✨</div>
+        <h4>Nechceš jen šetřit čas</h4>
+        <p>Chceš, aby tě práce zase bavila a dávala smysl. Aby rutinní úkoly nešly na úkor energie. Aby sis zjednodušila administrativu a měla ruce volné pro věci, které jsou skutečně důležité.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎲</div>
+        <h4>Zkoušíš naslepo a unavuje tě to</h4>
+        <p>Výsledky z AI tě nenadchly – ale nevíš, jestli je problém v zadání, nebo v přístupu. Nechceš to dál zkoušet metodou pokus–omyl. Chceš vědět přesně, jak na to.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🙋‍♀️</div>
+        <h4>Potřebuješ se zeptat bez obav</h4>
+        <p>Žádné hloupé otázky neexistují. Jen ty, já a tvoje konkrétní situace.</p>
+      </div>
+    </div>
+
+    <div class="dark-banner">
+      <h3>Nejde jen o to pracovat rychleji. Jde o to pracovat jinak.</h3>
+      <p>AI ti může uvolnit ruce pro věci, které tě baví. Stačí vědět, kde ji zapojit – a jak.</p>
+      <div class="tags">
+        <span class="tag">e-maily</span>
+        <span class="tag">příprava schůzek</span>
+        <span class="tag">plánování</span>
+        <span class="tag">psaní textů</span>
+        <span class="tag">rutinní úkoly</span>
+        <span class="tag">brainstorming</span>
+        <span class="tag">zápisy ze schůzek</span>
+        <span class="tag">automatizace workflow</span>
+        <span class="tag">fakturace</span>
+        <span class="tag">propojování nástrojů</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JAK TO FUNGUJE -->
+<section class="how-it-works" id="jak-to-funguje">
+  <div class="container">
+    <span class="section-label">Jak to funguje</span>
+    <h2>Nejde o přednášku. Jde o společnou práci na tvém konkrétním posunu.</h2>
+    <p class="section-perex">Každé sezení vychází z toho, co ty konkrétně potřebuješ.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h4>Jdeš s tím, co řešíš</h4>
+        <p>Přines reálný úkol nebo otázku z práce. Pracujeme na tom – ne na cvičném příkladu.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h4>Každá hodina navazuje</h4>
+        <p>Nestartujeme pořád od nuly. Rozvíjíme to, co funguje – a přidáváme další vrstvu.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h4>Stavíme na tom, co funguje</h4>
+        <p>Žádné opakování od začátku. Každé sezení přidává vrstvu k tomu, co už drží směr.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h4>Odcházíš s něčím konkrétním</h4>
+        <p>Tip, doporučení, nastavení, postup. Vždy něco, co ráno rovnou použiješ nebo vyzkoušíš.</p>
+      </div>
+    </div>
+    <div class="how-note">
+      Mentoring není jen hodina se mnou. Velká část posunu se odehraje mezi sezeními – v momentě, kdy věci sama zkusíš. Čím víc si je vyzkoušíš, tím víc se toho odneseš.
+    </div>
+  </div>
+</section>
+
+<!-- CO DOSTANEŠ -->
+<section class="what-you-get" id="co-dostanes">
+  <div class="container">
+    <span class="section-label">Co dostaneš</span>
+    <h2>Mentoring šitý přesně pro tebe</h2>
+    <div class="get-grid">
+      <div class="get-card">
+        <div class="get-num">01</div>
+        <h4>Vstupní diagnostika</h4>
+        <p>Krátký formulář před prvním sezením. Díky tomu budu mít o tobě základní představu ještě předtím, než se potkáme – a hned od začátku budeme řešit konkrétně to, na čem chceš pracovat.</p>
+      </div>
+      <div class="get-card">
+        <div class="get-num">02</div>
+        <h4>Sezení 1:1, 60 minut</h4>
+        <p>Online, v klidu, jen my dvě. Řešíme to, co ty potřebuješ.</p>
+      </div>
+      <div class="get-card">
+        <div class="get-num">03</div>
+        <h4>Konkrétní tipy a doporučení</h4>
+        <p>Ukážu ti, jak AI používám já, co funguje v praxi a jak to přizpůsobit tvé práci. Domů si odneseš konkrétní rady, doporučené nástroje a postup, který hned použiješ.</p>
+      </div>
+      <div class="get-card">
+        <div class="get-num">04</div>
+        <h4>Osobní stránka s materiály</h4>
+        <p>Ke každému mentoringu dostaneš vlastní zabezpečenou webovou stránku – s přehledem témat, zápisy ze sezení, pokroky a materiály. Kdykoli se k obsahu mentoringu můžeš vrátit a dál s ním pracovat.</p>
+      </div>
+      <div class="get-card">
+        <div class="get-num">05</div>
+        <h4>Podklady pro tvoji práci s AI</h4>
+        <p>Vše, co probereme, dostaneš přehledně zpracované. Nic nezmizí, nemusíš si dělat poznámky – a kdykoliv se vrátíš, víš, kde jsi skončila.</p>
+      </div>
+      <div class="get-card">
+        <div class="get-num">06</div>
+        <h4>Žádný závazek</h4>
+        <p>Jedna hodina nebo deset – záleží na tom, jak se budeš posouvat a jak ti mentoring bude vyhovovat. Hodiny přidáváme průběžně, nebo si nastavíme pravidelnou spolupráci – třeba jednou za měsíc nebo jednou za dva měsíce. Vše je jen na tobě.</p>
+      </div>
+    </div>
+    <div class="results-block">
+      <div class="results-col">
+        <h4>Po první hodině</h4>
+        <ul>
+          <li>víš, kde AI použít ve své práci</li>
+          <li>rozumíš tomu, co děláš – a proč to funguje</li>
+          <li>začínáš mít AI mindset: jiný způsob přemýšlení o práci</li>
+        </ul>
+      </div>
+      <div class="results-col">
+        <h4>Po několika hodinách</h4>
+        <ul>
+          <li>máš vlastní workflow přizpůsobený tvé práci</li>
+          <li>zvládáš úkoly rychleji a s menší námahou</li>
+          <li>používáš AI jako partnera – ne náhodný nástroj</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NABÍDKA -->
+<section class="offer" id="nabidka">
+  <div class="container">
+    <span class="section-label">Nabídka</span>
+    <h2>Osobní AI mentoring</h2>
+    <p class="section-perex">Přijdeš s tím, co potřebuješ řešit. Pracujeme na tvém konkrétním problému hned od první minuty. Začít můžeš zdarma – úvodní konzultací – nebo rovnou jednorázovým setkáním či balíčkem.</p>
+
+    <!-- Úvodní konzultace zdarma -->
+    <div class="offer-subsection">
+      <h3>Úvodní konzultace zdarma (20 min)</h3>
+      <div class="offer-intro-box">
+        <ul>
+          <li>→ ujasníme si, co potřebuješ a jak ti AI může pomoct</li>
+          <li>→ navrhnu konkrétní postup</li>
+        </ul>
+        <div class="offer-btns">
+          <a href="https://calendar.app.google/AL6XEoUVpUE3uc9p6" class="btn-primary" target="_blank" rel="noopener">👉 Rezervovat úvodní konzultaci zdarma (20 min)</a>
+          <a href="#zacit" class="btn-outline btn-cal">Domluvit první krok (formulář)</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Jednorázové setkání -->
+    <div class="offer-subsection">
+      <h3>Jednorázové setkání</h3>
+      <div class="offer-price">60 min: <strong>3 000 Kč</strong></div>
+      <p class="offer-price-note">Součástí každého setkání je i následná podpora e-mailem po dobu <strong>5 dnů</strong> od jeho konání. Můžeš se doptat na věci, které ti při zavádění AI nedávají smysl nebo potřebuješ upřesnit. Odpovídám zpravidla do 24–48 hodin.</p>
+      <ul class="offer-features" style="max-width: 680px;">
+        <li>Sezení 1:1 online (60 min)</li>
+        <li>Přizpůsobeno tvé práci a situaci</li>
+        <li>Konkrétní tipy, doporučení a postup po sezení</li>
+        <li>Vlastní zabezpečená stránka s materiály a zápisy</li>
+      </ul>
+      <div class="offer-btns">
+        <a href="https://calendar.app.google/rRpr1pQGoHsRc8jJ9" class="btn-outline" target="_blank" rel="noopener">📅 Vybrat termín mentoringu v kalendáři</a>
+      </div>
+    </div>
+
+    <!-- Balíčky -->
+    <div class="offer-subsection">
+      <h3>Balíčky</h3>
+      <div class="packages-grid">
+        <div class="package-card">
+          <h4>Start</h4>
+          <div class="package-desc">
+            <p>→ pochopíš, jak AI zapojit do svého dne</p>
+          </div>
+          <div class="package-price">3 setkání: <strong>8 550 Kč</strong></div>
+        </div>
+        <div class="package-card featured">
+          <span class="package-badge">Nejčastější volba</span>
+          <h4>Rozjezd</h4>
+          <div class="package-desc">
+            <p>→ začneš AI reálně používat v práci</p>
+          </div>
+          <div class="package-price">5 setkání: <strong>13 800 Kč</strong></div>
+        </div>
+        <div class="package-card">
+          <h4>Proměna</h4>
+          <div class="package-desc">
+            <p>→ nastavíš si vlastní systém, který ti šetří čas i energii</p>
+          </div>
+          <div class="package-price">10 setkání: <strong>26 100 Kč</strong></div>
+        </div>
+      </div>
+      <div class="packages-support">
+        V rámci balíčků máš k dispozici <strong>průběžnou podporu e-mailem</strong> po celou dobu spolupráce. Můžeš se ptát na konkrétní situace, prompty nebo výstupy, které řešíš v praxi. Odpovídám zpravidla do 24–48 hodin.
+      </div>
+      <div class="offer-btns">
+        <a href="#zacit" class="btn-primary">Vyplnit formulář – zájem o balíček</a>
+        <a href="https://calendar.app.google/rRpr1pQGoHsRc8jJ9" class="btn-outline" target="_blank" rel="noopener">📅 Vybrat termín mentoringu v kalendáři</a>
+      </div>
+    </div>
+
+    <!-- Společné CTA -->
+    <div class="offer-cta-row">
+      <p><strong>Jak začít:</strong> Vyplň formulář níže a rezervuj si <strong>20minutovou úvodní konzultaci zdarma</strong>, nebo si rovnou vyber termín mentoringu v kalendáři. Dva kalendáře jsou oddělené – jeden pro úvodní hovor, druhý pro placená setkání.</p>
+      <div class="offer-btns offer-btns-secondary">
+        <a href="#zacit" class="btn-primary">Vyplnit formulář</a>
+        <a href="https://calendar.app.google/AL6XEoUVpUE3uc9p6" class="btn-outline btn-cal" target="_blank" rel="noopener">📅 Úvodní konzultace (20 min) – kalendář</a>
+        <a href="https://calendar.app.google/rRpr1pQGoHsRc8jJ9" class="btn-outline btn-cal" target="_blank" rel="noopener">📅 Mentoring – kalendář</a>
+      </div>
+      <p class="offer-note">Žádné závazky u úvodní konzultace – jen rozhovor a jasnější směr.</p>
+    </div>
+  </div>
+</section>
+
+<!-- O MNĚ -->
+<section class="about" id="o-mne">
+  <div class="container">
+    <span class="section-label">O mně</span>
+    <div class="about-grid">
+      <div class="about-photo-placeholder">
+        [ foto Petry ]
+      </div>
+      <div class="about-bio">
+        <h2>Moderátorka, spoluzakladatelka neziskovky a nadšenkyně do AI.</h2>
+        <div class="name-badge">✦ Petra Květová Pšeničná</div>
+        <p>Celý život se pohybuji v médiích a komunikaci. Moderovala jsem televizní a rozhlasové pořady, pracovala jako novinářka, vedla projekty, koordinovala týmy, psala, mluvila, vyprávěla příběhy. Před lety jsem spoluzaložila neziskovou organizaci Fandi mámám – a dnes stojím jednou nohou v médiích, druhou v neziskovém světě a oběma v AI.</p>
+        <p>V roce 2025 jsem narazila na AI jako pracovní nástroj – a bylo to jiné než cokoliv předtím. Začala jsem zkoušet, dělat chyby, hledat cesty. A postupně jsem zjistila, jak moc se může změnit způsob práce člověka, který není ajťák, ale chce věci dělat líp. Dnes díky AI zvládám víc, mám lepší výstupy, dělám věci, které bych dřív vůbec nezvládla – a ta práce mě baví mnohem víc.</p>
+        <p>Snažím se AI zavádět i do Fandi mámám – od sledování dárců po automatizaci komunikace. A zjistila jsem, že co mi přijde jako malá rada, může být pro někoho jiného velký objev. Baví mě předávat dál to, co funguje.</p>
+        <p>Velký přelom přišel se spoluprací s Aibility – firmou, která se věnuje AI vzdělávání v Česku. Díky této spolupráci jsem se naučila obrovské množství věcí a úplně změnila způsob, jak s AI pracuji. A teď to předávám dál – svou řečí, bez technického žargonu, krok za krokem. Protože AI může používat každý.</p>
+        <ul class="about-bullets">
+          <li>Spoluzakladatelka a koordinátorka Fandi mámám</li>
+          <li>Moderátorka</li>
+          <li>Spolupráce s Aibility</li>
+          <li>Podcast Dobro Skladem</li>
+          <li>Mediální tréninky</li>
+        </ul>
+        <a href="https://www.linkedin.com/in/petra-kv%C4%9Btov%C3%A1-p%C5%A1eni%C4%8Dn%C3%A1-4761b74a/" target="_blank" rel="noopener" class="about-linkedin">→ LinkedIn profil</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MOJE PRAXE S AI -->
+<section class="my-practice">
+  <div class="container">
+    <span class="section-label">Moje praxe s AI</span>
+    <h2>Neučím z příruček. Tady je důkaz.</h2>
+    <p class="section-perex">Každý příklad níže je věc, kterou jsem skutečně udělala – s AI jako parťákem. Bez agentury, bez vývojáře, bez copywritera.</p>
+    <div class="practice-grid">
+      <div class="practice-card">
+        <div class="practice-icon">🚀</div>
+        <div class="practice-num">01</div>
+        <h4>Z chaosu k systému (NGO + tým)</h4>
+        <p>Díky AI jsem dokázala vytvořit funkční systém řízení lidí, smluv a výkazů.</p>
+        <ul class="practice-list">
+          <li>automatizace Google Sheets + Docs + Gmail</li>
+          <li>generování smluv na klik</li>
+          <li>přenos dat bez ruční práce</li>
+        </ul>
+        <div class="practice-result">Výsledek: úspora desítek hodin měsíčně + menší chybovost</div>
+      </div>
+      <div class="practice-card">
+        <div class="practice-icon">⚡</div>
+        <div class="practice-num">02</div>
+        <h4>Z nápadu k realizaci během hodin</h4>
+        <p>Díky AI zvládám přetavit nápad do konkrétního výstupu extrémně rychle.</p>
+        <ul class="practice-list">
+          <li>weby, texty, strategie, granty</li>
+          <li>scénáře podcastů, moderátorské vstupy</li>
+        </ul>
+        <div class="practice-result">Co dřív trvalo dny → dnes hotové za hodiny</div>
+      </div>
+      <div class="practice-card">
+        <div class="practice-icon">✨</div>
+        <div class="practice-num">03</div>
+        <h4>Spustila jsem vlastní brand za zlomek času a nákladů</h4>
+        <p><strong>AILadies</strong> – web, texty, obchodní podmínky, GDPR, bio, marketing copy – vše jsem vytvořila s AI jako parťákem. Bez agentury, bez copywritera, bez právníka.</p>
+      </div>
+      <div class="practice-card">
+        <div class="practice-icon">🧠</div>
+        <div class="practice-num">04</div>
+        <h4>Pracuji s AI jako se svým „druhým mozkem" každý den</h4>
+        <p>Rediguju texty hlasem (Wispr Flow), přepisuji schůzky (Sana AI), plánuju strategie, řeším pricing, píšu e-maily zákazníkům, připravuju obsah webinářů – AI je součást každého pracovního dne.</p>
+        <ul class="practice-list">
+          <li>generátor prezentací / HTML šablony – šablony prezentací k opakovanému použití</li>
+        </ul>
+      </div>
+      <div class="practice-card">
+        <div class="practice-icon">🎯</div>
+        <div class="practice-num">05</div>
+        <h4>Přetavila jsem zkušenosti do vzdělávání pro stovky lidí</h4>
+        <p>Webináře, frameworky, obsahové série – strukturované know-how, které by jinak zůstalo v mé hlavě.</p>
+        <div class="practice-result">Z individuální práce → dopad na komunitu.</div>
+      </div>
+    </div>
+    <div class="practice-quote">
+      <blockquote>„Co dřív trvalo dny, dnes zvládnu za hodiny. Nepracuju víc – pracuju jinak. A to přesně učím."</blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- SDÍLENÍ -->
+<section class="share-strip">
+  <div class="container">
+    <span class="section-label">Doporuč dál</span>
+    <h2>Znáš někoho, komu by to pomohlo?</h2>
+    <p>Pošli odkaz kamarádce, kolegyni nebo komukoli, kdo chce AI konečně opravdu využívat v práci.</p>
+    <div class="share-btns">
+      <button class="share-btn" onclick="navigator.clipboard.writeText(window.location.href).then(()=>alert('Odkaz zkopírován!'))">📋 Zkopírovat odkaz</button>
+      <a class="share-btn" href="mailto:?subject=Tohle%20t%C4%9B%20mo%C5%BEn%C3%A1%20zaujme%20%E2%80%93%20AI%20mentoring%20pro%20%C5%BEeny&body=Ahoj%2C%20narazila%20jsem%20na%20skvěl%C3%BD%20AI%20mentoring%20speci%C3%A1ln%C4%9B%20pro%20%C5%BEeny%20%E2%80%93%20AILadies%20od%20Petry%20Kv%C4%9Btov%C3%A9%20P%C5%A1eni%C4%8Dn%C3%A9.%20Osobn%C3%AD%20p%C5%99%C3%ADstup%2C%201%3A1%20online%2C%20bez%20technick%C3%A9ho%20%C5%BEargonu.%20Mysl%C3%ADm%2C%20%C5%BEe%20by%20t%C4%9B%20to%20mohlo%20zaj%C3%ADmat%20%F0%9F%91%87%20https%3A%2F%2Failadies.cz">✉️ Poslat e-mailem</a>
+      <a class="share-btn" href="https://wa.me/?text=Tohle%20t%C4%9B%20mo%C5%BEn%C3%A1%20zaujme%20%E2%80%93%20AI%20mentoring%20speci%C3%A1ln%C4%9B%20pro%20%C5%BEeny%20%F0%9F%91%A9%E2%80%8D%F0%9F%92%BB%E2%9C%A8%20https%3A%2F%2Failadies.cz" target="_blank">💬 Sdílet na WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- FORMULÁŘ -->
+<section class="contact-form" id="zacit">
+  <div class="container">
+    <span class="section-label">Začít</span>
+    <h2>Řekni mi o sobě</h2>
+    <p class="section-perex">Než se potkáme, ráda bych věděla víc o tobě a tvé práci. Pomůže mi to připravit se – a netrávit první sezení zbytečnými otázkami.</p>
+
+    <div class="form-wrap">
+      <div class="form-note">🎙️ Nechce se ti psát? Nahraj mi krátkou hlasovou zprávu – pole pro nahrávání najdeš níže.</div>
+
+      <form id="mentoring-form">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="name">Jméno a příjmení *</label>
+            <input type="text" id="name" name="name" required placeholder="Jana Nováková">
+          </div>
+          <div class="form-group">
+            <label for="email">E-mail *</label>
+            <input type="email" id="email" name="email" required placeholder="jana@example.cz">
+          </div>
+          <div class="form-group">
+            <label for="role">Pracovní role nebo pozice *</label>
+            <input type="text" id="role" name="role" required placeholder="Freelancerka, manažerka, ...">
+          </div>
+          <div class="form-group">
+            <label for="company">Obor nebo firma</label>
+            <input type="text" id="company" name="company" placeholder="Marketing, neziskovka, HR, ...">
+          </div>
+          <div class="form-group full">
+            <label for="day">Jak vypadá tvůj typický pracovní den? *</label>
+            <textarea id="day" name="day" required placeholder="Pár vět stačí – co děláš nejčastěji, s čím pracuješ..."></textarea>
+          </div>
+          <div class="form-group full">
+            <label for="pain">Co tě v práci nejvíc unavuje nebo zabírá čas?</label>
+            <textarea id="pain" name="pain" placeholder="Co bys nejradši zrychlila nebo zjednodušila?"></textarea>
+          </div>
+          <div class="form-group full">
+            <label>Jak na tom jsi s AI?</label>
+            <div class="radio-group">
+              <label class="radio-option"><input type="radio" name="ai-level" value="zacatecnik"> 🌱 Začínám od nuly</label>
+              <label class="radio-option"><input type="radio" name="ai-level" value="zkousela"> 🔍 Zkusila jsem, ale moc mi to nešlo</label>
+              <label class="radio-option"><input type="radio" name="ai-level" value="obcas"> ⚡ Občas používám, ale nejistě</label>
+              <label class="radio-option"><input type="radio" name="ai-level" value="pokrocila"> 🚀 Používám pravidelně, chci posunout dál</label>
+            </div>
+          </div>
+          <div class="form-group full">
+            <label>Které nástroje znáš nebo používáš?</label>
+            <div class="checkbox-group">
+              <label class="checkbox-label"><input type="checkbox" name="tools" value="chatgpt"> ChatGPT</label>
+              <label class="checkbox-label"><input type="checkbox" name="tools" value="claude"> Claude</label>
+              <label class="checkbox-label"><input type="checkbox" name="tools" value="gemini"> Gemini</label>
+              <label class="checkbox-label"><input type="checkbox" name="tools" value="copilot"> Microsoft Copilot</label>
+              <label class="checkbox-label"><input type="checkbox" name="tools" value="perplexity"> Perplexity</label>
+              <label class="checkbox-label"><input type="checkbox" name="tools" value="canva"> Canva AI</label>
+              <label class="checkbox-label"><input type="checkbox" name="tools" value="zadne"> Žádné</label>
+            </div>
+          </div>
+          <div class="form-group full">
+            <label for="other-tools">Jiné AI nástroje</label>
+            <input type="text" id="other-tools" name="other-tools" placeholder="Např. Midjourney, Notion AI, ...">
+          </div>
+          <div class="form-group full">
+            <label for="expectation">Co od mentoringu očekáváš? Co chceš zlepšit nebo změnit?</label>
+            <textarea id="expectation" name="expectation" placeholder="Klidně jen hrubý nápad – upřesníme spolu..."></textarea>
+          </div>
+          <div class="form-group full">
+            <label for="hours">Kolik hodin bys chtěla?</label>
+            <select id="hours" name="hours">
+              <option value="">— vyber —</option>
+              <option value="1">1 hodina</option>
+              <option value="2">2 hodiny</option>
+              <option value="3">3 hodiny</option>
+              <option value="5">5 hodin</option>
+              <option value="10">10 hodin</option>
+              <option value="individualni">Individuální nabídka</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label>Hlasová zpráva (volitelné)</label>
+            <div style="background: var(--grey); border-radius: 10px; padding: 1rem; font-family: sans-serif; font-size: 0.9rem; color: var(--grey-text);">
+              🎙️ Nechce se ti psát? Nahraj krátkou hlasovou zprávu (1–2 min) a pošli ji na <a href="mailto:hello@ailadies.cz" style="color: var(--pink);">hello@ailadies.cz</a>
+            </div>
+          </div>
+        </div>
+        <div class="form-submit">
+          <button type="submit" class="btn-submit">Odeslat a domluvit se na sezení ✦</button>
+        </div>
+      </form>
+
+      <div class="success-screen" id="success-screen">
+        <div class="success-icon">✦</div>
+        <h3>Tvoje žádost je na cestě!</h3>
+        <p>Poslala jsem ti potvrzovací e-mail.</p>
+        <p>Pokud si chceš termín vybrat hned, udělej to přímo v rezervačním kalendáři.</p>
+        <br>
+        <a href="https://calendar.app.google/rRpr1pQGoHsRc8jJ9" class="btn-primary" target="_blank" rel="noopener">📅 Vybrat termín mentoringu v kalendáři</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo"><span>AI</span>Ladies</div>
+      <p class="footer-tagline">Osobní AI mentoring pro ženy,<br>které chtějí pracovat jinak.</p>
+    </div>
+    <ul class="footer-nav">
+      <li><a href="#pro-koho">Pro koho</a></li>
+      <li><a href="#jak-to-funguje">Jak to funguje</a></li>
+      <li><a href="#co-dostanes">Co dostaneš</a></li>
+      <li><a href="#nabidka">Nabídka</a></li>
+      <li><a href="#o-mne">O mně</a></li>
+      <li><a href="#zacit">Začít</a></li>
+    </ul>
+    <div class="footer-contact">
+      <p><a href="mailto:hello@ailadies.cz">hello@ailadies.cz</a></p>
+      <p><a href="https://www.linkedin.com/in/petra-kv%C4%9Btov%C3%A1-p%C5%A1eni%C4%8Dn%C3%A1-4761b74a/" target="_blank" rel="noopener">LinkedIn</a></p>
+      <p><a href="#">Instagram</a></p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 AILadies · ailadies.cz</span>
+    <span>Ve spolupráci s <a href="https://aibility.cz" target="_blank" rel="noopener" style="color: var(--pink); text-decoration: none;">Aibility</a></span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('mentoring-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    this.style.display = 'none';
+    document.getElementById('success-screen').classList.add('active');
+    window.scrollTo({ top: document.getElementById('success-screen').offsetTop - 100, behavior: 'smooth' });
+  });
+</script>
+
+</body>
+</html>
