@@ -1,0 +1,178 @@
+{
+  "aktualizovano": "2026-06-07T19:13:00.999380+00:00",
+  "webinare": [
+    {
+      "id": "recUaMcvmLclF5F7B",
+      "typ": "webinar",
+      "nazev": "Jak si zjednodušit život s AI",
+      "status": "Návrh",
+      "datum": "23. 6. 2026",
+      "lektorka": "Petra Květová Pšeničná, Aneta Lízancová, Kateřina Šumpíková",
+      "meet_link": "",
+      "popis_preview": "*Jdeme krok za krokem - i kde kliknout.*\n*10 reálných situací ze života. Inspirace pro úplné začátečnice.*\nSlyšíš všude, že „AI změní svět\", a říkáš si - fajn, ale co konkrétně mi udělá v úterý večer,",
+      "airtable_url": "https://airtable.com/app0hrAz2Vj2TxNHe/tbl74yZ5Tx3Jy0Gfl/recUaMcvmLclF5F7B"
+    }
+  ],
+  "eventy": [
+    {
+      "typ": "event",
+      "nazev": "AI Ladies Night #1 — KICKOFF + natáčení CallCastu",
+      "status": "Návrh",
+      "datum": "17. 6. 2026 · 18:00",
+      "lektorka": "Aneta Lázancová (host)",
+      "meet_link": "",
+      "popis_preview": "Space Café Anděl · kickoff celého AI Ladies",
+      "airtable_url": ""
+    }
+  ],
+  "callcasty": [
+    {
+      "typ": "callcast",
+      "nazev": "CallCast — Díl 1 (zveřejnění)",
+      "status": "Návrh",
+      "datum": "30. 6. 2026",
+      "lektorka": "Petra · Aneta · Katka",
+      "meet_link": "",
+      "popis_preview": "YouTube + Spotify · zdarma",
+      "airtable_url": ""
+    }
+  ],
+  "lektorky": [
+    {
+      "id": "rec3D2i3RJvQHxI2H",
+      "jmeno": "Kateřina Šumpíková",
+      "bio": "Obchodnice a podnikatelka - přes dvacet let vede firmu Alesio. K AI se dostala v roce 2022 a brzy jí došlo, že není pro programátory, ale hlavně o komunikaci a skládání věcí dohromady. Dnes staví konverzační AI - asistenty a agenty, co se zákazníky mluví lidsky.",
+      "specializace": "",
+      "email": "sumpikova@alesio.cz",
+      "foto": "https://v5.airtableusercontent.com/v3/u/54/54/1780869600000/2cg-cV6doXyfokochmlZiQ/XsrXWB5d01ghwzkqlagREZiQ9Hmqv3ikJkRfyUAkq-BoYhcw9U6mv2lLAJ8qd7QaNTILQEwQ89g8CHDy4KnOR_waadwqxJRn13EzENvUa_PeIxzc3m6H9Cq0Hpkz7XD-Qjrrq9LxV-ifwW5e1IoseA/B4JI5Zwfw_pQC8khvAETiOYsQNDV9OgRRaM18aiyw-Q"
+    },
+    {
+      "id": "rec3RwhwTOxozrRIB",
+      "jmeno": "Klára Rybenská",
+      "bio": "Klára Rybenská je proděkankou pro studium na Filozofické fakultě Univerzity Hradec Králové, kde se dlouhodobě věnuje didaktice umělé inteligence, rozvoji AI gramotnosti a praktickému využití AI ve vzdělávání. Vede workshopy a školení pro vysokoškolské pedagogy, studenty i seniory (U3V), ve kterých u",
+      "specializace": "",
+      "email": "klara.rybenska@uhk.cz",
+      "foto": "https://v5.airtableusercontent.com/v3/u/54/54/1780869600000/5uQfa9uFpKQF5rUcrwKMKg/W_2t9w3pK_Bc7PO6X8Pw5nNLMncQluCJj8zMkpEO8Cbraq3tQcLdj9pcOELRF6ogszETH1tMvmaxjDyAQe5UyNbqgtMBttail_yA_09IZpueUEXJDORUYmunma9Jhz39vfIGvoMQdtZLfr_iMabWdA/HuRdyenRvEzNL9vLLZ8ar4HBbPMs6AM0xv16raMhaYQ"
+    },
+    {
+      "id": "rec4YQgB4ACDY8FSt",
+      "jmeno": "Tom Paulus",
+      "bio": "Designér, který zvyšuje konverze a zlepšuje zákaznickou zkušenost. Deset let se věnuje produktovému designu a své know-how sdílí prostřednictvím online kurzů, mentoringu designérů a e-booku Storytelling Masterclass.",
+      "specializace": "",
+      "email": "tomas.paulus@aibility.cz",
+      "foto": ""
+    },
+    {
+      "id": "recBFSYcztgrVs2e2",
+      "jmeno": "Filip Dřímalka",
+      "bio": "FILIP DŘÍMALKA je odborníkem na digitální inovace a jejich zavádění do firem. Založil projekty Digiskills, Aibility (ex-Digitask) nebo nowork.ai, které rozvíjejí nové dovednosti u stovek firem a desítek tisíc lidí v Česku i v zahraničí. Je autorem mnoha inovací, které dnes slouží jako základ vzděláv",
+      "specializace": "",
+      "email": "filip.drimalka@ef1.cz",
+      "foto": "https://v5.airtableusercontent.com/v3/u/54/54/1780869600000/sOIVLMy8r2uUilMYWrZOaA/IEEJX_OUowRK5nMmIOCzqiAjQ0xJB9U0Mmj83kpUbqRbdj0G3h-I9ITL23-hDqe55WKVNlsAgU-yHqeWdBwADdkb8BKuIon8HJNaTRkHl50VhyfHp8NDd__BHKLwVZ0f-SlbWyENuDuJ4vKQK4-7lQ/b_wN_o_AdJgiguMUxxaKKDhUhDGjXtpIga5EvK3aotw"
+    },
+    {
+      "id": "recCBuPwNSpfZkQ5B",
+      "jmeno": "Martin Imrich",
+      "bio": "Leader v Aibility. Pomáhá lidem a firmám získat „superschopnosti“ díky AI v každodenní praxi. Více než 14 let v IT a B2B softwaru. Dnes zjednodušuje cestu k adopci AI - od jednotlivců po celé organizace.",
+      "specializace": "",
+      "email": "martin.imrich@aibility.cz",
+      "foto": "https://v5.airtableusercontent.com/v3/u/54/54/1780869600000/X_cSP-wiOoQ2P6OEUs5-Bg/ei5vGhvbet_omCoPAGfNoBPLiKahaVQGDbxIVBb5vOcwYnRCjDzY_eHrPsefcmrkHSw9uvRoQ69KA5hOJneltSZw4mWS6oq3vn5giyipiCOxH5m4w_TLBUnTpqJNSRuNxetHmOldGhF4JjSbnyepqw/bPigAgPz2O4U9L9EOOyEbRoqHy8HoVGdQYrM9A3uyqQ"
+    },
+    {
+      "id": "recF9Kd3L4fnUCrfI",
+      "jmeno": "Ondřej Švec",
+      "bio": "Jako CTO v Aibility staví Aimee - AI kouče, který provází jednotlivce i celé organizace na jejich cestě k AI. Přes 14 let pomáhal firmám uchopit technologie, ať už jako architekt, v sales nebo ve vedení týmů, a někde uprostřed té cesty ho burnout přivedl ke koučinku, neurovědě a úplně jiným otázkám.",
+      "specializace": "",
+      "email": "",
+      "foto": "https://v5.airtableusercontent.com/v3/u/54/54/1780869600000/YbWxzuMBhlBpYSL0tZeT0A/50t1DBbbicsGTu_snnYNgF6s6IMMGD7GzD8ExprnJ5TUvQdRNWGgL5_9t6XkDQTXo_2dIpcIvIFdW6OwV2jytfY9iTTXTMlUpThf-pJh2nxVdscbWQuCfHEqaeEzWsKe1v5XOwnsw4w6qwBvwNq2fg/J7iETeBCQ-1gdl9Dxl4xw4fJY5cv9om7Gyuw-GknLKo"
+    },
+    {
+      "id": "recKR5EUNVhh9Havr",
+      "jmeno": "Žaneta Pavlíčková",
+      "bio": "Žaneta působí v roli Business Development a je prvním kontaktem mezi firmou a její AI budoucností. Provází klienty od počáteční skepse přes pilotní projekty až po full-scale transformace. Opírá se o roky zkušeností v B2B a digitálních inovacích, stovky hodin jednání s vedením firem a jeden jasný cíl",
+      "specializace": "Spoluzakladatelka · Marketing · Eventy",
+      "email": "zaneta.pavlickova@aibility.cz",
+      "foto": "https://v5.airtableusercontent.com/v3/u/54/54/1780869600000/S6i5tsHzezmVLbhD8DzY8w/9oUR4g41CtoHKRIS1Xw6svvkRlCEfiA6qAGjV7Qp0FKjihxFKKCihuc664DbrxRO3hFO77xaEbxKBUBQduvfU2ymRnWhfqKW5F4QZN_yyuMy1b3km_auVHmIMMuFgSeRCKIeYGgsz7ut11IYrSVkJQ/H0_85l4QW8CVv7IsNr6CVG-db--P52gA3K8GwMlsKsE"
+    },
+    {
+      "id": "recT2lWU7tMC0PsyE",
+      "jmeno": "Aneta Lízancová",
+      "bio": "Roky v marketingu, eventech a projektovém řízení. Ztělesnění kreativního chaosu. Díky AI dneska sama postaví věci, na které si půlku života myslela, že potřebuje celý tým - od webu přes kampaně až po atmosféru na akci.",
+      "specializace": "",
+      "email": "hello@ailadies.cz",
+      "foto": "https://v5.airtableusercontent.com/v3/u/54/54/1780869600000/jHn_oxwIGFiQRYA9lZ2ENw/U3coLp1-JQHQv0H1CtyDBM4zNh80N72oC1wLe97_wyuUSRQMljfKRqyIZckiaRvxa2qAuZ9-2f-5uQMV6Ys4Uo8juhOm-XiMhDdnRWo24trUDtgHFUMvpULZk_8rgeI2dw1j3mtjTGrIwfk0lR6rog/BoHFnvNzL2AdKLGpymN1h9zE3vYvu7yCjUBTcc0vmpk"
+    },
+    {
+      "id": "recWJswX3urRiwgY2",
+      "jmeno": "Lukáš Bekr",
+      "bio": "Lukáš Bekr je Product Marketing Manager pro AI a integrace v Apify. Kombinuje 10 let zkušeností v digitálním marketingu a vlastním podnikání s hlubokým ponorem do světa AI a automatizací. Po večerech si povídá s Claude code a tvoří svého osobního AI asistenta aby mohl vše ovládat z terminálu.",
+      "specializace": "",
+      "email": "lukas.bekr@apify.com",
+      "foto": "https://v5.airtableusercontent.com/v3/u/54/54/1780869600000/47pdcSCi31T-s8vvSVsw9w/zCqvuPtAsYnSak6bTE6GnW9JoVYfo4NAyOwmSCDnPqoYN86mw5hX6rtdZwpAg1bCnOMgg6QhheA6eAHblEROxB6pImgZt0KpaGRIgtRJplCLV8Mo5CrXaqW0tcT-bsYYRnkd5mfKqGA78Xzue4wvGA/It0xHksUWYeVr8BBazQamSbj5EN84rT_2c18_gyRIQc"
+    },
+    {
+      "id": "recbXV1Zsu6dn8Fnx",
+      "jmeno": "Lenka Stawarczyk",
+      "bio": "Lenka Stawarczyk je marketérka, školitelka a UX writerka s více než deseti lety v marketingu a produktovém vývoji. Vedla marketing ve Storyous, tým produktových marketérů v LMC a spolupracovala s projekty jako FaceUp, Trezor či AAVE.\n\nDnes pracuje samostatně a pomáhá značkám najít hlas i uživatelům ",
+      "specializace": "",
+      "email": "jedina@lenkastawarczyk.com",
+      "foto": "https://v5.airtableusercontent.com/v3/u/54/54/1780869600000/WevopD2IhWJD67scc_bNsg/OxJ9vAi7Z0DjC5o8rd8jwu7LWwwrU2_v0LcFdKgVbUmL1M5UJudvok7ZKD2GlBu48-bI7xuao3d2gmj-Lpie2q5F0ky1bLjrChdiRhHtAyzsjdXWKcgqZW9xyClPxkZntHaYTY-len8fqGHPsAkoxg/o9YvtaZwKpyxcX1DEw6mh8T9SNHt1r_SgBgSSJzDZSo"
+    },
+    {
+      "id": "recbbe8ePtyV2FlGm",
+      "jmeno": "Petra Květová Pšeničná",
+      "bio": "Moderátorka a facilitátorka, která propojuje svět médií, nezisku a vzdělávání. Spoluzaložila a vede organizaci Fandi mámám. V AI Ladies moderuje webináře a předává konkrétní postupy - bez složitostí a bez pocitu, ze bys měla něco umět.",
+      "specializace": "",
+      "email": "p.kvetova@gmail.com",
+      "foto": "https://v5.airtableusercontent.com/v3/u/54/54/1780869600000/UUxnuaY56Evz7VdNaWXVvg/my4xZo2dN4h0yTx2egKqs4oXN_Naspqk6u7HGlMtOsXztsGpa09ya6kqBHKfDIPCltWgfcRbI7bt_nIhZW290_BRogcGx-02zn-7iHRfjP_z8ELridufiHzan6VCwBWWAZ-EXOqTY-bfcvUfgBiRSQ/OhG6YG8GO35asOaIxVv1G5ThFqfTys3kLiesOQqeWKA"
+    },
+    {
+      "id": "recgfRaehZs817g5c",
+      "jmeno": "Josef Hajkr",
+      "bio": "Lídr, který propojuje lidi, projekty a umělou inteligenci.Stojí v čele SHINE Consulting už více než 25 let a patří mezi průkopníky moderního projektového řízení v Česku. Je autorem konceptu Řízení projektů 5.0, který spojuje lidskost a technologie. Pod jeho vedením firma přešla na strategie \"Online ",
+      "specializace": "",
+      "email": "josef.hajkr@shine.cz",
+      "foto": "https://v5.airtableusercontent.com/v3/u/54/54/1780869600000/YlJRaTW3O3Eqjv3efiVP0Q/nENL7XCnmYJbWQLKsFNev07GgdQnta4xALHm5X6UWKlDjVCeDQC96e1HDDeeNPsvi4MhrZN6ZWvr28cq3mPBy5htirqSAjX2QLU-LguUvPWXOT1uvevXk3BMQHvMplnxS6FpAcuwnOM7pkt93apLaA/teQo-Z8k5rjiauL-fuygARHYpzWIc1W6XYWnKKF9BWU"
+    },
+    {
+      "id": "recjmRT1vqvaMhWlu",
+      "jmeno": "Dominik Palla",
+      "bio": "Ing. Dominik Palla působí na Fakultě informatiky a managementu Univerzity Hradec Králové, kde se věnuje výuce programování a výzkumu v oblasti využití generativní umělé inteligence v softwarovém inženýrství a vzdělávání. Je koordinátorem fakultního Centra pro školení a konzultace v oblasti AI, v rám",
+      "specializace": "",
+      "email": "dominik.palla@uhk.cz",
+      "foto": "https://v5.airtableusercontent.com/v3/u/54/54/1780869600000/LIEyi_uOMCSv7TGXtcl7rA/HGmhmLn2hHim81FFnWLc8JwjLlKbxeDnuuMi9wgK4pQlGoiK9GXoDjNBra7o_etvFK9MwnQCKZSPYWJjQdcqzEHjdZo3ZfZ_f2b6wkUvUsyAqGUcVRKtTv70-YmiJFWBAe8bd8XMDOfeSeChQgt9vg/WKHb84LUZQ1Q-B-CuousCWTNwM19PMhNSy1UTutNYhY"
+    },
+    {
+      "id": "reckwwEWeC2ulcyIT",
+      "jmeno": "Viacheslav Zakhutskyi",
+      "bio": "Agentic Engineer v Aibility. Vedl inženýrské týmy. Pak zjistil, že s AI agenty dělá to samé - nastavuje kontext, definuje „what good looks like\" a dává zpětnou vazbu, která zůstane. Vrátil se k budování, protože cit pro to, co funguje, dává jen praxe. Podílí se na vývoji platformy Aimee - a tvrdí, ž",
+      "specializace": "",
+      "email": "",
+      "foto": "https://v5.airtableusercontent.com/v3/u/54/54/1780869600000/CPDEZlWmB3hSLcr6QAfqEg/YmHXDNl2pCYA71qzvZ9Ys2-dL_vdL35Iw5ER_hP1flHRJGM_5fEjxrDynf665RgTgpqHM5mFfNMa_iH2E0QuL3o9L2ygfuF6Kj1J-AFtG1AOA3FlK7MAjVOJJ_VQ99CDxuU1R30ZMKaN5QRwuNwB-w/6TRKNt4Eg6rpgd0vqfe3R1bCCT_z2OAu7JuFkfkorIo"
+    },
+    {
+      "id": "recmOLgKCch4ZefA1",
+      "jmeno": "Jakub Danielka",
+      "bio": "Lektor a konzultant, který proměňuje AI, automatizaci a digitalizaci v konkrétní výsledky. Pomáhá firmám přejít od nápadu k funkčnímu systému - od low-code prototypů po produkční řešení. Specializuje se na Microsoft 365, Google Workspace, nástroje Make, Zapier či n8n a vývoj v prostředí React/Next.j",
+      "specializace": "",
+      "email": "jakub@danielka.net",
+      "foto": "https://v5.airtableusercontent.com/v3/u/54/54/1780869600000/mp8G7tklHAa4afu6spXvKQ/r-ByvQ-GoDs7dzM5NM6N4cr4rD0CzNN3u5ni9k6JbhHUd-m8Vd9M_4oyRwBQF9_-jWQD7T04UqUlQ17t7wU_ugGDMYVU91dHNetFviWuv_QdQW2JdUi3oEHS3hoHJGv3dqFW6eB1jFGSyBjKg4L0LQ/xRP7kYaHYPDauZDYo-XpZEvWZ57VJ2JKKHrFYNOpmPI"
+    },
+    {
+      "id": "recurx7iGRx7tN8Ol",
+      "jmeno": "Petra Kovandová",
+      "bio": "AI ambasadorka v Century21 a expertka, která inspiruje k využití umělé inteligence v cestovním ruchu a realitním trhu. Specializuje se na objevování možností AI v těchto oblastech a motivuje profesionály k využívání nových technologií pro zlepšení jejich služeb a zákaznické zkušenosti.",
+      "specializace": "Spoluzakladatelka · Moderátorka · Mentorka",
+      "email": "kovandova.p@seznam.cz",
+      "foto": "https://v5.airtableusercontent.com/v3/u/54/54/1780869600000/XeHyG3rlwyNKsZM8K3Lw3A/WtnhkASl3IsezEaxhzC2wNBbul-TySnratuSKIFoqlBbyvj4BW4aHyxkeBRVEHGIsDCrO0mv4tENfmJz_y7zNyubDWoAujot-9nMzoSDS-jPMvJjg9qHAJZapOqbbFa-NeYj9TH6QAF3fGa-BUQTMQ/MdeHfJLodu61-JEiJak3EhQasXIJzWIWzlcoRuqPzSc"
+    },
+    {
+      "id": "recvbzqn7cHJ0AyzB",
+      "jmeno": "Tomáš Kerepecký",
+      "bio": "Tomáš Kerepecký\nAI consultant & researcher & lecturer\n\nAI konzultant, výzkumník a lektor propojující technologii a vzdělávání. Získal Ph.D. ve zpracování digitálního obrazu a Fulbrightovo stipendium pro výzkum AI v USA. Tomáš sedm let vedl zážitkovou organizaci Atleti v akci, z. s., a vyučoval v Čes",
+      "specializace": "",
+      "email": "kerepecky@utia.cas.cz",
+      "foto": "https://v5.airtableusercontent.com/v3/u/54/54/1780869600000/lT7OkmcBaDLyDE61wRqzdQ/TEqAry19jkqYw1cR38q2FIMV1zQn3NcUcYERmjNpPR_J0fowmW5s_O3figsv7Lshu9b7ah09u37oqmVyNVH_yXQQkEGg8Infgf-voBSjnrnBFSIf101L4pPVw_FrlET1bf2svw7YmhmxMGvwASKkEw/h2d4_KPqkiEzAS5fCwOW9wkx5iVbV9AdUGKFPFiWYlQ"
+    }
+  ]
+}
