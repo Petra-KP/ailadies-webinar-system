@@ -231,21 +231,13 @@
     .event-row.pause{background:rgba(212,175,55,.06);color:var(--text-muted)}
     .event-row.highlight{background:linear-gradient(90deg,rgba(212,175,55,.16) 0%,transparent 80%);border-left:3px solid var(--accent)}
 
-    /* Proběhlý měsíc — přeškrtnutý archiv */
-    .month--past{opacity:.72}
-    .month--past .month-head{background:#3a3530}
-    .month--past .month-head .month-meta{color:rgba(255,255,255,.55)}
-    .month--past .event-row{opacity:.85}
-    .month--past .event-title,
-    .month--past .event-date,
-    .month--past .event-time{text-decoration:line-through;text-decoration-color:rgba(26,21,16,.35)}
-    .month--past .event-title small{text-decoration:line-through}
-    .phase-card--past{opacity:.78}
-    .phase-card--past h3,
-    .phase-card--past .phase-when,
-    .phase-card--past p,
-    .phase-card--past li{text-decoration:line-through;text-decoration-color:rgba(26,21,16,.28)}
-    .phase-card--past .phase-num{text-decoration:none}
+    /* Proběhlá akce — přeškrtnout jen řádky, které už byly */
+    .event-row--past{opacity:.78}
+    .event-row--past .event-title,
+    .event-row--past .event-date,
+    .event-row--past .event-time{text-decoration:line-through;text-decoration-color:rgba(26,21,16,.35)}
+    .event-row--past .event-title small{text-decoration:line-through}
+    .phase-card li.is-past{text-decoration:line-through;text-decoration-color:rgba(26,21,16,.28);opacity:.85}
 
     @media(max-width:740px){
       .event-row{grid-template-columns:1fr;gap:6px;padding:14px 18px}
@@ -945,23 +937,23 @@
   <div class="section-head">
     <span class="section-eyebrow">07 · Kalendář akcí</span>
     <h2>Kalendář akcí 2026</h2>
-    <p class="section-lead"><strong>Červen je za námi</strong> — výkop proběhl eventem 17. 6., natáčením CallCastu (18. 6.) a zveřejněním Dílu 1 (30. 6.). Placený červnový webinář se nekonal. Teď jedeme <strong>červenec a srpen</strong>, od září přejdeme na Nástrojový měsíc.</p>
+    <p class="section-lead">Výkop proběhl <strong>eventem 17. 6.</strong> a <strong>natáčením CallCastu 18. 6.</strong> Placený červnový webinář se nekonal. <strong>CallCast Díl 1 (30. 6.)</strong> ještě čeká na zveřejnění. Teď jedeme <strong>červenec a srpen</strong>, od září přejdeme na Nástrojový měsíc.</p>
   </div>
 
-  <!-- ČERVEN — proběhlo -->
-  <div class="month month--past">
+  <!-- ČERVEN -->
+  <div class="month">
     <div class="month-head">
       <h3>Červen 2026 — výkop projektu</h3>
-      <span class="month-meta">Proběhlo</span>
+      <span class="month-meta">2 akce proběhly · 1 naplánovaná</span>
     </div>
     <div class="month-body">
-      <div class="event-row highlight">
+      <div class="event-row highlight event-row--past">
         <div class="event-date">17. 6.<small>Středa</small></div>
         <div class="event-time">18:00</div>
         <div class="event-title">AI Ladies Night #1 — KICKOFF <small>🎉 Space Café Anděl · ~60 lidí · „Léto, mentální load a AI" · host Aneta</small></div>
         <span class="event-type et-event">Event · kickoff</span>
       </div>
-      <div class="event-row highlight">
+      <div class="event-row highlight event-row--past">
         <div class="event-date">18. 6.<small>Čtvrtek</small></div>
         <div class="event-time">—</div>
         <div class="event-title">CallCast — natáčení 2 dílů <small>🎙️ Den po Night #1 · příprava pro zveřejnění 30. 6.</small></div>
@@ -1134,14 +1126,14 @@
   </div>
 
   <div class="roadmap">
-    <div class="phase-card phase-card--past">
+    <div class="phase-card">
       <span class="phase-num">Fáze 1 · Spustit</span>
       <h3>Červen 2026</h3>
-      <div class="phase-when">MVP — proběhlo</div>
+      <div class="phase-when">MVP — částečně proběhlo</div>
       <p>Hlavní cíl: <strong>veřejně vykopnout AI Ladies eventem 17. 6.</strong>, otestovat formáty, získat první komunitu. Web a programy zveřejníme spolu s eventem — do té doby na ailadies.cz běží jen landing AI Ladies Night + představení projektu.</p>
       <ul>
-        <li><strong>Kickoff: AI Ladies Night #1 (17. 6.)</strong> — Space Café Anděl, ~60 lidí</li>
-        <li>Natáčení 2 dílů CallCastu (18. 6.)</li>
+        <li class="is-past"><strong>Kickoff: AI Ladies Night #1 (17. 6.)</strong> — Space Café Anděl, ~60 lidí</li>
+        <li class="is-past">Natáčení 2 dílů CallCastu (18. 6.)</li>
         <li>Zveřejnění CallCast Díl 1 (30. 6.) — náš free formát</li>
         <li>Web ailadies.cz: do 17. 6. jen landing eventu, pak plné 4 pilíře</li>
         <li>Platba na eventu QR kódem (zatím bez firemního účtu)</li>
