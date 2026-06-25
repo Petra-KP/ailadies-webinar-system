@@ -231,6 +231,22 @@
     .event-row.pause{background:rgba(212,175,55,.06);color:var(--text-muted)}
     .event-row.highlight{background:linear-gradient(90deg,rgba(212,175,55,.16) 0%,transparent 80%);border-left:3px solid var(--accent)}
 
+    /* Proběhlý měsíc — přeškrtnutý archiv */
+    .month--past{opacity:.72}
+    .month--past .month-head{background:#3a3530}
+    .month--past .month-head .month-meta{color:rgba(255,255,255,.55)}
+    .month--past .event-row{opacity:.85}
+    .month--past .event-title,
+    .month--past .event-date,
+    .month--past .event-time{text-decoration:line-through;text-decoration-color:rgba(26,21,16,.35)}
+    .month--past .event-title small{text-decoration:line-through}
+    .phase-card--past{opacity:.78}
+    .phase-card--past h3,
+    .phase-card--past .phase-when,
+    .phase-card--past p,
+    .phase-card--past li{text-decoration:line-through;text-decoration-color:rgba(26,21,16,.28)}
+    .phase-card--past .phase-num{text-decoration:none}
+
     @media(max-width:740px){
       .event-row{grid-template-columns:1fr;gap:6px;padding:14px 18px}
       .event-time{margin-bottom:2px}
@@ -378,7 +394,7 @@
       <p class="hero-claim">AI Ladies je český projekt, který pomáhá ženám prakticky a bezpečně začít používat umělou inteligenci v práci, podnikání i běžném životě. Tento dokument je interní přehled našich programů — webinářů, podcastu CallCast, eventů AI Ladies Night a komunitní platformy AI Ladies Hub.</p>
       <div class="hero-actions">
         <a href="#programy" class="btn btn-primary">Přehled programů</a>
-        <a href="#kalendar" class="btn btn-ghost">Kalendář červen 2026</a>
+        <a href="#kalendar" class="btn btn-ghost">Kalendář akcí</a>
       </div>
       <div class="hero-meta">
         <span>Verze 3.0</span><span>Květen 2026</span><span>Petra · Aneta · Katka</span><span>Interní dokument</span>
@@ -928,15 +944,15 @@
 <section class="section" id="kalendar">
   <div class="section-head">
     <span class="section-eyebrow">07 · Kalendář akcí</span>
-    <h2>Kalendář na červen — start projektu.</h2>
-    <p class="section-lead">Červen je <strong>výkop celé komunity</strong>. Vykopáváme celé AI Ladies <strong>eventem 17. 6.</strong> — spolu s ním spouštíme web a programy. V jednom měsíci rozjedeme všechny 4 pilíře: Night #1 (17. 6.), natáčení CallCastu (18. 6.), placený webinář (23. 6. v 11:00) a zveřejnění CallCastu (30. 6.). Pak postupně škálujeme přes léto a od září přejdeme na Nástrojový měsíc.</p>
+    <h2>Kalendář akcí 2026</h2>
+    <p class="section-lead"><strong>Červen je za námi</strong> — výkop proběhl eventem 17. 6., natáčením CallCastu (18. 6.) a zveřejněním Dílu 1 (30. 6.). Placený červnový webinář se nekonal. Teď jedeme <strong>červenec a srpen</strong>, od září přejdeme na Nástrojový měsíc.</p>
   </div>
 
-  <!-- ČERVEN — STĚŽEJNÍ -->
-  <div class="month">
+  <!-- ČERVEN — proběhlo -->
+  <div class="month month--past">
     <div class="month-head">
       <h3>Červen 2026 — výkop projektu</h3>
-      <span class="month-meta">Kickoff celého AI Ladies · spouštíme všechny 4 pilíře</span>
+      <span class="month-meta">Proběhlo</span>
     </div>
     <div class="month-body">
       <div class="event-row highlight">
@@ -950,12 +966,6 @@
         <div class="event-time">—</div>
         <div class="event-title">CallCast — natáčení 2 dílů <small>🎙️ Den po Night #1 · příprava pro zveřejnění 30. 6.</small></div>
         <span class="event-type et-cast">CallCast · natáčení</span>
-      </div>
-      <div class="event-row highlight">
-        <div class="event-date">23. 6.<small>Úterý</small></div>
-        <div class="event-time">11:00</div>
-        <div class="event-title">Jak si zjednodušit život s AI <small>🌱 První placený webinář · 60 min · 10 reálných situací ze života · Lektorky: Petra, Aneta, Katka</small></div>
-        <span class="event-type et-web">Webinář 490 Kč</span>
       </div>
       <div class="event-row highlight">
         <div class="event-date">30. 6.<small>Úterý</small></div>
@@ -1004,15 +1014,9 @@
   <div class="month">
     <div class="month-head">
       <h3>Srpen 2026 — finiš léta</h3>
-      <span class="month-meta">4 webináře + AI Ladies Night #2</span>
+      <span class="month-meta">2 webináře + AI Ladies Night #2</span>
     </div>
     <div class="month-body">
-      <div class="event-row">
-        <div class="event-date">srpen<small>upřesníme</small></div>
-        <div class="event-time">—</div>
-        <div class="event-title">Jak si zjednodušit život s AI <small>🌱 10 situací z práce a domácnosti · přesunuto z června · Lektorky: Petra, Aneta, Katka · termín upřesníme</small></div>
-        <span class="event-type et-web">Webinář 490 Kč</span>
-      </div>
       <div class="event-row">
         <div class="event-date">4. 8.<small>Úterý</small></div>
         <div class="event-time">10:00</div>
@@ -1130,15 +1134,14 @@
   </div>
 
   <div class="roadmap">
-    <div class="phase-card">
+    <div class="phase-card phase-card--past">
       <span class="phase-num">Fáze 1 · Spustit</span>
       <h3>Červen 2026</h3>
-      <div class="phase-when">MVP všech 4 pilířů</div>
+      <div class="phase-when">MVP — proběhlo</div>
       <p>Hlavní cíl: <strong>veřejně vykopnout AI Ladies eventem 17. 6.</strong>, otestovat formáty, získat první komunitu. Web a programy zveřejníme spolu s eventem — do té doby na ailadies.cz běží jen landing AI Ladies Night + představení projektu.</p>
       <ul>
         <li><strong>Kickoff: AI Ladies Night #1 (17. 6.)</strong> — Space Café Anděl, ~60 lidí</li>
         <li>Natáčení 2 dílů CallCastu (18. 6.)</li>
-        <li>1 placený webinář „Jak si zjednodušit život s AI" (23. 6. v 11:00) — Petra, Aneta, Katka</li>
         <li>Zveřejnění CallCast Díl 1 (30. 6.) — náš free formát</li>
         <li>Web ailadies.cz: do 17. 6. jen landing eventu, pak plné 4 pilíře</li>
         <li>Platba na eventu QR kódem (zatím bez firemního účtu)</li>
@@ -1152,7 +1155,7 @@
       <div class="phase-when">Škálování + první externí</div>
       <p>Hlavní cíl: <strong>získat opakované účastnice</strong>, otestovat externí lektorky (Katka srpen), pustit CallCast pravidelně, druhý event. Začít MVP Hubu se základním profilem a kalendářem.</p>
       <ul>
-        <li>2 webináře červenec, 4 webináře srpen (1× termín upřesníme)</li>
+        <li>2 webináře červenec, 2 webináře srpen</li>
         <li>AI Ladies Night #2 (27. 8.)</li>
         <li>CallCast 1× týdně (po rozjezdu)</li>
         <li>Hub: MVP – profily, kalendář, diskuze</li>
@@ -1226,7 +1229,7 @@
         </thead>
         <tbody>
           <tr>
-            <td>Léto · 6 webinářů × 490 Kč (červen–srpen)</td>
+            <td>Léto · 4 webináře × 490 Kč (červenec–srpen)</td>
             <td>červen–srpen</td>
             <td><strong>147 000 Kč</strong></td>
             <td><strong>441 000 Kč</strong></td>
@@ -1295,15 +1298,14 @@
   <!-- Webináře -->
   <div class="task-group">
     <h3>Webináře <span class="task-tag">červen</span></h3>
-    <p class="task-intro">První placený webinář 23. 6. „Jak si zjednodušit život s AI" (Petra, Aneta, Katka). Právnický webinář (AI Act) v červenci. Texty v červenci (30. 7.) — Martin Kafka.</p>
+    <p class="task-intro">Právnický webinář (AI Act) v červenci (14. 7.). Texty v červenci (30. 7.) — Martin Kafka. Asistent na web a vychytávky v srpnu.</p>
     <ol class="task-list">
-      <li><span class="t-num">1</span><span class="t-text">Trojice připraví webinář „Jak si zjednodušit život s AI" (23. 6.)</span><span class="t-owner">trojice</span><span class="t-due">do 20. 6.</span></li>
-      <li><span class="t-num">2</span><span class="t-text">Potvrdit Káťu Šumpíkovou (chatbot, srpen)</span><span class="t-owner">Aneta</span><span class="t-due">do 30. 5.</span></li>
-      <li><span class="t-num">3</span><span class="t-text">Domluvit Petru Kovandovou (AI bezpečně / AI Act — 14. 7.)</span><span class="t-owner">Petra</span><span class="t-due">do 15. 6.</span></li>
-      <li><span class="t-num">4</span><span class="t-text">Potvrdit Martina Kafku (Proč mi z AI leze taková nuda — 30. 7.)</span><span class="t-owner">Petra</span><span class="t-due">do 30. 6.</span></li>
-      <li><span class="t-num">5</span><span class="t-text">Oslovit Kláru Rybenskou (UHK — AI ve vzdělávání) a Mariku (finance pro ženy)</span><span class="t-owner">Petra</span><span class="t-due">do 31. 7.</span></li>
-      <li><span class="t-num">6</span><span class="t-text">Domluvit Petru Komandovou na vibe coding workshop (pokročilé, říjen)</span><span class="t-owner">Petra</span><span class="t-due">do 31. 8.</span></li>
-      <li><span class="t-num">7</span><span class="t-text">Otestovat technickou rotaci: Google Meet + sdílení obrazovky + nahrávání</span><span class="t-owner">Petra</span><span class="t-due">do 10. 6.</span></li>
+      <li><span class="t-num">1</span><span class="t-text">Potvrdit Káťu Šumpíkovou (asistent na web, 4. 8.)</span><span class="t-owner">Aneta</span><span class="t-due">do 30. 5.</span></li>
+      <li><span class="t-num">2</span><span class="t-text">Domluvit Petru Kovandovou (AI bezpečně / AI Act — 14. 7.)</span><span class="t-owner">Petra</span><span class="t-due">do 15. 6.</span></li>
+      <li><span class="t-num">3</span><span class="t-text">Potvrdit Martina Kafku (Proč mi z AI leze taková nuda — 30. 7.)</span><span class="t-owner">Petra</span><span class="t-due">do 30. 6.</span></li>
+      <li><span class="t-num">4</span><span class="t-text">Oslovit Kláru Rybenskou (UHK — AI ve vzdělávání) a Mariku (finance pro ženy)</span><span class="t-owner">Petra</span><span class="t-due">do 31. 7.</span></li>
+      <li><span class="t-num">5</span><span class="t-text">Domluvit Petru Komandovou na vibe coding workshop (pokročilé, říjen)</span><span class="t-owner">Petra</span><span class="t-due">do 31. 8.</span></li>
+      <li><span class="t-num">6</span><span class="t-text">Otestovat technickou rotaci: Google Meet + sdílení obrazovky + nahrávání</span><span class="t-owner">Petra</span><span class="t-due">do 10. 6.</span></li>
     </ol>
   </div>
 
